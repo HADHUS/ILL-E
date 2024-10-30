@@ -1,0 +1,48 @@
+spells: []
+maxspells: []
+locationactions: ['west', 'east', 'north', 'south', 'save data', 'loadout', 'inventory', 'help', 'coins', 'hp', 'time', 'hunger', 'quests', 'exchange', 'merchants', 'inn', 'converse', 'storage', 'taxi']
+quests: []
+eqgear: []
+battleactions: ['attack', 'block', 'run']
+magicbonus: 0
+atkbonus: 1
+ac: 11
+location: Falezrin
+hp: 8
+maxhp: 10
+style: agile
+pc: 0
+gc: 11
+sc: 0
+cc: 0
+eqhelm: none
+eqarmor: none
+eqgreaves: none
+inventory: ['bestiary', 'goblin sword']
+eqweapon: bronze sword
+eqoffhand: wooden shield
+minutes: 0
+hunger: 10
+maxhunger: 10
+hours: 6
+timeofday: am
+sclass: warrior
+stylep: swift
+throwingknife: 0
+d2b: 0
+eat: no
+gt: 0
+cspdb: 0
+soq: 0
+quests: []
+csb1: 0
+vq: 0
+bardcd: 0
+storagelist: []
+bowbonus: 0
+knifebonus: 0
+gsq: 0
+os1: 0
+bestiarylist: ['goblin']
+citiesbeento: ['Falezrin']
+weather: clear
