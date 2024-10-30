@@ -43,36 +43,51 @@ import time
 import random
 import math
 import ast
-from readchar import readkey, key
+from readchar import readkey, key #ignore on github (missing package manager)
 
+#UNCHANGED - PURPOSE: Climbing speed bonus value
 cspdb = 0
 
+#UNCHANGED - PURPOSE: Does something with timeshift, and involves the player doing bard work
 bardcd = 0
 
+#UNCHANGED - PURPOSE: 1-0 value for stealth checks
 invis = 0
 
+#UNCHANGED - PURPOSE: Dictates the current hour
 hours = 6
+#UNCHANGED - PURPOSE: Dictates the current minute
 minutes = 0
+#UNCHANGED - PURPOSE: Dictates whether it's day or night.
 timeofday = "am"
+#UNCHANGED - PURPOSE: Player hunger points
 hunger = 10
+#UNCHANGED - PURPOSE: Maximum player hunger points
 maxhunger = 10
+#UNCHANGED - PURPOSE: Player hitpoints
 hp = 0
+#UNCHANGED - PURPOSE: Maximum player hitpoints
 maxhp = 0
 
+#UNCHANGED - PURPOSE: A conditional value used in the start combat and the Broken Ballista quest combat
 dp = 0
 
+#UNCHANGED - PURPOSE: A conditional value used to determine if the player has found a specific sword (There can only be one)
 vdf = 0
 
+#UNCHANGED - PURPOSE: A conditional value used for determining if the player has the "gambler's trinket"
 gt = 0
+#UNCHANGED - PURPOSE: A conditional value used for determining if the quest "A Letter To Matthew" has been completed
 soq = 0
+#UNCHANGED - PURPOSE: A staged (0-1-2) conditional value for a fetch quest (converse - B) in Stones Edge. (2 = completed, 1 = accepted quest, 0 = hasn't started quest)
 vq = 0
+#UNCHANGED - PURPOSE: A staged (0-1-2) conditional value for a fetch quest "A Broken Ballista" (2 = player gives oak branches and iron ingot to npc/ballista finished (player needs to interact with npc again), 1 = Accepted quest and needs to retrive materials, 0 = quest not started)
 gsq = 0
 
+#UNCHANGED - PURPOSE: A list of all discovered enemies (killing a new enemy type adds it to the list)
 bestiarylist = []
 
-#TODO:
-# 1. Make locations easier to make, especially since theres going to genuinely be 30+ clouded spires locations.
-
+#CHANGE: Reformatted | PURPOSE: A list of all possible character classes
 classes = [
   "warrior",
   "rogue",
@@ -85,6 +100,7 @@ classes = [
   "druid"
   ]
 
+#CHANGE: Reformatted | PURPOSE: A list for storing class descriptions
 cdesc = [
   #Warrior
   "'Strike strong, defend stronger.'  Your defense is your offense, and your offense helps your defense.  Warriors use melee weapons paired with shields to both defend and attack. Excellent all-rounders.",
@@ -106,6 +122,7 @@ cdesc = [
   "'Face nature with open arms and your foes will face it too.' Druids call upon all aspects of nature - summoning storms, controlling plants, and transforming into beasts.  Bulky DPS/AOE Burst units.",
   ]
 
+#CHANGE: Reformatted | PURPOSE: A list of possible styles a character can possess
 styles = [
   "swift",
   "strong",
@@ -113,82 +130,127 @@ styles = [
   "tough",
   ]
 
+#UNCHANGED - PURPOSE: A list of all possible actions during combat (gets added to, depending on class)
 battleactions = ["attack", "block", "run"]
 
+#UNCHANGED - PURPOSE: A list of all possible actions in a given location
 locationactions = ["west", "east", "north", "south", "save data", "loadout", "inventory", "help", "coins","hp", "time", "hunger", "quests", "exchange"]
 
+#CHANGE: More locations to be added | PURPOSE: A list of locations where fishing is allowed
 fishingspots = ["verdanthills4", "verdanthills5", "sunsetmesa2", "northernsea1", "northernsea2", "northernsea3"]
+#CHANGE: More locations to be added | PURPOSE: A list of locations where combat events can happen
 combatareas = ["cloudedspires1", "savagesteppe5", "savagesteppe2", "oakensanctuary13"]
+#CHANGE: Finished adding locations | PURPOSE: A list of all city locations
 cities = ["Falezrin", "ShroudedOutpost", "StonesEdge", "TheOasis", "RTherin", "Snowdrift", "Olaera", "Riverside"]
+#UNCHANGED - PURPOSE: Visiting a city you havent been to logs it here, lets you 'Taxi' to any city in the list
 citiesbeento = []
 
+#UNCHANGED - PURPOSE: Off-character storage accessible only in cities
 storagelist = []
 
+#UNCHANGED - PURPOSE: A list of possible items that can be found when gathering
 gatherlist = []
 
+#UNCHANGED - PURPOSE: Throwing knife counter
 throwingknife = 0
 
+#UNCHANGED - PURPOSE: No fucking clue/couldn't tell ya
 gwpcharge = 0
 gwpy = "no"
 
+#UNCHANGED - PURPOSE: Spell storage lists
 maxspells = []
 spells = []
 
+#UNCHANGED - PURPOSE: Used by eating function
 eat = "no"
 
+#UNCHANGED - PURPOSE: Current selected class
 sclass = ""
 
+#UNCHANGED - PURPOSE: Moneys; Platinum Coins, Gold Coins, Silver Coins, Copper Coins
 pc = 0
 gc = 10
 sc = 0
 cc = 0
 
+#UNCHANGED - PURPOSE: Used by all locations to dictate where the character is
 location = "tutorial"
 
+#UNCHANGED - PURPOSE: Accuracy?
 ac = 10
 
+#UNCHANGED - PURPOSE: 1-0 (t/f) used by the 'Sigil of The Night' item (damage boost at night when equipped)
 nightbonus = 0
 
+#UNCHANGED - PURPOSE: A list for quests
 quests = []
 
+#UNCHANGED - PURPOSE: Bonus attack damage
 atkbonus = 0
+#UNCHANGED - PURPOSE: Bonus throwing knife damage
 knifebonus = 0
+#UNCHANGED - PURPOSE: Bonus bow damage
 bowbonus = 0
+#UNCHANGED - PURPOSE: Bonus magical damage
 magicbonus = 0
+#UNCHANGED - PURPOSE: Global player damage bonus (all damage values are modified by this)
 dmgbonus = 0
 
+#UNCHANGED - PURPOSE: 1-0 (t/f) used by the sniping action in select locations
 snipe = 0
 
+#UNCHANGED - PURPOSE: Another yes or no thing that seems to be used in combat (no clue what it does)
 wsyes = "no"
 
+#UNCHANGED - PURPOSE: List of active enemies
 enemies = []
 
+#UNCHANGED - PURPOSE: Player inventory list
 inventory = []
 
+#UNCHANGED - PURPOSE: Achivement list (NO ACHIVEMENTS EXIST IN THE GAME)
 achievements = []
 
+#UNCHANGED - PURPOSE: After combat this is typically run through an if statement, which determines if the player gets loot after they win a fight
 loot = "yes"
 
+#UNCHANGED - PURPOSE: 1-0 value tracker that is set to 1 when a specific scripted event is completed (so it doesn't happen twice)
 d2b = 0
+#UNCHANGED - PURPOSE: 1-0 value tracker that is set to 1 when a specific scripted event is completed (so it doesn't happen twice)
 csb1 = 0
+#UNCHANGED - PURPOSE: 1-0 value tracker that is set to 1 when a specific scripted event is completed (so it doesn't happen twice)
 os1 = 0
 
+#UNCHANGED - PURPOSE: General damage reduction (enemy damage reduced by this value)
 DR = 0
+#UNCHANGED - PURPOSE: Ranged damage reduction (enemy ranged damage reduced by this value)
 rangedDR = 0
+#UNCHANGED - PURPOSE: Magic damage reduction (enemy magic damage reduced by this value)
 magicDR = 0
 
+#UNCHANGED - PURPOSE: A conditional value for determining if the player has successfully raided the orc city
 orcl = 0
 
+#UNCHANGED - PURPOSE: A string used to determine the current weather
 weather = "clear"
 
+#UNCHANGED - PURPOSE: A list of all valid ranged weapons
 rangedweapons = ["oaken longbow", "oaken crossbow", "yumi", "mahogany recurve","twinpierce slinger", "stormbolt ballista", "reinforced longbow","repeating crossbow"]
+#UNCHANGED - PURPOSE: A list of all valid magic weapons
 magicweapons = ["topaz spellslinger", "shaman's staff", "lifedrain staff"]
 
+#UNCHANGED - PURPOSE: Player's equipped weapon
 eqweapon = "none"
+#UNCHANGED - PURPOSE: Player's equipped helmet
 eqhelm = "none"
+#UNCHANGED - PURPOSE: Player's equipped armor
 eqarmor = "none"
+#UNCHANGED - PURPOSE: Player's equipped leggings/greaves
 eqgreaves = "none"
+#UNCHANGED - PURPOSE: Player's equipped offhand item
 eqoffhand = "none"
+#UNCHANGED - PURPOSE: Player's equipped gear items
 eqgear = []
 
 # [Output Text Customization]: Formatting Modifiers:
@@ -239,6 +301,7 @@ coloborite = '\033[38;2;238;210;238m' #Material color
 pendinium = '\033[38;2;174;238;238m' #Material color
 painite = '\033[38;2;68;0;0m' #Material color
 
+#NEW: A list of all valid colors
 validcolors = [
   darkred, red2, red, brown, orange, paleyellow, tan, yellow, darkgreen, green, lime,
   black, darkgrey, grey, lightgrey, offwhite, cyan, teal, turquoise, blue3, blue2, blue,
@@ -246,6 +309,7 @@ validcolors = [
   steel, leather, coloborite, pendinium, painite
 ]
 
+#UNCHANGED - PURPOSE: A list of colors that are used in the start screen for coloring class names
 clcolor = [
   #Warrior
   red,
@@ -267,6 +331,7 @@ clcolor = [
   green
 ]
 
+#NEW: A decorative horizontal line generator
 def hzline(type, style, extra="none"):
   if type == "a":
     if style == 1:
@@ -309,6 +374,7 @@ def hzline(type, style, extra="none"):
   else:
     print(red + "< HZLINE ERROR: INVALID HZLINE TYPE >" + white)
 
+#NEW: A decorative text entry generator
 def normentry(name, usecolor="F", color=white, text="SampleText"):
   if usecolor == "F" or usecolor == "f":
     color = white
@@ -320,12 +386,15 @@ def normentry(name, usecolor="F", color=white, text="SampleText"):
   else:
     print(red+"< USECOLOR SYNTAX ERROR: Please specify whether true or false. >"+white) # ERROR
 
+#NEW: A decorative dialogue generator (npc to player)
 def says(namcolor, name, texcolor, text):
   print(clearf+namcolor+italic+" "+name+clearf+white+": "+texcolor+text+white)
 
+#NEW: A decorative dialogue generator (world to player)
 def tell(name, text, namcolor=white, texcolor=lightgrey):
   print(clearf+namcolor+" "+name+clearf+white+": "+texcolor+text+white)
 
+#UNCHANGED - PURPOSE: Runs audio (!BROKEN!)
 def playaudio(filename):
   import urllib.request
   import urllib.parse
@@ -334,10 +403,12 @@ def playaudio(filename):
   data = urllib.parse.urlencode(data).encode("utf-8")
   urllib.request.urlopen(urllib.request.Request(url, data))
 
+#UNCHANGED - PURPOSE: An enter sequence creator
 def enterwait():
   print("[ENTER] to continue.")
   wait = input()
 
+#UNCHANGED - PURPOSE: Title card function
 def title():
   print(gold+ "         ██\                     "+white+"/\                  "+green+"           (''''')")
   print(gold + "         \_███\ ███\ "+green+"  (o)      "+white+"/  \_           /\      "+green+"      (_    3  _)")
