@@ -253,7 +253,7 @@ eqoffhand = "none"
 #UNCHANGED - PURPOSE: Player's equipped gear items
 eqgear = []
 
-# [Output Text Customization]: Formatting Modifiers:
+#NEW: Escape code formatting
 clearline = '\x1B[2K'
 italic = '\x1B[3m'
 normal = '\033[1m'
@@ -261,7 +261,7 @@ clearf = '\033[0m'
 slowbli = '\033[5m'
 rapibli = '\033[6m'
 stkthru = '\033[9m'
-# [Output Text Customization]: Standard Colorization Modifiers:
+#NEW: Escape code colorization
 darkred = '\033[38;2;85;0;0m'
 red2 = '\033[38;2;128;0;0m' 
 red = '\033[38;2;255;0;0m'
@@ -288,8 +288,9 @@ purple = '\033[38;2;140;0;240m'
 hotpink = '\033[38;2;255;0;255m'
 pink = '\033[38;2;255;128;255m'
 lightpink = '\033[38;2;255;192;255m'
+lavender = '\033[38;2;230;230;250m'
 white = '\033[38;2;255;255;255m'
-# [Output Text Customization]: Currency/Material Colorization Modifiers:
+
 platinum = '\033[38;2;205;192;255m' #Currency & material color
 gold = '\033[38;2;255;192;64m' #Currency & material color
 silver = '\033[38;2;209;223;229m' #Currency & material color
@@ -301,12 +302,12 @@ coloborite = '\033[38;2;238;210;238m' #Material color
 pendinium = '\033[38;2;174;238;238m' #Material color
 painite = '\033[38;2;68;0;0m' #Material color
 
-#NEW: A list of all valid colors
+#NEW: A list of all valid colors | PURPOSE: Used in some of my functions to make sure things get correctly colored
 validcolors = [
   darkred, red2, red, brown, orange, paleyellow, tan, yellow, darkgreen, green, lime,
   black, darkgrey, grey, lightgrey, offwhite, cyan, teal, turquoise, blue3, blue2, blue,
-  purple, hotpink, pink, lightpink, white, platinum, gold, silver, copper, bronze,
-  steel, leather, coloborite, pendinium, painite
+  purple, hotpink, pink, lightpink, lavender, white, platinum, gold, silver, copper,
+  bronze, steel, leather, coloborite, pendinium, painite
 ]
 
 #UNCHANGED - PURPOSE: A list of colors that are used in the start screen for coloring class names
@@ -331,7 +332,7 @@ clcolor = [
   green
 ]
 
-#NEW: A decorative horizontal line generator
+#NEW: A decorative horizontal line generator | EXAMPLE: hzline("a", 1) = '================================================================================'
 def hzline(type, style, extra="none"):
   if type == "a":
     if style == 1:
@@ -374,7 +375,73 @@ def hzline(type, style, extra="none"):
   else:
     print(red + "< HZLINE ERROR: INVALID HZLINE TYPE >" + white)
 
-#NEW: A decorative text entry generator
+#NEW: A new method of displaying merchant entries | EXAMPLE: NO! (I had to genuinely rework how this was formatted when I imported it from my previous mod)
+def merchentry(name1, pcc, gcc, scc, ccc, names=1, usecolor="F", color1=white, name2=" ", color2=white, name3=" ", color3=white):
+  currencysuffix = None
+  #straightline entries (ex. [pc, gc, sc, cc])
+  if pcc != 0 and gcc != 0 and scc != 0 and ccc != 0:
+    currencysuffix = (str(pcc)+platinum+" pc"+white+", "+str(gcc)+gold+" gc"+white+", "+str(scc)+silver+" sc"+white+", "+str(ccc)+copper+" cc"+white+"]") # pc, gc, sc, cc
+  elif pcc == 0 and gcc != 0 and scc != 0 and ccc != 0:
+    currencysuffix = (str(gcc)+gold+" gc"+white+", "+str(scc)+silver+" sc"+white+", "+str(ccc)+copper+" cc"+white+"]") # gc, sc, cc
+  elif pcc == 0 and gcc == 0 and scc != 0 and ccc != 0:
+    currencysuffix = (str(scc)+silver+" sc"+white+", "+str(ccc)+copper+" cc"+white+"]") # sc, cc
+  elif pcc == 0 and gcc == 0 and scc == 0 and ccc != 0:
+    currencysuffix = (str(ccc)+copper+" cc"+white+"]") # cc
+  #single entries (ex. [pc])
+  elif pcc != 0 and gcc == 0 and scc == 0 and ccc == 0:
+    currencysuffix = (str(pcc)+platinum+" pc"+white+"]") # pc
+  elif pcc == 0 and gcc != 0 and scc == 0 and ccc == 0:
+    currencysuffix = (str(gcc)+gold+" gc"+white+"]") # gc
+  elif pcc == 0 and gcc == 0 and scc != 0 and ccc == 0:
+    currencysuffix = (str(scc)+silver+" sc"+white+"]") # sc
+  #double entries (ex. [pc, cc])
+  elif pcc != 0 and gcc != 0 and scc == 0 and ccc == 0:
+    currencysuffix = (str(pcc)+platinum+" pc"+white+", "+str(gcc)+gold+" gc"+white+"]") # pc, gc
+  elif pcc != 0 and gcc == 0 and scc != 0 and ccc == 0:
+    currencysuffix = (str(pcc)+platinum+" pc"+white+", "+str(scc)+silver+" sc"+white+"]") # pc, sc
+  elif pcc != 0 and gcc == 0 and scc == 0 and ccc != 0:
+    currencysuffix = (str(pcc)+platinum+" pc"+white+", "+str(ccc)+copper+" cc"+white+"]") # pc, cc
+  elif pcc == 0 and gcc != 0 and scc != 0 and ccc == 0:
+    currencysuffix = (str(gcc)+gold+" gc"+white+", "+str(scc)+silver+" sc"+white+"]") # gc, sc
+  elif pcc == 0 and gcc != 0 and scc == 0 and ccc != 0:
+    currencysuffix = (str(gcc)+gold+" gc"+white+", "+str(ccc)+copper+" cc"+white+"]") # gc, cc
+  #triple entries (ex. [pc, gc, cc])
+  elif pcc != 0 and gcc != 0 and scc != 0 and ccc == 0:
+    currencysuffix = (str(pcc)+platinum+" pc"+white+", "+str(gcc)+gold+" gc"+white+", "+str(scc)+silver+" sc"+white+"]") # pc, gc, sc
+  elif pcc != 0 and gcc != 0 and scc == 0 and ccc != 0:
+    currencysuffix = (str(pcc)+platinum+" pc"+white+", "+str(gcc)+gold+" gc"+white+", "+str(ccc)+copper+" cc"+white+"]") # pc, gc, cc
+  elif pcc != 0 and gcc == 0 and scc != 0 and ccc != 0:
+    currencysuffix = (str(pcc)+platinum+" pc"+white+", "+str(scc)+silver+" sc"+white+", "+str(ccc)+copper+" cc"+white+"]") # pc, sc, cc
+  #FREE?!?!?!?!
+  elif pcc == 0 and gcc == 0 and scc == 0 and ccc == 0:
+    currencysuffix = " "+lime+"FREE!"
+  else:
+    print(red + "< ENTRY ERROR: SOMETHING WENT WRONG WITH CREATING A CURRENCYSUFFIX! >" + white) # ERROR
+  #ABOVE IS ONLY THE CURRENCY SUFFIX GENERATOR | BELOW IS WHERE THE PRINT STATEMENT IS MADE
+  if usecolor == "F" or usecolor == "f":
+    if names == 1:
+      print(white+" > ["+name1+"] - ["+currencysuffix)
+    elif names == 2:
+      print(white+" > ["+name1+" "+name2+"] - ["+currencysuffix)
+    elif names == 3 or names > 3:
+      print(white+" > ["+name1+" "+name2+" "+name3+"] - ["+currencysuffix)
+  elif usecolor == "T" or usecolor == "t":
+    if color1 not in validcolors:
+      color1 = white
+    if color2 not in validcolors:
+      color2 = white
+    if color3 not in validcolors:
+      color3 = white
+    if names == 1:
+      print(white+" > ["+color1+name1+"] = ["+currencysuffix)
+    elif names == 2:
+      print(white+" > ["+color1+name1+" "+color2+name2+white+"] - ["+currencysuffix)
+    elif names == 3 or names > 3:
+      print(white+" > ["+color1+name1+" "+color2+name2+" "+color3+name3+white+"] - ["+currencysuffix)
+  else:
+    print(red+"< USECOLOR SYNTAX ERROR: Please specify whether true or false. >"+white) # ERROR
+
+#NEW: A decorative text entry generator | EXAMPLE: normentry("Brick", "F", white, "A simple red brick.") = ' > [Brick]: A simple red brick.'
 def normentry(name, usecolor="F", color=white, text="SampleText"):
   if usecolor == "F" or usecolor == "f":
     color = white
@@ -386,11 +453,11 @@ def normentry(name, usecolor="F", color=white, text="SampleText"):
   else:
     print(red+"< USECOLOR SYNTAX ERROR: Please specify whether true or false. >"+white) # ERROR
 
-#NEW: A decorative dialogue generator (npc to player)
+#NEW: A decorative dialogue generator (npc to player) | EXAMPLE: says(white, "John", lightgrey, "Hello world!") = ' *John*: Hello world!'
 def says(namcolor, name, texcolor, text):
   print(clearf+namcolor+italic+" "+name+clearf+white+": "+texcolor+text+white)
 
-#NEW: A decorative dialogue generator (world to player)
+#NEW: A decorative dialogue generator (world to player) | EXAMPLE: tell("John", "Hello world!") = ' John: Hello world!'
 def tell(name, text, namcolor=white, texcolor=lightgrey):
   print(clearf+namcolor+" "+name+clearf+white+": "+texcolor+text+white)
 
@@ -424,10 +491,12 @@ def title():
   print(gold +"█████████████|     █ |     \████\_/    ██\          \__███\_████\  \████\_\   \__███\_████\ ")
   print(gold +"\____________\     \_\      \___/      \_\             \__\ \___\   \___\        \__\ \___\ "+white)
   
+#UNCHANGED - PURPOSE: Decorative list display function | EXAMPLE: las(LIST_NAME_HERE)
 def las(listc):
   laas = ", ".join(listc)
   print("[" + laas + "]")
 
+#UNCHANGED - PURPOSE: Dynamic test
 def dt(dur, text):
   os.system("cls")
   for i,character in enumerate(text):
@@ -435,6 +504,7 @@ def dt(dur, text):
     time.sleep(dur)
   print("")
 
+#FULL REWORK: Remade the entire beastiary using (my) more stylistic functions
 def bestiary():
   global combatdictionary
   ex = 0
@@ -533,6 +603,7 @@ def bestiary():
       ex = 1
   locationreturn()
 
+#UNCHANGED - PURPOSE: To alter and progress time in the game | EXAMPLE: <hours = 5> <minutes = 30> timeshift(6, 30) = (hours = 12, minutes = 0)
 def timeshift(hrs, mns):
   global hours, minutes, timeofday, bardcd, ac, dmgbonus, atkbonus, nightbonus, hunger, maxhunger, hp, maxhp
   if mns + minutes > 60:
@@ -597,6 +668,7 @@ def timeshift(hrs, mns):
       hp = 1
     time.sleep(1)
 
+#UNCHANGED - PURPOSE: Actions UI (do not modify)
 def acs(placeholder, actions):
   print("[ENTER] to continue.")
   wait = input()
@@ -627,7 +699,7 @@ def acs(placeholder, actions):
     os.system('cls')
   return placeholder
 
-#class select
+#UNCHANGED - PURPOSE: Class choosing sequence for intro
 def classchoose():
   global classes, cdesc, sclass, eqweapon, eqoffhand, eqhelm, maxhp, atkbonus, hp, magicbonus, throwingknife, xp, lvl, battleactions, spells, maxspells, inventory
   current = 0
@@ -736,7 +808,7 @@ def classchoose():
     os.system("cls")
     classchoose()
 
-#style select
+#UNCHANGED - PURPOSE: Style choosing sequence for intro
 def stylechoose():
   global style, atkbonus, magicbonus, ac, maxhp, hp, stylep, styles
   print("Next, which style would you prefer?")
@@ -766,11 +838,13 @@ def stylechoose():
     os.system("cls")
     stylechoose()
 
+#UNCHANGED - PURPOSE: Lets the player check how many throwing knives they have
 def knifecount():
   print("You have " + throwingknife + " throwing knives.")
   ri = input("> ")
   locationreturn()
 
+#UNCHANGED - PURPOSE: Vendor that only appears for players who picked the rogue class
 def rgvendor():
   global gc, sc, throwingknife, locationactions
   rvsaying = random.randint(1, 7)
@@ -830,6 +904,7 @@ def rgvendor():
     time.sleep(2.5)
     locationreturn()
 
+#UNCHANGED - PURPOSE: Runs a weather check and outputs in a decorative manner
 def weathercheck():
   global weather
   weatherlist = ["sun", "rain", "fog", "storm", "wind", "sandstorm", "clear", "snow"]
@@ -842,13 +917,15 @@ def weathercheck():
   print("")
   print("[ENTER] to continue.")
   wait = input()
-  
+
+#UNCHANGED - PURPOSE: Lets the player check their hunger stat
 def hungercheck():
   global maxhunger, hunger
   print("You are at " + darkred + str(hunger) + "/" + str(maxhunger) + white +        " hunger.")
   time.sleep(1)
   locationreturn()
 
+#UNCHANGED - PURPOSE: A function that automatically warns the player when their hunger is low, and lets them eat within the menu
 def mealcheck():
   global hours, minutes, hp, hunger, maxhunger, eat, timeofday, hp, maxhp, inventory
   if ((((hours == 11) or (hours == 12)) and (timeofday == "am")) or ((hours == 7) or (hours == 8))):
@@ -925,6 +1002,7 @@ def mealcheck():
       else:
         mealcheck()
 
+#UNCHANGED - PURPOSE: Lets the player turn coins into other coins
 def exchange():
   global location, pc, gc, sc, cc
   print("What money would you like to exchange? [" + platinum + "pc" + white +        "/" + gold + "gc" + white + "/" + silver + "cc" + white + "/" +        copper + "cc" + white + "]")
@@ -1187,16 +1265,19 @@ def exchange():
   else:
     exchange()
 
+#UNCHANGED - PURPOSE: A function for displaying the player's equipped gear
 def lasg():
   global eqgear
   laasg = ", ".join(eqgear)
   print("Gear: " + laasg)
 
+#UNCHANGED - PURPOSE: A function for displaying the player's beastiary
 def lasb():
   global bestiarylist
   laasb = "], [".join(bestiarylist)
   print("[Discovered Enemies]: " + silver + "[" + laasb + "] " + white)
 
+#UNCHANGED - PURPOSE: Displays the current time in game
 def timecheck():
   global timeofday, hours, minutes
   if minutes < 10:
@@ -1206,6 +1287,7 @@ def timecheck():
   time.sleep(1)
   locationreturn()
 
+#UNCHANGED - PURPOSE: A function for displaying the player's loadout
 def loadout():
   global location
   print("Weapon: " + eqweapon)
@@ -1217,6 +1299,7 @@ def loadout():
   time.sleep(1)
   locationreturn()
 
+#UNCHANGED - PURPOSE: A function for displaying the player's coins
 def coins():
   global location
   print(platinum + "pc" + white + ": " + str(pc))
@@ -1226,12 +1309,14 @@ def coins():
   time.sleep(1)
   locationreturn()
 
+#UNCHANGED - PURPOSE: A function for displaying the player's hitpoints/max hitpoints
 def hpcheck():
   global maxhp, hp
   print("You are at " + red + str(hp) + "/" + str(maxhp) + " HP." + white)
   time.sleep(1)
   locationreturn()
 
+#UNCHANGED - PURPOSE: A location dependant function that lets the player fish
 def fish():
   global inventory, weather
   if "ultra rod" in inventory:
@@ -1286,6 +1371,7 @@ def fish():
   time.sleep(2)
   locationreturn()
 
+#UNCHANGED - PURPOSE: A function that opens the off-character storage menu
 def storage():
   global inventory, storagelist
   storex = 0
@@ -1315,12 +1401,14 @@ def storage():
     time.sleep(1)
   locationreturn()
 
+#UNCHANGED - PURPOSE: A function for inventory purging
 def massremove(nu, mat):
   global inventory
   while nu > 0:
     nu = nu - 1
     inventory.remove(mat)
 
+#UNCHANGED - PURPOSE: Literally the intro sequence
 def start():
   global enemies, dp
   dp = 1
@@ -1346,7 +1434,7 @@ def start():
     time.sleep(1)
   Falezrinentry()
 
-#Inn in Falezrin
+#ADDED ON TO: New locations | PURPOSE: Returns the player to their last location, typically used to get out of menus
 def locationreturn():
   global location
   if location == "tutorial":
@@ -1404,118 +1492,138 @@ def locationreturn():
   if location == "cloudedspires1":
     cloudedspires1()
 
-#time check
+#HALF REWORKED: Reworked with decorative functions, gave the merchant a unique character.
 def falmercha():
-  global gc, sc
-  print("Hello, here are the goods I'm selling today.  May I interest you in anything?")
+  global gc, sc, pc, cc
+  says(green, "Tom", lightgrey, "Hello, here are the goods I'm selling today. May I interest you in anything?")
   time.sleep(1)
-  merchentry()
-  print("[BREAD][2 " + gold + "gc" + white + "]")
-  print("[MILK][2 " + gold + "gc" + white + "]")
-  print("[TOMATO][5 " + silver + "sc" + white + "]")
-  fmac = input("> ").lower()
-  if fmac == "bread":
+  hzline("b", 2, "FOOD")
+  merchentry("BREAD", 0, 2, 0, 0, 1)
+  merchentry("TOMATO", 0, 0, 5, 0, 1)
+  hzline("b", 2, "DRINK")
+  merchentry("MILK", 0, 2, 0, 0, 1)
+  hzline("a", 2)
+  fmaa = input("> ").lower()
+  if fmaa == "bread":
     if gc >= 2:
-      print("Here you go, thank you for your purchase.")
+      says(green, "Tom", lightgrey, "Here you go, thanks for your purchase.")
       gc = gc - 2
       inventory.append("bread")
     else:
-      print("You don't have enough money!")
-  elif fmac == "milk":
+      says(green, "Tom", lightgrey, "Ah. Sorry, you don't have enough money.")
+  elif fmaa == "milk":
     if gc >= 2:
-      print("Here you go, thank you for your purchase.")
+      says(green, "Tom", lightgrey, "Here you go, thanks for your purchase.")
       gc = gc - 2
       inventory.append("milk")
     else:
-      print("You don't have enough money!")
-  elif fmac == "tomato":
+      says(green, "Tom", lightgrey, "Ah. Sorry, you don't have enough money.")
+  elif fmaa == "tomato":
     if sc >= 5:
-      print("Here you go, thank you for your purchase.")
+      says(green, "Tom", lightgrey, "Here you go, thanks for your purchase.")
       sc = sc - 5
       inventory.append("tomato")
     else:
-      print("You don't have enough money!")
+      says(green, "Tom", lightgrey, "Ah. Sorry, you don't have enough money.")
   else:
-    print("You can't buy that here!")
+    says(green, "Tom", lightgrey, "Sorry, but I don't have any '"+italic+white+fmaa+clearf+lightgrey+"'.")
   time.sleep(1)
   Falezrin()
 
+#HALF REWORKED: Reworked with decorative functions, gave the merchant a unique character.
 def falmerchc():
   global cc, pc, gc, sc
-  print("Salutations, adventurer.  May I interest you in some magic items?")
+  says(purple, "Aria", lavender, "Greetings, adventurer... May I interest you in some magical items?")
   time.sleep(1)
-  print("[FIREBALL TOME][35 " + gold + "gc" + white + "]")
-  print("[SMALL HEALTH POTION][5 " + gold + "sc" + white + "]")
-  print("[HEALTH POTION][1 " + gold + "gc" + white + "]")
-  print("[MANASPARK POTION][3 " + gold + "gc" + white + "]")
+  hzline("b", 3, "GEAR")
+  merchentry("ANGELIC RINGLET", 5, 0, 0, 0, 1, "T", gold)
+  hzline("b", 3, "TOMES")
+  merchentry("FIREBALL", 3, 5, 0, 0, 2, "T", orange, "TOME", white)
+  hzline("b", 3, "POTIONS")
+  merchentry("SMALL", 0, 0, 5, 0, 3, "T", white, "HEALTH", lime, "POTION", white)
+  merchentry("HEALTH", 0, 1, 0, 0, 2, "T", lime, "POTION", white)
+  merchentry("MANASPARK", 0, 3, 0, 0, 2, "T", teal, "POTION", white)
+  hzline("a", 3)
   fmac = input("> ").lower()
-  if fmac == "fireball tome":
-    if gc >= 35:
-      print("Here you go, thank you for your purchase.")
-      gc = gc - 35
+  if fmac == "angelic ringlet":
+    if pc >= 5:
+      says(purple, "Aria", lavender, "Here you go... Be careful with that thing.")
+      pc = pc - 5
+      inventory.append("angelic ringlet")
+    else:
+      says(purple, "Aria", lavender, "Appologies, but it seems you're a bit short.")
+  elif fmac == "fireball tome":
+    if pc >= 3 and gc >= 5:
+      says(purple, "Aria", lavender, "Here you go. Please do come again sometime.")
+      pc = pc - 3
+      gc = gc - 5
       inventory.append("fireball tome")
     else:
-      print("You don't have enough money!")
+      says(purple, "Aria", lavender, "Appologies, but it seems you're a bit short.")
   elif fmac == "small health potion":
-    if sc >= 35:
-      print("Here you go, thank you for your purchase.")
+    if sc >= 5:
+      says(purple, "Aria", lavender, "Here you go. Please do come again sometime.")
       sc = sc - 5
       inventory.append("small health potion")
     else:
-      print("You don't have enough money!")
+      says(purple, "Aria", lavender, "Appologies, but it seems you're a bit short.")
   elif fmac == "health potion":
     if gc >= 1:
-      print("Here you go, thank you for your purchase.")
+      says(purple, "Aria", lavender, "Here you go. Please do come again sometime.")
       gc = gc - 1
       inventory.append("health potion")
     else:
-      print("You don't have enough money!")
+      says(purple, "Aria", lavender, "Appologies, but it seems you're a bit short.")
   elif fmac == "manaspark potion":
     if gc >= 3:
-      print("Here you go, thank you for your purchase.")
+      says(purple, "Aria", lavender, "Here you go. Please do come again sometime.")
       gc = gc - 3
       inventory.append("manaspark potion")
     else:
-      print("You don't have enough money!")
+      says(purple, "Aria", lavender, "Appologies, but it seems you're a bit short.")
+  else:
+    says(purple, "Aria", lavender, "Sorry, but I don't have any '"+italic+white+fmac+clearf+lavender+"'.")
   locationreturn()
 
-#An armorsmith in Falezrin
+#HALF REWORKED: Reworked with decorative functions, gave the merchant a unique character.
 def falmerchb():
-  global gc
-  print("*clang clang*")
+  global gc, pc, sc, cc
+  print(orange+"*"+yellow+"clank clang"+orange+"*"+clearf)
   time.sleep(0.5)
-  print("*clang clang*")
+  print(orange+"*"+yellow+"clang clonk"+orange+"*"+clearf)
   time.sleep(1)
-  print("Oh, didn't see you there.  I'm the armorsmith here in Falezrin.  Can I help you?")
+  says(yellow, "Jeremiah", paleyellow, "Oh, didn't see ya there. I'm the armorsmith here in Falezrin.")
   time.sleep(1)
-  print("")
-  print("[IRON HELM][12 " + gold + "gc" + white + "]")
-  print("[IRON PLATE][35 " + gold + "gc" + white + "]")
-  print("[IRON GREAVES][25 " + gold + "gc" + white + "]")
+  hzline("b", 1, "ARMOR")
+  merchentry("IRON", 1, 2, 0, 0, 2, "T", lightgrey, "HELM", white)
+  merchentry("IRON", 3, 5, 0, 0, 2, "T", lightgrey, "PLATE", white)
+  merchentry("IRON", 2, 5, 0, 0, 2, "T", lightgrey, "GREAVES", white)
+  hzline("a", 1)
   fmbc = input("> ").lower()
   if fmbc == "iron helm":
-    if gc >= 12:
-      print("Here you go, thank you for your purchase.")
-      gc = gc - 12
+    if pc >= 1 and gc >= 2:
+      says(yellow, "Jeremiah", paleyellow, "Here ya go, thanks for yer' purchase.")
+      pc = pc - 1
+      gc = gc - 2
       inventory.append("iron helm")
     else:
-      print("You don't have enough money!")
+      says(yellow, "Jeremiah", paleyellow, "Sorry, pal, ya don't got enough money for that.")
   elif fmbc == "iron plate":
     if gc >= 35:
-      print("Here you go, thank you for your purchase.")
+      says(yellow, "Jeremiah", paleyellow, "Here ya go, thanks for yer' purchase.")
       gc = gc - 35
       inventory.append("iron plate")
     else:
-      print("You don't have enough money!")
+      says(yellow, "Jeremiah", paleyellow, "Sorry, pal, ya don't got enough money for that.")
   elif fmbc == "iron greaves":
     if gc >= 25:
-      print("Here you go, thank you for your purchase.")
+      says(yellow, "Jeremiah", paleyellow, "Here ya go, thanks for yer' purchase.")
       gc = gc - 25
       inventory.append("iron greaves")
     else:
-      print("You don't have enough money!")
+      says(yellow, "Jeremiah", paleyellow, "Sorry, pal, ya don't got enough money for that.")
   else:
-    print("You can't buy that here!")
+    says(yellow, "Jeremiah", paleyellow, "Sorry, but I don't have any '"+italic+white+fmbc+clearf+lavender+"'.")
   time.sleep(1)
   Falezrin()
 
@@ -4400,11 +4508,16 @@ def sunsetmesa4(): #Message on going south from sunsetmesa1: "You walk to the so
       time.sleep(2)
       timeshift(1, 0)
       sunsetmesa5()
-    
-    
-  
 
 def sunsetmesa3():
+  print("redirecting...")
+  locationreturn()
+
+def sunsetmesa4():
+  print("redirecting...")
+  locationreturn()
+
+def sunsetmesa5():
   print("redirecting...")
   locationreturn()
 
