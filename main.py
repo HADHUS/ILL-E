@@ -137,7 +137,16 @@ battleactions = ["attack", "block", "run"]
 locationactions = ["west", "east", "north", "south", "save data", "loadout", "inventory", "help", "coins","hp", "time", "hunger", "quests", "exchange"]
 
 #CHANGE: More locations to be added | PURPOSE: A list of locations where fishing is allowed
-fishingspots = ["verdanthills4", "verdanthills5", "sunsetmesa2", "northernsea1", "northernsea2", "northernsea3"]
+fishingspots = [
+    "twilighttundra1", "twilighttundra2", "verdanthills4", "verdanthills5", "sunsetmesa2", "northernsea1", "northernsea2", "northernsea3",
+    "oakensanctuary3", "oakensanctuary4", "oakensanctuary9", "LakeOya", "scintillantrainforest3", "scintillantrainforest8",
+    "scintillantrainforest13", "scintillantrainforest14", "scintillantrainforest15", "scintillantrainforest17", "bogofmangroves1",
+    "bogofmangroves3", "bogofmangroves7", "bogofmangroves10", "verdanthills9", "verdanthills6", "sunsetmesa1", "sunsetmesa4", "sunsetmesa5",
+    "skygrassprairie7", "skygrassprairie8", "skygrassprairie5", "skygrassprairie3", "sandyshores1", "sandyshores2", "sandyshores3", "sandyshores4",
+    "sandyshores5", "sandyshores6", "sandyshores7", "sandyshores8", "sandyshores9", "IsleRho", "IsleTheta1", "southeastsea1", "southeastsea2",
+    "southeastsea3", "southeastsea4", "southeastsea5", "southeastsea6", "southeastsea7", "southeastsea8", "southeastsea9", "southeastsea10",
+    "southeastsea11", "southeastsea12", "southeastsea13", "southeastsea14", "southeastsea15", "southeastsea16", "southeastsea17", "southeastsea18",
+    "southeastsea19", "cragrockbelt1", "cragrockbelt2", "Riverside"]
 #CHANGE: More locations to be added | PURPOSE: A list of locations where combat events can happen
 combatareas = ["cloudedspires1", "savagesteppe5", "savagesteppe2", "oakensanctuary13"]
 #CHANGE: Finished adding locations | PURPOSE: A list of all city locations
@@ -236,9 +245,9 @@ orcl = 0
 weather = "clear"
 
 #UNCHANGED - PURPOSE: A list of all valid ranged weapons
-rangedweapons = ["oaken longbow", "oaken crossbow", "yumi", "mahogany recurve","twinpierce slinger", "stormbolt ballista", "reinforced longbow","repeating crossbow"]
+rangedweapons = ["oaken longbow", "oaken crossbow", "yumi", "mahogany recurve","twinpierce slinger", "stormbolt ballista", "reinforced longbow","repeating crossbow", "worn shortbow"]
 #UNCHANGED - PURPOSE: A list of all valid magic weapons
-magicweapons = ["topaz spellslinger", "shaman's staff", "lifedrain staff"]
+magicweapons = ["topaz spellslinger", "shaman's staff", "lifedrain staff", "worn painite staff"]
 
 #UNCHANGED - PURPOSE: Player's equipped weapon
 eqweapon = "none"
@@ -302,12 +311,18 @@ coloborite = '\033[38;2;238;210;238m' #Material color
 pendinium = '\033[38;2;174;238;238m' #Material color
 painite = '\033[38;2;68;0;0m' #Material color
 
+elitecolor = '\033[38;2;255;215;0m' #Elite enemy color
+minibosscolor = '\033[38;2;255;100;0m' #Miniboss enemy color
+bosscolor = '\033[38;2;255;0;0m' #Boss enemy color
+superbosscolor = '\033[38;2;100;0;0m' #Superboss enemy color
+
 #NEW: A list of all valid colors | PURPOSE: Used in some of my functions to make sure things get correctly colored
 validcolors = [
   darkred, red2, red, brown, orange, paleyellow, tan, yellow, darkgreen, green, lime,
   black, darkgrey, grey, lightgrey, offwhite, cyan, teal, turquoise, blue3, blue2, blue,
   purple, hotpink, pink, lightpink, lavender, white, platinum, gold, silver, copper,
-  bronze, steel, leather, coloborite, pendinium, painite
+  bronze, steel, leather, coloborite, pendinium, painite, elitecolor, minibosscolor,
+  bosscolor, superbosscolor
 ]
 
 #UNCHANGED - PURPOSE: A list of colors that are used in the start screen for coloring class names
@@ -442,14 +457,18 @@ def merchentry(name1, pcc, gcc, scc, ccc, names=1, usecolor="F", color1=white, n
     print(red+"< USECOLOR SYNTAX ERROR: Please specify whether true or false. >"+white) # ERROR
 
 #NEW: A decorative text entry generator | EXAMPLE: normentry("Brick", "F", white, "A simple red brick.") = ' > [Brick]: A simple red brick.'
-def normentry(name, usecolor="F", color=white, text="SampleText"):
+def normentry(name, usecolor="F", color=white, text="SampleText", textcolor=lightgrey):
   if usecolor == "F" or usecolor == "f":
     color = white
-    print(white+" > ["+color+name+white+"]: "+lightgrey+text+white)
+    if textcolor not in validcolors:
+      textcolor = lightgrey
+    print(white+" > ["+color+name+white+"]: "+textcolor+text+white)
   elif usecolor == "T" or usecolor == "t":
     if color not in validcolors:
       color = white
-    print(white+" > ["+color+name+white+"]: "+lightgrey+text+white)
+    if textcolor not in validcolors:
+      textcolor = lightgrey
+    print(white+" > ["+color+name+white+"]: "+textcolor+text+white)
   else:
     print(red+"< USECOLOR SYNTAX ERROR: Please specify whether true or false. >"+white) # ERROR
 
@@ -596,7 +615,187 @@ def bestiary():
         normentry("Scrap Metal", "F", lightgrey, "25%")
         normentry("Scrap Metal", "F", lightgrey, "25%")
         hzline("a", 1)
-        normentry("Entry", "F", lightgrey, "Known as \'land sharks\', these burrowing beasts are deadly and swift.")
+        normentry("Entry", "F", lightgrey, "Known as 'land sharks', these burrowing beasts are deadly and swift.")
+        hzline("a", 1)
+      elif blearn == "skygrass wyrm":
+        tell("Entry", "8/50")
+        hzline("a", 1)
+        normentry("Common Name", "F", white, "Skygrass Wyrm")
+        hzline("a", 1)
+        normentry("Habitat", "F", white, "Skygrass Prairie")
+        hzline("a", 1)
+        normentry("Wyrm Flesh", "F", lightgrey, "15%")
+        normentry("Wyrm Fang", "F", lightgrey, "5%")
+        hzline("a", 1)
+        normentry("Entry", "F", lightgrey, "Creatures similar to snakes that tend to stay hidden in the grass.")
+        hzline("a", 1)
+      elif blearn == "megacrab":
+        tell("Entry", "9/50")
+        hzline("a", 1)
+        normentry("Common Name", "F", white, "Megacrab")
+        hzline("a", 1)
+        normentry("Habitat", "F", white, "Sandy Shores")
+        hzline("a", 1)
+        normentry("Megacrab Shell", "F", lightgrey, "10%")
+        normentry("Megacrab Claw", "F", lightgrey, "5%")
+        hzline("a", 1)
+        normentry("Entry", "F", lightgrey, "Giant crabs that are known to be territorial and aggressive.")
+        hzline("a", 1)
+      elif blearn == "blackbear":
+        tell("Entry", "10/50")
+        hzline("a", 1)
+        normentry("Common Name", "F", white, "Blackbear")
+        hzline("a", 1)
+        normentry("Habitat", "F", white, "Oaken Sanctuary")
+        hzline("a", 1)
+        normentry("Bear Pelt", "F", lightgrey, "10%")
+        normentry("Bear Claw", "F", lightgrey, "5%")
+        hzline("a", 1)
+        normentry("Entry", "F", lightgrey, "Large, black bears that are known to be aggressive and territorial.")
+        hzline("a", 1)
+      elif blearn == "cultist":
+        tell("Entry", "11/50")
+        hzline("a", 1)
+        normentry("Common Name", "F", white, "Cultist")
+        hzline("a", 1)
+        normentry("Habitat", "F", white, "Darkspore Forest / Distant Meadows")
+        hzline("a", 1)
+        normentry("Cultist Robes", "F", lightgrey, "10%")
+        normentry("Ritual Dagger", "F", lightgrey, "5%")
+        hzline("a", 1)
+        normentry("Entry", "F", lightgrey, "Worshippers of dark gods, these cultists are dangerous and fanatical.")
+        hzline("a", 1)
+      elif blearn == "siren":
+        tell("Entry", "12/50")
+        hzline("a", 1)
+        normentry("Common Name", "F", white, "Siren")
+        hzline("a", 1)
+        normentry("Habitat", "F", white, "Southeast Sea / Isle Rho")
+        hzline("a", 1)
+        normentry("Siren Scale", "F", lightgrey, "15%")
+        normentry("Siren Eye", "F", lightgrey, "2.5%")
+        hzline("a", 1)
+        normentry("Entry", "F", lightgrey, "Enchanting sea creatures that lure sailors to their doom.")
+        hzline("a", 1)
+      elif blearn == "skeleton":
+        tell("Entry", "13/50")
+        hzline("a", 1)
+        normentry("Common Name", "F", white, "Skeleton")
+        hzline("a", 1)
+        normentry("Habitat", "F", white, "Bog of Mangroves / Darkspore Forest")
+        hzline("a", 1)
+        normentry("Bone", "F", lightgrey, "20%")
+        normentry("Skull", "F", lightgrey, "5%")
+        hzline("a", 1)
+        normentry("Entry", "F", lightgrey, "Fragile undead beings that are easy to make using magic.")
+        hzline("a", 1)
+      elif blearn == "skeleton archer":
+        tell("Entry", "14/50")
+        hzline("a", 1)
+        normentry("Common Name", "F", white, "Skeleton Archer")
+        hzline("a", 1)
+        normentry("Habitat", "F", white, "Bog of Mangroves / Darkspore Forest")
+        hzline("a", 1)
+        normentry("Bone", "F", lightgrey, "15%")
+        normentry("Worn Shortbow", "F", lightgrey, "10%")
+        hzline("a", 1)
+        normentry("Entry", "F", lightgrey, "Skeletons who have been given bows and arrows to use.")
+        hzline("a", 1)
+      elif blearn == "skeleton warrior":
+        tell("Entry", "15/50")
+        hzline("a", 1)
+        normentry("Common Name", "F", white, "Skeleton Warrior")
+        hzline("a", 1)
+        normentry("Habitat", "F", white, "Bog of Mangroves / Darkspore Forest")
+        hzline("a", 1)
+        normentry("Wooden Buckler", "F", lightgrey, "15%")
+        normentry("Worn Flamberge", "F", lightgrey, "5%")
+        hzline("a", 1)
+        normentry("Entry", "F", lightgrey, "Tankier skeletons from a fallen army, known for their signature flamberge swords.")
+        hzline("a", 1)
+      elif blearn == "skeleton mage":
+        tell("Entry", "16/50")
+        hzline("a", 1)
+        normentry("Common Name", "F", white, "Skeleton Mage")
+        hzline("a", 1)
+        normentry("Habitat", "F", white, "Bog of Mangroves / Darkspore Forest")
+        hzline("a", 1)
+        normentry("Bone", "F", lightgrey, "10%")
+        normentry("Worn Painite Staff", "F", lightgrey, "7.5%")
+        hzline("a", 1)
+        normentry("Entry", "F", lightgrey, "Skeletons who were powerful mages in their past life. They specialize in blood magic.")
+        hzline("a", 1)
+      elif blearn == "skeleton juggernaut":
+        tell("Entry", "17/50")
+        hzline("a", 1)
+        normentry("Common Name", "T", white, "Skeleton Juggernaut", elitecolor)
+        hzline("a", 1)
+        normentry("Habitat", "F", white, "Bog of Mangroves / Darkspore Forest")
+        hzline("a", 1)
+        normentry("Worn Warhammer", "F", lightgrey, "7.5%")
+        normentry("Heavy Plate Armor", "F", lightgrey, "5%")
+        hzline("a", 1)
+        normentry("Entry", "F", lightgrey, "Very tanky skeletons outfitted in heavy steel plate armor, weilding warhammers. Seems to be immune to projectiles.")
+        hzline("a", 1)
+      elif blearn == "skeleton lieutenant":
+        tell("Entry", "18/50")
+        hzline("a", 1)
+        normentry("Common Name", "T", white, "Skeleton Lieutenant", elitecolor)
+        hzline("a", 1)
+        normentry("Habitat", "F", white, "Bog of Mangroves / Darkspore Forest")
+        hzline("a", 1)
+        normentry("Dark Legion Flagpole", "F", lightgrey, "7.5%")
+        normentry("Lieutenant Coat", "F", lightgrey, "2.5%")
+        hzline("a", 1)
+        normentry("Entry", "F", lightgrey, "Skeletons who lead the undead armies, known for their dark flags and coats. Tends to empower adjacent skeletons.")
+        hzline("a", 1)
+      elif blearn == "skeleton captain":
+        tell("Entry", "19/50")
+        hzline("a", 1)
+        normentry("Common Name", "T", white, "Skeleton Captain", minibosscolor)
+        hzline("a", 1)
+        normentry("Habitat", "F", white, "Bog of Mangroves / Darkspore Forest")
+        hzline("a", 1)
+        normentry("Captain's Sabre", "F", lightgrey, "5%")
+        normentry("Captain's Hat", "F", lightgrey, "2.5%")
+        hzline("a", 1)
+        normentry("Entry", "F", lightgrey, "Powerful skeletons that specialize in leadership and tactics. Scary to fight.")
+        hzline("a", 1)
+      elif blearn == "dark legion leader":
+        tell("Entry", "20/50")
+        hzline("a", 1)
+        normentry("Common Name", "T", white, "Dark Legion Leader", bosscolor)
+        hzline("a", 1)
+        normentry("Habitat", "F", white, "Darkspore Forest")
+        hzline("a", 1)
+        normentry("Broken Greatblade", "F", lightgrey, "25%")
+        normentry("Tattered Legion Cape", "F", lightgrey, "25%")
+        hzline("a", 1)
+        normentry("Entry", "F", lightgrey, "The leader of the Dark Legion, a powerful undead warrior who commands the undead armies.")
+        hzline("a", 1)
+      elif blearn == "legionary guardsman":
+        tell("Entry", "21/50")
+        hzline("a", 1)
+        normentry("Common Name", "F", white, "Legionary Guardsman", minibosscolor)
+        hzline("a", 1)
+        normentry("Habitat", "F", white, "Darkspore Forest")
+        hzline("a", 1)
+        normentry("Guardsman's Glaive", "F", lightgrey, "15%")
+        normentry("Dark Legion Armor", "F", lightgrey, "10%")
+        hzline("a", 1)
+        normentry("Entry", "F", lightgrey, "Elite soldiers of the Dark Legion, known for their glaives and armor. They protect the Dark Legion Leader whenever they are in danger.")
+        hzline("a", 1)
+      elif blearn == "elder lich":
+        tell("Entry", "22/50")
+        hzline("a", 1)
+        normentry("Common Name", "T", white, "Elder Lich", superbosscolor)
+        hzline("a", 1)
+        normentry("Habitat", "F", white, "Bog of Mangroves")
+        hzline("a", 1)
+        normentry("Tome of Ressurection", "F", lightgrey, "100%")
+        normentry("Tome of Splitting", "F", lightgrey, "100%")
+        hzline("a", 1)
+        normentry("Entry", "F", lightgrey, "The source of the skeletons that roam this land. Good ridance.")
         hzline("a", 1)
       print("")
     if blearn == "exit":
@@ -846,28 +1045,31 @@ def knifecount():
 
 #UNCHANGED - PURPOSE: Vendor that only appears for players who picked the rogue class
 def rgvendor():
-  global gc, sc, throwingknife, locationactions
+  global pc, gc, sc, throwingknife, locationactions
   rvsaying = random.randint(1, 7)
   if rvsaying <= 3:
-    print("Hey. Nice to see you again.  Need some throwing knives?")
+    says(red2, "Shady Vendor", grey, "Hey. Nice to see you again. Need some throwing knives?")
   elif 3 < rvsaying <= 6:
-    print("Hey. Running low on knives?")
+    says(red2, "Shady Vendor", grey, "Hey. Running low on knives?")
   elif rvsaying == 7:
-    print("Quiet. I think I'm being followed. If you need throwing knives, buy them quickly.")
+    says(red2, "Shady Vendor", grey, "Quiet. I think I'm being followed. If you need throwing knives, buy them quickly.")
   time.sleep(1)
-  print("[Full Refill] - 3 " + gold + "gc" + white + "")
-  print("[3 Knives] - 8 " + silver + "cc" + white + "")
-  print("[Heirloom Whetstone] - 60 " + gold + "gc" + white + "")
+  hzline("b", 4, "Services")
+  merchentry("Full Refill", 0, 3, 0, 0)
+  merchentry("3 Knives", 0, 0, 8, 0)
+  hzline("b", 4, "Other")
+  merchentry("Heriloom Whetstone", 6, 0, 0, 0, 1, "T", gold)
+  hzline("a", 4)
   rvc = input("> ").lower()
   if rvc == "full refill":
     if gc >= 3:
       gc = gc - 3
       throwingknife = 20
-      print("Thanks. Hope these help you.")
+      says(red2, "Shady Vendor", grey, "Thanks. Hope these help you.")
       time.sleep(2)
       locationreturn()
     else:
-      print("Sorry, cant help if you don't have the money. Gotta go!")
+      says(red2, "Shady Vendor", grey, "Sorry, cant help if you don't have the money. Gotta go!")
       locationactions.remove("rogue vendor")
       time.sleep(2)
       locationreturn()
@@ -875,32 +1077,32 @@ def rgvendor():
     if sc >= 8:
       sc = sc - 8
       throwingknife = throwingknife + 3
-      print("Here you go.  Thank you.")
+      says(red2, "Shady Vendor", grey, "Here you go.  Thank you.")
       time.sleep(1)
       if throwingknife > 20:
         throwingknife = 20
-        print("Your knife belt only has space for 20 knives!")
+        says(red2, "Shady Vendor", grey, "Sorry, your knife belt only has space for 20 knives.")
       time.sleep(2)
       locationreturn()
     else:
-      print("Sorry, can't help if you don't have the money. Gotta go!")
+      says(red2, "Shady Vendor", grey, "Sorry, can't help if you don't have the money. Gotta go!")
       locationactions.remove("rogue vendor")
       time.sleep(2)
       locationreturn()
   elif rvc == "heirloom whetstone":
-    if gc >= 60:
-      gc = gc - 60
-      print("No. Way. Thanks for being such a loyal customer, see you around.")
+    if pc >= 6:
+      pc = pc - 6
+      says(red2, "Shady Vendor", grey, "No. Way. Thanks for being such a loyal customer, see you around.")
       time.sleep(2)
       inventory.append("Heirloom Whetstone")
       locationactions.remove("rogue vendor")
       locationreturn()
     else:
-      print("Oh, that? My old whetstone, it's served me well.  Doesn't seem like you can afford it though, sorry 'bout that...")
+      says(red2, "Shady Vendor", grey, "Oh, that? My old whetstone, it's served me well.  Doesn't seem like you can afford it though, sorry 'bout that...")
       time.sleep(4)
       locationreturn()
   else:
-    print("Uhhh can't help you with that...")
+    says(red2, "Shady Vendor", grey, "Uhhh can't help you with that...")
     time.sleep(2.5)
     locationreturn()
 
@@ -1441,8 +1643,122 @@ def locationreturn():
     start()
   if location == "Falezrin":
     Falezrin()
-  if location == "verdanthills1":
-    verdanthills1()
+  if location == "ShroudedOutpost":
+    ShroudedOutpost()
+  if location == "StonesEdge":
+    StonesEdge()
+  if location == "Snowdrift":
+    Snowdrift()
+  if location == "TheOasis":
+    TheOasis()
+  if location == "Olaera":
+    Olaera()
+  if location == "RTherinWest":
+    RTherinWest()
+  if location == "RTherinEast":
+    RTherinEast()
+  if location == "Riverside":
+    Riverside()
+  if location == "northernsea1":
+    northernsea1()
+  if location == "northernsea2":
+    northernsea2()
+  if location == "northernsea3":
+    northernsea3()
+  if location == "twilighttundra1":
+    twilighttundra1()
+  if location == "twilighttundra2":
+    twilighttundra2()
+  if location == "twilighttundra3":
+    twilighttundra3()
+  if location == "twilighttundra4":
+    twilighttundra4()
+  if location == "twilighttundra5":
+    twilighttundra5()
+  if location == "twilighttundra6":
+    twilighttundra6()
+  if location == "twilighttundra7":
+    twilighttundra7()
+  if location == "twilighttundra8":
+    twilighttundra8()
+  if location == "shatteredtaiga1":
+    shatteredtaiga1()
+  if location == "shatteredtaiga2":
+    shatteredtaiga2()
+  if location == "shatteredtaiga3":
+    shatteredtaiga3()
+  if location == "shatteredtaiga4":
+    shatteredtaiga4()
+  if location == "shatteredtaiga5":
+    shatteredtaiga5()
+  if location == "oakensanctuary1":
+    oakensanctuary1()
+  if location == "oakensanctuary2":
+    oakensanctuary2()
+  if location == "oakensanctuary3":
+    oakensanctuary3()
+  if location == "oakensanctuary4":
+    oakensanctuary4()
+  if location == "oakensanctuary5":
+    oakensanctuary5()
+  if location == "oakensanctuary6":
+    oakensanctuary6()
+  if location == "oakensanctuary7":
+    oakensanctuary7()
+  if location == "oakensanctuary8":
+    oakensanctuary8()
+  if location == "oakensanctuary9":
+    oakensanctuary9()
+  if location == "oakensanctuary10":
+    oakensanctuary10()
+  if location == "oakensanctuary11":
+    oakensanctuary11()
+  if location == "oakensanctuary12":
+    oakensanctuary12()
+  if location == "oakensanctuary13":
+    oakensanctuary13()
+  if location == "oakensanctuary14":
+    oakensanctuary14()
+  if location == "oakensanctuary15":
+    oakensanctuary15()
+  if location == "LakeOya":
+    LakeOya()
+  if location == "scintillantrainforest1":
+    scintillantrainforest1()
+  if location == "scintillantrainforest2":
+    scintillantrainforest2()
+  if location == "scintillantrainforest3":
+    scintillantrainforest3()
+  if location == "scintillantrainforest4":
+    scintillantrainforest4()
+  if location == "scintillantrainforest5":
+    scintillantrainforest5()
+  if location == "scintillantrainforest6":
+    scintillantrainforest6()
+  if location == "scintillantrainforest7":
+    scintillantrainforest7()
+  if location == "scintillantrainforest8":
+    scintillantrainforest8()
+  if location == "scintillantrainforest9":
+    scintillantrainforest9()
+  if location == "scintillantrainforest10":
+    scintillantrainforest10()
+  if location == "scintillantrainforest11":
+    scintillantrainforest11()
+  if location == "scintillantrainforest12":
+    scintillantrainforest12()
+  if location == "scintillantrainforest13":
+    scintillantrainforest13()
+  if location == "scintillantrainforest14":
+    scintillantrainforest14()
+  if location == "scintillantrainforest15":
+    scintillantrainforest15()
+  if location == "scintillantrainforest16":
+    scintillantrainforest16()
+  if location == "scintillantrainforest17":
+    scintillantrainforest17()
+  if location == "scintillantrainforest18":
+    scintillantrainforest18()
   if location == "darksporeforest1":
     darksporeforest1()
   if location == "darksporeforest2":
@@ -1457,18 +1773,70 @@ def locationreturn():
     darksporeforest6()
   if location == "darksporeforest7":
     darksporeforest7()
+  if location == "darksporeforest8":
+    darksporeforest8()
+  if location == "darksporeforest9":
+    darksporeforest9()
+  if location == "darksporeforest10":
+    darksporeforest10()
+  if location == "darksporeforest11":
+    darksporeforest11()
+  if location == "darksporeforest12":
+    darksporeforest12()
+  if location == "darksporeforest13":
+    darksporeforest13()
+  if location == "bogofmangroves1":
+    bogofmangroves1()
+  if location == "bogofmangroves2":
+    bogofmangroves2()
+  if location == "bogofmangroves3":
+    bogofmangroves3()
+  if location == "bogofmangroves4":
+    bogofmangroves4()
+  if location == "bogofmangroves5":
+    bogofmangroves5()
+  if location == "bogofmangroves6":
+    bogofmangroves6()
+  if location == "bogofmangroves7":
+    bogofmangroves7()
+  if location == "bogofmangroves8":
+    bogofmangroves8()
+  if location == "bogofmangroves9":
+    bogofmangroves9()
+  if location == "bogofmangroves10":
+    bogofmangroves10()
+  if location == "distantmeadows1":
+    distantmeadows1()
+  if location == "distantmeadows2":
+    distantmeadows2()
+  if location == "distantmeadows3":
+    distantmeadows3()
+  if location == "distantmeadows4":
+    distantmeadows4()
+  if location == "distantmeadows5":
+    distantmeadows5()
+  if location == "distantmeadows6":
+    distantmeadows6()
+  if location == "distantmeadows7":
+    distantmeadows7()
+  if location == "distantmeadows8":
+    distantmeadows8()
+  if location == "distantmeadows9":
+    distantmeadows9()
+  if location == "distantmeadows10":
+    distantmeadows10()
+  if location == "distantmeadows11":
+    distantmeadows11()
+  if location == "distantmeadows12":
+    distantmeadows12()
+  if location == "distantmeadows13":
+    distantmeadows13()
+  if location == "distantmeadows14":
+    distantmeadows14()
   if location == "savagesteppe1":
     savagesteppe1()
   if location == "savagesteppe2":
     savagesteppe2()
-  if location == "verdanthills2":
-    verdanthills2()
-  if location == "verdanthills3":
-    verdanthills3()
-  if location == "verdanthills4":
-    verdanthills4()
-  if location == "verdanthills5":
-    verdanthills5()
   if location == "savagesteppe3":
     savagesteppe3()
   if location == "savagesteppe4":
@@ -1477,20 +1845,222 @@ def locationreturn():
     savagesteppe5()
   if location == "savagesteppe6":
     savagesteppe6()
+  if location == "savagesteppe7":
+    savagesteppe7()
+  if location == "savagesteppe8":
+    savagesteppe8()
+  if location == "savagesteppe9":
+    savagesteppe9()
+  if location == "savagesteppe10":
+    savagesteppe10()
+  if location == "savagesteppe11":
+    savagesteppe11()
+  if location == "savagesteppe12":
+    savagesteppe12()
+  if location == "savagesteppe13":
+    savagesteppe13()
+  if location == "verdanthills1":
+    verdanthills1()
+  if location == "verdanthills2":
+    verdanthills2()
+  if location == "verdanthills3":
+    verdanthills3()
+  if location == "verdanthills4":
+    verdanthills4()
+  if location == "verdanthills5":
+    verdanthills5()
+  if location == "verdanthills6":
+    verdanthills6()
+  if location == "verdanthills7":
+    verdanthills7()
+  if location == "verdanthills8":
+    verdanthills8()
+  if location == "verdanthills9":
+    verdanthills9()
+  if location == "verdanthills10":
+    verdanthills10()
+  if location == "skygrassprairie1":
+    skygrassprairie1()
+  if location == "skygrassprairie2":
+    skygrassprairie2()
+  if location == "skygrassprairie3":
+    skygrassprairie3()
+  if location == "skygrassprairie4":
+    skygrassprairie4()
+  if location == "skygrassprairie5":
+    skygrassprairie5()
+  if location == "skygrassprairie6":
+    skygrassprairie6()
+  if location == "skygrassprairie7":
+    skygrassprairie7()
+  if location == "skygrassprairie8":
+    skygrassprairie8()
+  if location == "sandyshores1":
+    sandyshores1()
+  if location == "sandyshores2":
+    sandyshores2()
+  if location == "sandyshores3":
+    sandyshores3()
+  if location == "sandyshores4":
+    sandyshores4()
+  if location == "sandyshores5":
+    sandyshores5()
+  if location == "sandyshores6":
+    sandyshores6()
+  if location == "sandyshores7":
+    sandyshores7()
+  if location == "sandyshores8":
+    sandyshores8()
+  if location == "sandyshores9":
+    sandyshores9()
+  if location == "sandyshores10":
+    sandyshores10()
+  if location == "southeastsea1":
+    southeastsea1()
+  if location == "southeastsea2":
+    southeastsea2()
+  if location == "southeastsea3":
+    southeastsea3()
+  if location == "southeastsea4":
+    southeastsea4()
+  if location == "southeastsea5":
+    southeastsea5()
+  if location == "southeastsea6":
+    southeastsea6()
+  if location == "southeastsea7":
+    southeastsea7()
+  if location == "southeastsea8":
+    southeastsea8()
+  if location == "southeastsea9":
+    southeastsea9()
+  if location == "southeastsea10":
+    southeastsea10()
+  if location == "southeastsea11":
+    southeastsea11()
+  if location == "southeastsea12":
+    southeastsea12()
+  if location == "southeastsea13":
+    southeastsea13()
+  if location == "southeastsea14":
+    southeastsea14()
+  if location == "southeastsea15":
+    southeastsea15()
+  if location == "southeastsea16":
+    southeastsea16()
+  if location == "southeastsea17":
+    southeastsea17()
+  if location == "southeastsea18":
+    southeastsea18()
+  if location == "southeastsea19":
+    southeastsea19()
+  if location == "forsakenkarst1":
+    forsakenkarst1()
+  if location == "forsakenkarst2":
+    forsakenkarst2()
+  if location == "forsakenkarst3":
+    forsakenkarst3()
+  if location == "forsakenkarst4":
+    forsakenkarst4()
   if location == "sunsetmesa1":
     sunsetmesa1()
   if location == "sunsetmesa2":
     sunsetmesa2()
-  if location == "skygrassprairie1":
-    skygrassprairie1()
-  if location == "ShroudedOutpost":
-    ShroudedOutpost()
-  if location == "StonesEdge":
-    StonesEdge()
-  if location == "oakensanctuary13":
-    oakensanctuary13()
+  if location == "sunsetmesa3":
+    sunsetmesa3()
+  if location == "sunsetmesa4":
+    sunsetmesa4()
+  if location == "sunsetmesa5":
+    sunsetmesa5()
+  if location == "IsleRho":
+    IsleRho()
+  if location == "IsleTheta1":
+    IsleTheta1()
+  if location == "IsleTheta2":
+    IsleTheta2()
+  if location == "cragrockbelt1":
+    cragrockbelt1()
+  if location == "cragrockbelt2":
+    cragrockbelt2()
+  if location == "cragrockbelt3":
+    cragrockbelt3()
+  if location == "cragrockbelt4":
+    cragrockbelt4()
+  if location == "peaksofdespair1":
+    peaksofdespair1()
+  if location == "peaksofdespair2":
+    peaksofdespair2()
+  if location == "embersreach1":
+    embersreach1()
+  if location == "embersreach2":
+    embersreach2()
+  if location == "embersreach3":
+    embersreach3()
   if location == "cloudedspires1":
     cloudedspires1()
+  if location == "cloudedspires2":
+    cloudedspires2()
+  if location == "cloudedspires3":
+    cloudedspires3()
+  if location == "cloudedspires4":
+    cloudedspires4()
+  if location == "cloudedspires5":
+    cloudedspires5()
+  if location == "cloudedspires6":
+    cloudedspires6()
+  if location == "cloudedspires7":
+    cloudedspires7()
+  if location == "cloudedspires8":
+    cloudedspires8()
+  if location == "cloudedspires9":
+    cloudedspires9()
+  if location == "cloudedspires10":
+    cloudedspires10()
+  if location == "cloudedspires11":
+    cloudedspires11()
+  if location == "cloudedspires12":
+    cloudedspires12()
+  if location == "cloudedspires13":
+    cloudedspires13()
+  if location == "cloudedspires14":
+    cloudedspires14()
+  if location == "cloudedspires15":
+    cloudedspires15()
+  if location == "cloudedspires16":
+    cloudedspires16()
+  if location == "cloudedspires17":
+    cloudedspires17()
+  if location == "cloudedspires18":
+    cloudedspires18()
+  if location == "cloudedspires19":
+    cloudedspires19()
+  if location == "cloudedspires20":
+    cloudedspires20()
+  if location == "cloudedspires21":
+    cloudedspires21()
+  if location == "cloudedspires22":
+    cloudedspires22()
+  if location == "cloudedspires23":
+    cloudedspires23()
+  if location == "cloudedspires24":
+    cloudedspires24()
+  if location == "cloudedspires25":
+    cloudedspires25()
+  if location == "cloudedspires26":
+    cloudedspires26()
+  if location == "cloudedspires27":
+    cloudedspires27()
+  if location == "cloudedspires28":
+    cloudedspires28()
+  if location == "cloudedspires29":
+    cloudedspires29()
+  if location == "cloudedspires30":
+    cloudedspires30()
+  if location == "cloudedspires31":
+    cloudedspires31()
+  if location == "cloudedspires32":
+    cloudedspires32()
+  if location == "cloudedspires33":
+    cloudedspires33()
 
 #HALF REWORKED: Reworked with decorative functions, gave the merchant a unique character.
 def falmercha():
@@ -1627,7 +2197,7 @@ def falmerchb():
   time.sleep(1)
   Falezrin()
 
-#Which merchant in Falezrin does the user want to go to?
+#UNCHANGED - PURPOSE: Which merchant in Falezrin does the user want to go to?
 def falmerch():
   print("There are three merchants.  Which one would you like to go to? Say 'a', 'b' or 'c', or exit to leave.")
   falmech = input("> ").lower()
@@ -1645,7 +2215,7 @@ def falmerch():
     print("That's not a merchant.")
     falmerch()
 
-#entry to Falezrin (to prevent as much of a text wall)
+#UNCHANGED - PURPOSE: Entry to Falezrin (to prevent as much of a text wall)
 def Falezrinentry():
   global inve, invi, invu, location
   locationchange("Falezrin")
@@ -1786,22 +2356,19 @@ def verdanthills3():
       time.sleep(2)
       print("...")
       time.sleep(2)
-      gatherluck = random.randint(1, 20)
-      if 1 <= gatherluck <= 5:
+      gatherluck = random.randint(1, 18)
+      if 1 <= gatherluck >= 5:
         print("In the hour that you searched, you could not find any resources of high quality.")
-      elif 6 <= gatherluck <= 11:
+      elif 6 <= gatherluck >= 11:
         print("You find some nice fallen branches that are strong and thick. You break them apart cleanly.")
         inventory.append("oak branches")
-      elif 12 <= gatherluck <= 15:
+      elif 12 <= gatherluck >= 15:
         print("You find some very intact and thriving blossoming vines and gather them.")
         inventory.append("blossom vines")
-      elif 16 <= gatherluck <= 18:
+      elif 16 <= gatherluck >= 18:
         print("You find a lot of very intact and thriving blossoming vines and gather them.")
         inventory.append("blossom vines")
         inventory.append("blossom vines")
-      elif 19 <= gatherluck <= 20:
-        print("You find some ore poking out of the ground.  After a lot of pulling and digging, you excavate a small piece of tin embedded in a stone.")
-        inventory.append("tin ore")
       time.sleep(2.5)
       verdanthills1()
     elif laction == "loadout":
@@ -1879,22 +2446,12 @@ def verdanthills4():
       time.sleep(2)
       print("...")
       time.sleep(2)
-      gatherluck = random.randint(1, 20)
+      gatherluck = random.randint(1, 11)
       if 1 <= gatherluck <= 5:
         print("In the hour that you searched, you could not find any resources of high quality.")
       elif 6 <= gatherluck <= 11:
         print("You find some nice fallen branches that are strong and thick. You break them apart cleanly.")
         inventory.append("oak branches")
-      elif 12 <= gatherluck <= 15:
-        print("You find some very high quality grasses.")
-        inventory.append("skygrass cluster")
-      elif 16 <= gatherluck <= 18:
-        print("You find a lot of high quality grass.")
-        inventory.append("skygrass cluster")
-        inventory.append("skygrass cluster")
-      elif 19 <= gatherluck <= 20:
-        print("You find some ore poking out of the ground.  After a lot of pulling and digging, you excavate a small piece of tin embedded in a stone.")
-        inventory.append("tin ore")
       time.sleep(2.5)
       verdanthills1()
     elif laction == "loadout":
@@ -1973,7 +2530,7 @@ def verdanthills5():
       time.sleep(2)
       print("...")
       time.sleep(2)
-      gatherluck = random.randint(1, 20)
+      gatherluck = random.randint(1, 15)
       if 1 <= gatherluck <= 3:
         print("In the hour that you searched, you could not find any resources of high quality.")
       elif 4 <= gatherluck <= 10:
@@ -1982,13 +2539,6 @@ def verdanthills5():
       elif 11 <= gatherluck <= 15:
         print("You find some blossoming vines.")
         inventory.append("blossom vines")
-      elif 16 <= gatherluck <= 18:
-        print("You find a lot of high quality grass.")
-        inventory.append("skygrass cluster")
-        inventory.append("skygrass cluster")
-      elif 19 <= gatherluck <= 20:
-        print("You find some ore poking out of the ground.  After a lot of pulling and digging, you excavate a small piece of copper embedded in a stone.")
-        inventory.append("copper ore")
       time.sleep(2.5)
       verdanthills5()
     elif laction == "loadout":
@@ -2921,7 +3471,7 @@ def Falezrin():
       print("Or say 'Arrowfall' to partake in the crossover event!")
       persch = input("> ").lower()
       if persch == "a":
-        dt(0.02, "Hey.  Hope you're doing well.")
+        dt(0.02, "Hey. Hope you're doing well.")
         time.sleep(1)
         Falezrin()
       elif persch == "b":
@@ -3017,6 +3567,74 @@ def Falezrin():
       Falezrin()
   else:
     Falezrin()
+
+def inwater():
+    global inventory, hp
+    #if boat is not in inventory
+    if "boat" not in inventory:
+        flvtext = random.randint(1, 3)
+        if flvtext == 1:
+            print("You lose a bit of health as you struggle to stay afloat.")
+        elif flvtext == 2:
+            print("You start to feel the water pulling you under. You lose a bit of health.")
+        elif flvtext == 3:
+            print("Desperately trudging through the waters weakens your body. You lose a bit of health.")
+        hp = hp - 1
+        if hp >= 0:
+            print("You fall unconscious and wake up on the shore.")
+            time.sleep(1)
+            if location == "northernsea1" or location == "northernsea2" or location == "northernsea3":
+                shorespot = random.randint(1, 2)
+                timeshift(4, 0)
+                if shorespot == 1:
+                    twilighttundra1()
+                elif shorespot == 2:
+                    twilighttundra2()
+            elif location == "southeastsea1" or location == "southeastsea2" or location == "southeastsea3":
+                shorespot = random.randint(1, 3)
+                timeshift(4, 0)
+                if shorespot == 1:
+                    bogofmangroves10()
+                elif shorespot == 2:
+                    sandyshores2()
+                elif shorespot == 3:
+                    sandyshores3()
+            elif location == "southeastsea4" or location == "southeastsea5":
+                timeshift(4, 0)
+                sandyshores4()
+            elif location == "southeastsea6":
+                timeshift(4, 0)
+                sandyshores6()
+            elif location == "southeastsea7" or location == "southeastsea9" or location == "southeastsea13":
+                timeshift(4, 0)
+                IsleRho()
+            elif location == "southeastsea8":
+                timeshift(4, 0)
+                shorespot = random.randint(1, 2)
+                if shorespot == 1:
+                    sandyshores6()
+                elif shorespot == 2:
+                    sandyshores8()
+            elif location == "southeastsea10":
+                timeshift(4, 0)
+                shorespot = random.randint(1, 2)
+                if shorespot == 1:
+                    sandyshores8()
+                elif shorespot == 2:
+                    sandyshores9()
+            elif location == "southeastsea11" or location == "southeastsea17" or location == "southeastsea12" or location == "southeastsea15" or location == "southeastsea18" or location == "southeastsea19":
+                timeshift(4, 0)
+                IsleTheta1()
+            elif location == "southeastsea14":
+                timeshift(4, 0)
+                shorespot = random.randint(1, 2)
+                if shorespot == 1:
+                    IsleTheta1()
+                elif shorespot == 2:
+                    RiversideDrown()
+            elif location == "southeastsea16":
+                timeshift(4, 0)
+                RiversideDrown()
 
 def cliffscale(direction, height, nlocation):
   global hp, location, cspdb, inventory
