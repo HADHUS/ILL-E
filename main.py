@@ -68,6 +68,8 @@ maxhunger = 10
 hp = 0
 #UNCHANGED - PURPOSE: Maximum player hitpoints
 maxhp = 0
+#NEW - PURPOSE: Boss rush protocol
+InBossRush = 0
 
 #UNCHANGED - PURPOSE: A conditional value used in the start combat and the Broken Ballista quest combat
 dp = 0
@@ -136,7 +138,7 @@ battleactions = ["attack", "block", "run"]
 #UNCHANGED - PURPOSE: A list of all possible actions in a given location
 locationactions = ["west", "east", "north", "south", "save data", "loadout", "inventory", "help", "coins","hp", "time", "hunger", "quests", "exchange"]
 
-#CHANGE: More locations to be added | PURPOSE: A list of locations where fishing is allowed
+#CHANGE: All locations added | PURPOSE: A list of locations where fishing is allowed
 fishingspots = [
     "twilighttundra1", "twilighttundra2", "verdanthills4", "verdanthills5", "sunsetmesa2", "northernsea1", "northernsea2", "northernsea3",
     "oakensanctuary3", "oakensanctuary4", "oakensanctuary9", "LakeOya", "scintillantrainforest3", "scintillantrainforest8",
@@ -347,6 +349,11 @@ clcolor = [
   green
 ]
 
+#NEW: A clearing function because apparently cls broke?
+def clearscreen():
+    #newline technique
+    print("\n" * 100)
+
 #NEW: A decorative horizontal line generator | EXAMPLE: hzline("a", 1) = '================================================================================'
 def hzline(type, style, extra="none"):
   if type == "a":
@@ -448,7 +455,7 @@ def merchentry(name1, pcc, gcc, scc, ccc, names=1, usecolor="F", color1=white, n
     if color3 not in validcolors:
       color3 = white
     if names == 1:
-      print(white+" > ["+color1+name1+"] = ["+currencysuffix)
+      print(white+" > ["+color1+name1+white+"] = ["+currencysuffix)
     elif names == 2:
       print(white+" > ["+color1+name1+" "+color2+name2+white+"] - ["+currencysuffix)
     elif names == 3 or names > 3:
@@ -515,9 +522,9 @@ def las(listc):
   laas = ", ".join(listc)
   print("[" + laas + "]")
 
-#UNCHANGED - PURPOSE: Dynamic test
+#UNCHANGED - PURPOSE: Dramatic text (text slowly appears)
 def dt(dur, text):
-  os.system("cls")
+  clearscreen()
   for i,character in enumerate(text):
     print(normal,character,sep='',end='',flush=True)
     time.sleep(dur)
@@ -538,7 +545,7 @@ def bestiary():
         hzline("a", 1)
         normentry("Common Name", "F", white, "Goblin")
         hzline("a", 1)
-        normentry("Habitat", "F", white, "Darkspore Forest / Lower Spires")
+        normentry("Habitat", "F", white, "Darkspore Forest")
         hzline("a", 1)
         normentry("Goblin Sword", "F", lightgrey, "12.5%")
         normentry("Goblin War Paint", "F", lightgrey, "5%")
@@ -548,9 +555,9 @@ def bestiary():
       elif blearn == "goblin striker":
         tell("Entry", "2/50")
         hzline("a", 1)
-        normentry("Common Name", "F", white, "Goblin Striker")
+        normentry("Common Name", "F", white, "Goblin Striker", elitecolor)
         hzline("a", 1)
-        normentry("Habitat", "F", white, "Darkspore Forest / Lower Spires")
+        normentry("Habitat", "F", white, "Darkspore Forest")
         hzline("a", 1)
         normentry("Striker Blade", "F", lightgrey, "7.14%")
         normentry("Scrap Metal", "F", lightgrey, "50%")
@@ -574,15 +581,39 @@ def bestiary():
         hzline("a", 1)
         normentry("Common Name", "F", white, "Outlaw")
         hzline("a", 1)
-        normentry("Habitat", "F", white, "Savage Steppe")
+        normentry("Habitat", "F", white, "Savage Steppe / Distant Meadows")
         hzline("a", 1)
         normentry("Rusty Dagger", "F", lightgrey, "10%")
         normentry("Outlaw Bandana", "F", lightgrey, "6.6%")
         hzline("a", 1)
-        normentry("Entry", "F", lightgrey, "Outlaws who have left city life in favor of one in the desert.")
+        normentry("Entry", "F", lightgrey, "Outlaws who have left city life in favor of one in the desert and meadows.")
         hzline("a", 1)
+      elif blearn == "outlaw brute":
+          tell("Entry", "5/50")
+          hzline("a", 1)
+          normentry("Common Name", "F", white, "Outlaw Brute")
+          hzline("a", 1)
+          normentry("Habitat", "F", white, "Savage Steppe / Distant Meadows")
+          hzline("a", 1)
+          normentry("Worn Mace", "F", lightgrey, "10%")
+          normentry("Outlaw Bandana", "F", lightgrey, "6.6%")
+          hzline("a", 1)
+          normentry("Entry", "F", lightgrey, "Outlaws who have left city life in favor of one in the desert and meadows.")
+          hzline("a", 1)
+      elif blearn == "outlaw raider":
+          tell("Entry", "6/50")
+          hzline("a", 1)
+          normentry("Common Name", "F", white, "Outlaw Raider", elitecolor)
+          hzline("a", 1)
+          normentry("Habitat", "F", white, "Savage Steppe / Distant Meadows")
+          hzline("a", 1)
+          normentry("Rusty Handaxe", "F", lightgrey, "10%")
+          normentry("Raider Cloak", "F", lightgrey, "6.6%")
+          hzline("a", 1)
+          normentry("Entry", "F", lightgrey, "Outlaws who have adapted to a life of rading and pillaging.")
+          hzline("a", 1)
       elif blearn == "orc":
-        tell("Entry", "5/50")
+        tell("Entry", "7/50")
         hzline("a", 1)
         normentry("Common Name", "F", white, "Orc")
         hzline("a", 1)
@@ -594,7 +625,7 @@ def bestiary():
         normentry("Entry", "F", lightgrey, "Tall, green, brutish humanoids who in fact have complex towns.")
         hzline("a", 1)
       elif blearn == "orcish shaman":
-        tell("Entry", "6/50")
+        tell("Entry", "8/50")
         hzline("a", 1)
         normentry("Common Name", "F", white, "Orcish Shaman")
         hzline("a", 1)
@@ -606,7 +637,7 @@ def bestiary():
         normentry("Entry", "F", lightgrey, "Leaders of orcish societies, powerful spirit/nature mages.")
         hzline("a", 1)
       elif blearn == "prairie bulette":
-        tell("Entry", "7/50")
+        tell("Entry", "9/50")
         hzline("a", 1)
         normentry("Common Name", "F", white, "Prairie Bulette")
         hzline("a", 1)
@@ -618,7 +649,7 @@ def bestiary():
         normentry("Entry", "F", lightgrey, "Known as 'land sharks', these burrowing beasts are deadly and swift.")
         hzline("a", 1)
       elif blearn == "skygrass wyrm":
-        tell("Entry", "8/50")
+        tell("Entry", "10/50")
         hzline("a", 1)
         normentry("Common Name", "F", white, "Skygrass Wyrm")
         hzline("a", 1)
@@ -630,7 +661,7 @@ def bestiary():
         normentry("Entry", "F", lightgrey, "Creatures similar to snakes that tend to stay hidden in the grass.")
         hzline("a", 1)
       elif blearn == "megacrab":
-        tell("Entry", "9/50")
+        tell("Entry", "11/50")
         hzline("a", 1)
         normentry("Common Name", "F", white, "Megacrab")
         hzline("a", 1)
@@ -642,7 +673,7 @@ def bestiary():
         normentry("Entry", "F", lightgrey, "Giant crabs that are known to be territorial and aggressive.")
         hzline("a", 1)
       elif blearn == "blackbear":
-        tell("Entry", "10/50")
+        tell("Entry", "12/50")
         hzline("a", 1)
         normentry("Common Name", "F", white, "Blackbear")
         hzline("a", 1)
@@ -654,7 +685,7 @@ def bestiary():
         normentry("Entry", "F", lightgrey, "Large, black bears that are known to be aggressive and territorial.")
         hzline("a", 1)
       elif blearn == "cultist":
-        tell("Entry", "11/50")
+        tell("Entry", "13/50")
         hzline("a", 1)
         normentry("Common Name", "F", white, "Cultist")
         hzline("a", 1)
@@ -666,7 +697,7 @@ def bestiary():
         normentry("Entry", "F", lightgrey, "Worshippers of dark gods, these cultists are dangerous and fanatical.")
         hzline("a", 1)
       elif blearn == "siren":
-        tell("Entry", "12/50")
+        tell("Entry", "14/50")
         hzline("a", 1)
         normentry("Common Name", "F", white, "Siren")
         hzline("a", 1)
@@ -678,7 +709,7 @@ def bestiary():
         normentry("Entry", "F", lightgrey, "Enchanting sea creatures that lure sailors to their doom.")
         hzline("a", 1)
       elif blearn == "skeleton":
-        tell("Entry", "13/50")
+        tell("Entry", "15/50")
         hzline("a", 1)
         normentry("Common Name", "F", white, "Skeleton")
         hzline("a", 1)
@@ -690,7 +721,7 @@ def bestiary():
         normentry("Entry", "F", lightgrey, "Fragile undead beings that are easy to make using magic.")
         hzline("a", 1)
       elif blearn == "skeleton archer":
-        tell("Entry", "14/50")
+        tell("Entry", "16/50")
         hzline("a", 1)
         normentry("Common Name", "F", white, "Skeleton Archer")
         hzline("a", 1)
@@ -702,7 +733,7 @@ def bestiary():
         normentry("Entry", "F", lightgrey, "Skeletons who have been given bows and arrows to use.")
         hzline("a", 1)
       elif blearn == "skeleton warrior":
-        tell("Entry", "15/50")
+        tell("Entry", "17/50")
         hzline("a", 1)
         normentry("Common Name", "F", white, "Skeleton Warrior")
         hzline("a", 1)
@@ -714,7 +745,7 @@ def bestiary():
         normentry("Entry", "F", lightgrey, "Tankier skeletons from a fallen army, known for their signature flamberge swords.")
         hzline("a", 1)
       elif blearn == "skeleton mage":
-        tell("Entry", "16/50")
+        tell("Entry", "18/50")
         hzline("a", 1)
         normentry("Common Name", "F", white, "Skeleton Mage")
         hzline("a", 1)
@@ -726,7 +757,7 @@ def bestiary():
         normentry("Entry", "F", lightgrey, "Skeletons who were powerful mages in their past life. They specialize in blood magic.")
         hzline("a", 1)
       elif blearn == "skeleton juggernaut":
-        tell("Entry", "17/50")
+        tell("Entry", "19/50")
         hzline("a", 1)
         normentry("Common Name", "T", white, "Skeleton Juggernaut", elitecolor)
         hzline("a", 1)
@@ -738,7 +769,7 @@ def bestiary():
         normentry("Entry", "F", lightgrey, "Very tanky skeletons outfitted in heavy steel plate armor, weilding warhammers. Seems to be immune to projectiles.")
         hzline("a", 1)
       elif blearn == "skeleton lieutenant":
-        tell("Entry", "18/50")
+        tell("Entry", "20/50")
         hzline("a", 1)
         normentry("Common Name", "T", white, "Skeleton Lieutenant", elitecolor)
         hzline("a", 1)
@@ -750,7 +781,7 @@ def bestiary():
         normentry("Entry", "F", lightgrey, "Skeletons who lead the undead armies, known for their dark flags and coats. Tends to empower adjacent skeletons.")
         hzline("a", 1)
       elif blearn == "skeleton captain":
-        tell("Entry", "19/50")
+        tell("Entry", "21/50")
         hzline("a", 1)
         normentry("Common Name", "T", white, "Skeleton Captain", minibosscolor)
         hzline("a", 1)
@@ -762,7 +793,7 @@ def bestiary():
         normentry("Entry", "F", lightgrey, "Powerful skeletons that specialize in leadership and tactics. Scary to fight.")
         hzline("a", 1)
       elif blearn == "dark legion leader":
-        tell("Entry", "20/50")
+        tell("Entry", "22/50")
         hzline("a", 1)
         normentry("Common Name", "T", white, "Dark Legion Leader", bosscolor)
         hzline("a", 1)
@@ -774,7 +805,7 @@ def bestiary():
         normentry("Entry", "F", lightgrey, "The leader of the Dark Legion, a powerful undead warrior who commands the undead armies.")
         hzline("a", 1)
       elif blearn == "legionary guardsman":
-        tell("Entry", "21/50")
+        tell("Entry", "23/50")
         hzline("a", 1)
         normentry("Common Name", "F", white, "Legionary Guardsman", minibosscolor)
         hzline("a", 1)
@@ -786,7 +817,7 @@ def bestiary():
         normentry("Entry", "F", lightgrey, "Elite soldiers of the Dark Legion, known for their glaives and armor. They protect the Dark Legion Leader whenever they are in danger.")
         hzline("a", 1)
       elif blearn == "elder lich":
-        tell("Entry", "22/50")
+        tell("Entry", "24/50")
         hzline("a", 1)
         normentry("Common Name", "T", white, "Elder Lich", superbosscolor)
         hzline("a", 1)
@@ -797,6 +828,79 @@ def bestiary():
         hzline("a", 1)
         normentry("Entry", "F", lightgrey, "The source of the skeletons that roam this land. Good ridance.")
         hzline("a", 1)
+      elif blearn == "king of the orcs":
+          tell("Entry", "25/50")
+          hzline("a", 1)
+          normentry("Common Name", "T", white, "King of the Orcs", bosscolor)
+          hzline("a", 1)
+          normentry("Habitat", "F", white, "Darkspore Forest")
+          hzline("a", 1)
+          normentry("Orcish Crown", "F", lightgrey, "100%")
+          normentry("Orcish Warhammer", "F", lightgrey, "100%")
+          hzline("a", 1)
+          normentry("Entry", "F", lightgrey, "The leader of the orcish tribes, a powerful warrior to the core.")
+          hzline("a", 1)
+      #elementals
+      elif blearn == "ice elemental":
+          tell("Entry", "26/50")
+          hzline("a", 1)
+          normentry("Common Name", "T", white, "Ice Elemental", minibosscolor)
+          hzline("a", 1)
+          normentry("Habitat", "F", white, "Twilight Tundra")
+          hzline("a", 1)
+          normentry("Essence of Ice", "F", lightgrey, "15%")
+          normentry("Ice Elemental Core", "F", lightgrey, "10%")
+          hzline("a", 1)
+          normentry("Entry", "F", lightgrey, "Elementals made of ice, known for their freezing properties.")
+          hzline("a", 1)
+      elif blearn == "fire elemental":
+          tell("Entry", "27/50")
+          hzline("a", 1)
+          normentry("Common Name", "T", white, "Fire Elemental", minibosscolor)
+          hzline("a", 1)
+          normentry("Habitat", "F", white, "Ember's Reach")
+          hzline("a", 1)
+          normentry("Essence of Fire", "F", lightgrey, "15%")
+          normentry("Fire Elemental Core", "F", lightgrey, "10%")
+          hzline("a", 1)
+          normentry("Entry", "F", lightgrey, "Elementals made of fire, known for their eternal flames.")
+          hzline("a", 1)
+      elif blearn == "earth elemental":
+          tell("Entry", "28/50")
+          hzline("a", 1)
+          normentry("Common Name", "T", white, "Earth Elemental", minibosscolor)
+          hzline("a", 1)
+          normentry("Habitat", "F", white, "Cragrock Belt")
+          hzline("a", 1)
+          normentry("Essence of Earth", "F", lightgrey, "15%")
+          normentry("Earth Elemental Core", "F", lightgrey, "10%")
+          hzline("a", 1)
+          normentry("Entry", "F", lightgrey, "Elementals made of earth, known for their ability to armor themselves.")
+          hzline("a", 1)
+      elif blearn == "wind elemental":
+          tell("Entry", "29/50")
+          hzline("a", 1)
+          normentry("Common Name", "T", white, "Wind Elemental", minibosscolor)
+          hzline("a", 1)
+          normentry("Habitat", "F", white, "Clouded Spires")
+          hzline("a", 1)
+          normentry("Essence of Wind", "F", lightgrey, "15%")
+          normentry("Wind Elemental Core", "F", lightgrey, "10%")
+          hzline("a", 1)
+          normentry("Entry", "F", lightgrey, "Elementals made of wind, known for their ability to redirect projectiles.")
+          hzline("a", 1)
+      elif blearn == "water elemental":
+          tell("Entry", "30/50")
+          hzline("a", 1)
+          normentry("Common Name", "T", white, "Water Elemental", minibosscolor)
+          hzline("a", 1)
+          normentry("Habitat", "F", white, "Southeast Sea / Northern Sea")
+          hzline("a", 1)
+          normentry("Essence of Fluidity", "F", lightgrey, "15%")
+          normentry("Water Elemental Core", "F", lightgrey, "10%")
+          hzline("a", 1)
+          normentry("Entry", "F", lightgrey, "Elementals made of water, known for their ability to absorb damage.")
+          hzline("a", 1)
       print("")
     if blearn == "exit":
       ex = 1
@@ -872,7 +976,7 @@ def acs(placeholder, actions):
   print("[ENTER] to continue.")
   wait = input()
   current = 0
-  os.system('cls')
+  clearscreen()
   placeholder = ""
   while placeholder == "":
     print("Here are your current actions.\nWhat would you like to do?")
@@ -895,19 +999,18 @@ def acs(placeholder, actions):
     if keyg == key.ENTER:
       time.sleep(0.15)
       placeholder = actions[current]
-    os.system('cls')
+    clearscreen()
   return placeholder
 
 #UNCHANGED - PURPOSE: Class choosing sequence for intro
 def classchoose():
-  global classes, cdesc, sclass, eqweapon, eqoffhand, eqhelm, maxhp, atkbonus, hp, magicbonus, throwingknife, xp, lvl, battleactions, spells, maxspells, inventory
+  global classes, cdesc, sclass, eqweapon, eqoffhand, eqhelm, maxhp, atkbonus, hp, magicbonus, throwingknife, xp, lvl, battleactions, spells, maxspells, inventory, InBossRush
   current = 0
-  os.system('cls')
-  print("Which class would you like to be?")
+  clearscreen()
   time.sleep(2)
-  os.system('cls')
   chclass = ""
   while chclass == "":
+    print("Which class would you like to be?")
     print(clearf + clcolor[current] + normal + "[" +          classes[current].capitalize() + "]")
     print(clearf + italic + cdesc[current])
     print(clearf + normal + "<" + " " * (len(classes[current])) + ">")
@@ -928,8 +1031,8 @@ def classchoose():
     if keyg == key.ENTER:
       time.sleep(0.15)
       chclass = classes[current]
-    os.system('cls')
-  if chclass in classes:
+    clearscreen()
+  if chclass in classes and InBossRush == 0:
     inventory.append("bestiary")
     if chclass == "warrior" or chclass == "Warrior":
       sclass = "warrior"
@@ -1000,11 +1103,64 @@ def classchoose():
     hp = maxhp
     lvl = 1
     xp = 0
+  elif chclass in classes and InBossRush == 1:
+      #buffed stats for boss rush
+      inventory.append("health potion")
+      inventory.append("health potion")
+      inventory.append("health potion")
+      inventory.append("health potion")
+      inventory.append("health potion")
+      if chclass == "warrior" or chclass == "Warrior":
+          sclass = "warrior"
+          maxhp = 25
+          atkbonus = 3
+          eqweapon = "warrior's pride"
+          eqoffhand = "heavy shield"
+          battleactions.append("repost")
+      elif chclass == "rogue" or chclass == "Rogue":
+          sclass = "rogue"
+          maxhp = 20
+          atkbonus = 3
+          eqweapon = "scarlet blade"
+          battleactions.append("knife throw")
+          throwingknife = 50
+          battleactions.append("backstab")
+      elif chclass == "mage" or chclass == "Mage":
+          sclass = "mage"
+          maxhp = 15
+          atkbonus = 2
+          eqweapon = "staff of the archmage"
+          battleactions.append("magic")
+          spells.append("magic missile")
+          spells.append("magic missile")
+          spells.append("fireball")
+          spells.append("fireball")
+          spells.append("psionic blast")
+          maxspells.extend(spells)
+          inventory.append("manaspark potion")
+          inventory.append("manaspark potion")
+          inventory.append("manaspark potion")
+          inventory.append("manaspark potion")
+          inventory.append("manaspark potion")
+          inventory.append("manaspark potion")
+          inventory.append("manaspark potion")
+          inventory.append("manaspark potion")
+          inventory.append("manaspark potion")
+          inventory.append("manaspark potion")
+      elif chclass == "cleric" or chclass == "Cleric":
+          sclass = "cleric"
+          maxhp = 20
+          atkbonus = 2
+          eqweapon = "staff of the divine"
+          battleactions.append("magic")
+          spells.append("heal I")
+
+
   else:
     print("uh, that's not a class. sorry...")
     print("")
     time.sleep(2)
-    os.system("cls")
+    clearscreen()
     classchoose()
 
 #UNCHANGED - PURPOSE: Style choosing sequence for intro
@@ -1034,7 +1190,7 @@ def stylechoose():
     print("Just saying, that's not a style that you can have.")
     print("")
     time.sleep(2)
-    os.system("cls")
+    clearscreen()
     stylechoose()
 
 #UNCHANGED - PURPOSE: Lets the player check how many throwing knives they have
@@ -1101,6 +1257,9 @@ def rgvendor():
       says(red2, "Shady Vendor", grey, "Oh, that? My old whetstone, it's served me well.  Doesn't seem like you can afford it though, sorry 'bout that...")
       time.sleep(4)
       locationreturn()
+  elif rvc == "exit" or rvc == "leave":
+    time.sleep(0.5)
+    locationreturn()
   else:
     says(red2, "Shady Vendor", grey, "Uhhh can't help you with that...")
     time.sleep(2.5)
@@ -2095,8 +2254,10 @@ def falmercha():
       inventory.append("tomato")
     else:
       says(green, "Tom", lightgrey, "Ah. Sorry, you don't have enough money.")
+  elif fmaa == "exit" or fmaa == "leave":
+    pass
   else:
-    says(green, "Tom", lightgrey, "Sorry, but I don't have any '"+italic+white+fmaa+clearf+lightgrey+"'.")
+    says(green, "Tom", lightgrey, "Sorry, but I don't have any "+white+"'"+italic+fmaa+clearf+"'"+lightgrey+".")
   time.sleep(1)
   Falezrin()
 
@@ -2151,9 +2312,12 @@ def falmerchc():
       inventory.append("manaspark potion")
     else:
       says(purple, "Aria", lavender, "Appologies, but it seems you're a bit short.")
+  elif fmac == "exit" or fmac == "leave":
+    pass
   else:
-    says(purple, "Aria", lavender, "Sorry, but I don't have any '"+italic+white+fmac+clearf+lavender+"'.")
-  locationreturn()
+    says(purple, "Aria", lavender, "Sorry, but I don't have any "+white+"'"+italic+fmac+clearf+"'"+lavender+".")
+  time.sleep(1)
+  Falezrin()
 
 #HALF REWORKED: Reworked with decorative functions, gave the merchant a unique character.
 def falmerchb():
@@ -2192,8 +2356,10 @@ def falmerchb():
       inventory.append("iron greaves")
     else:
       says(yellow, "Jeremiah", paleyellow, "Sorry, pal, ya don't got enough money for that.")
+  elif fmbc == "exit" or fmbc == "leave":
+    pass
   else:
-    says(yellow, "Jeremiah", paleyellow, "Sorry, but I don't have any '"+italic+white+fmbc+clearf+lavender+"'.")
+    says(yellow, "Jeremiah", paleyellow, "Sorry, but I don't have any "+white+"'"+italic+white+fmbc+clearf+"'"+paleyellow+".")
   time.sleep(1)
   Falezrin()
 
@@ -2259,7 +2425,7 @@ def verdanthills1():
       time.sleep(2)
       print("...")
       time.sleep(2)
-      gatherluck = random.randint(1, 20)
+      gatherluck = random.randint(1, 18)
       if 1 <= gatherluck <= 5:
         print("In the hour that you searched, you could not find any resources of high quality.")
       elif 6 <= gatherluck <= 11:
@@ -2272,9 +2438,6 @@ def verdanthills1():
         print("You find a lot of very intact and thriving blossoming vines and gather them.")
         inventory.append("blossom vines")
         inventory.append("blossom vines")
-      elif 19 <= gatherluck <= 20:
-        print("You find some ore poking out of the ground.  After a lot of pulling and digging, you excavate a small piece of copper embedded in a stone.")
-        inventory.append("copper ore")
       time.sleep(2.5)
       verdanthills1()
     elif laction == "loadout":
@@ -3966,7 +4129,7 @@ def verdanthills2():
       time.sleep(2)
       print("...")
       time.sleep(2)
-      gatherluck = random.randint(1, 20)
+      gatherluck = random.randint(1, 18)
       if 1 <= gatherluck <= 7:
         print("In the hour that you searched, you could not find any resources of high quality.")
       elif 8 <= gatherluck <= 12:
@@ -3979,20 +4142,13 @@ def verdanthills2():
         print("You find a lot of very intact and thriving blossoming vines and gather them.")
         inventory.append("blossom vines")
         inventory.append("blossom vines")
-      elif 18 <= gatherluck <= 19:
-        print("You find some ore poking out of the ground.  After a lot of pulling and digging, you excavate a small piece of copper embedded in a stone.")
-        inventory.append("copper ore")
-      elif gatherluck == 20:
-        if random.randint(1, 20) != 20:
-          print("Something shiny catches your eye.  After edging your " + eqweapon + " into the ground as a lever and pulling, twisting, and digging, you excavate a small piece of iron embedded in a stone.")
-          inventory.append("iron ore")
+      else:
+        if vdf != 1:
+          print("As you're about to turn back, you miraculously spot a flash of verdant green in the shade under a bush.  You dig around under the bush and find a mysterious lightly curved blade, seeming transparent, with a flowering vine-covered hilt and a shining lime green gem embedded in the blade near the root.")
+          time.sleep(2.5)
+          inventory.append("verdant scimitar")
         else:
-          if vdf != 1:
-            print("As you're about to turn back, you miraculously spot a flash of verdant green in the shade under a bush.  You dig around under the bush and find a mysterious lightly curved blade, seeming transparent, with a flowering vine-covered hilt and a shining lime green gem embedded in the blade near the root.")
-            time.sleep(2.5)
-            inventory.append("verdant scimitar")
-          else:
-            print("You pass the mysterious place where you found the ancient blade.")
+          print("You pass the mysterious place where you found the ancient blade.")
       time.sleep(2.5)
       verdanthills2()
     elif laction == "loadout":
@@ -4009,6 +4165,13 @@ def verdanthills2():
       timecheck()
     elif laction == "save data":
       savedata()
+    elif laction == "north":
+        print("You head north through the hills.")
+        timeshift(1, 0)
+        time.sleep(1)
+        print("The hills become more rugged and the trees more common.")
+        time.sleep(2)
+        verdanthills7()
     elif laction == "west":
       print("You head west throught the plains, approaching the dark forests now in front of you.")
       timeshift(1, 0)
@@ -4017,6 +4180,13 @@ def verdanthills2():
       print("But it's not.  As your eyes adjust, sparse pale yellow translucent mushrooms of varying sizes light up the dark spots of the forest with bioluminescence.")
       time.sleep(2)
       darksporeforest1()
+    elif laction == "east":
+        print("You head east through the plains.")
+        timeshift(1, 0)
+        time.sleep(1)
+        print("There is a nice river out this way, maybe you could catch something.")
+        time.sleep(2)
+        verdanthills6()
     elif laction == "south":
       print("You head south through the plains.")
       timeshift(0, 30)
@@ -4036,6 +4206,68 @@ def verdanthills2():
       verdanthills2()
   else:
     verdanthills2()
+
+def verdanthills7():
+    global location, hours, timeofday, minutes, hunger
+    locationchange("verdanthills7")
+    mealcheck()
+    dt(0.02, "This part of the hills neighbors the darkspore forest.  The trees are tall and thick, with the vines from the other trees seemingly absent here.")
+    time.sleep(1)
+    lactionfix()
+    global laction
+    laction = ""
+    laction = acs(laction, locationactions)
+    if laction in locationactions:
+        if laction == "inventory":
+            invf()
+        elif laction == "hp":
+            hpcheck()
+        elif laction == "quests":
+            print("Your quests: " + str(quests))
+            time.sleep(1)
+            locationreturn()
+        elif laction == "loadout":
+            loadout()
+        elif laction == "hunger":
+            hungercheck()
+        elif laction == "time":
+            timecheck()
+        elif laction == "coins":
+            coins()
+        elif laction == "exchange":
+            exchange()
+        elif laction == "save data":
+            savedata()
+        elif laction == "north":
+            print("You head north, towards the edge of the darkspore forest.")
+            timeshift(1, 0)
+            time.sleep(1)
+            darksporeforest12()
+        elif laction == "west":
+            print("You head west, towards the edge of the darkspore forest.")
+            timeshift(1, 0)
+            time.sleep(1)
+            darksporeforest2()
+        elif laction == "south":
+            print("You head south, back towards the verdant hills.")
+            timeshift(1, 0)
+            time.sleep(1)
+            verdanthills2()
+        elif laction == "east":
+            print("You head east, further into the hills.")
+            timeshift(1, 0)
+            time.sleep(1)
+            verdanthills8()
+        elif laction == "help":
+            print("Use the directions to move to new areas, use some commands to look around town, and some commands to check stats and items you have.  If some commands don't work, they're likely being developed or haven't been coded yet.  I strive to make this a positive experience for players and will almost always test commands I've edited recently.")
+            print("")
+            print("tl;dr: follow the commands it says you can use, directions are to explore and everything else is self-explanatory.")
+            wait = input()
+            verdanthills7()
+        else:
+            print("[not coded yet, sorry]")
+    else:
+        verdanthills7()
 
 def savagesteppe3():
   global location, hours, timeofday, hunger, loot
@@ -4288,7 +4520,7 @@ def ShroudedInn():
     time.sleep(1)
     print("[ENTER] to continue.")
     wait = input()
-    os.system("cls")
+    clearscreen()
     Falinn()
   if iaction == "checkin":
     print("'Hello, would you like a room?'")
@@ -4851,7 +5083,7 @@ def cloudedspires1():
       if (fyn == "yes") or (fyn == "y"):
         print("You run towards them and leap into combat!")
         time.sleep(2)
-        os.system("cls")
+        clearscreen()
         enemies.append("goblin")
         enemies.append("orc")
         csb1 = 1
@@ -4863,7 +5095,7 @@ def cloudedspires1():
     else:
       print("A goblin and an orc sitting a bit away notice you and charge.")
       time.sleep(2)
-      os.system("cls")
+      clearscreen()
       enemies.append("goblin")
       enemies.append("orc")
       csb1 = 1
@@ -4929,7 +5161,7 @@ def sniping():
   print("You loose an arrow, directly at your foes.")
   snipe = 1
   time.sleep(2)
-  os.system("cls")
+  clearscreen()
   if location == "cloudedspires1":
     csb1 = 1
     enemies.append("goblin")
@@ -5166,7 +5398,7 @@ def StoneInn():
     time.sleep(1)
     print("[ENTER] to continue.")
     wait = input()
-    os.system("cls")
+    clearscreen()
     StoneInn()
   if iaction == "checkin":
     print("'Heya! Looking to stay the night??'")
@@ -5301,7 +5533,7 @@ def stonemerch():
       print("[Old Fishing Rod] + [Iron Ingot] x 2 + [Oak Branches] x 5 = [Fine Fishing Rod]")
       print("")
       wait = input().lower()
-      os.system("cls")
+      clearscreen()
       stonemerch()
     elif rectypesm == "advanced":
       print("Currently unusable, but you can craft these!")
@@ -5318,7 +5550,7 @@ def stonemerch():
       print("[Heavytip Quiver] x 1 + [Invisibility Potion] x 5 = [Stalker's Quiver]")
       print("")
       wait = input().lower()
-      os.system("cls")
+      clearscreen()
       stonemerch()
     elif rectypesm == "resource":
       print("[Copper Ore] x 2 = [Copper Ingot]")
@@ -5334,7 +5566,7 @@ def stonemerch():
       print("[Raw Cod] = [Filleted Cod] + [Fish Scales]")
       print("")
       wait = input().lower()
-      os.system("cls")
+      clearscreen()
       stonemerch()
     else:
       stonemerch()
@@ -6002,7 +6234,7 @@ def Falinn():
     time.sleep(1)
     print("[ENTER] to continue.")
     wait = input()
-    os.system("cls")
+    clearscreen()
     Falinn()
   if iaction == "checkin":
     print("'Hello, would you like a room?'")
@@ -7704,15 +7936,34 @@ def attack(target):
               hp = maxhp
             print("You are at " + str(hp) + "HP!")
             spells.remove("heal I")
+          #psionic blast
+          if spellcast == "psionic blast": #insane damage, does self damage
+              print("You focus your mind and unleash a wave of psychic energy.")
+              if random.randint(1, 20) + magicbonus + 5 >= tac:
+                  print("The wave of psychic energy strikes the " + enemies[av] + "!")
+                  target -= random.randint(8, 15) + magicbonus
+                  hp -= random.randint(3, 6)
+              else:
+                  print("The wave of psychic energy misses.")
+              spells.remove("psionic blast")
+          #purge
           if spellcast == "purge":
             print("Holy energy spreads through you and out your extended palm.")
             target -= random.randint(1, 4)
             statusg1 = "none"
             spells.remove("purge")
+          #scroll of the night
           if ((eqweapon in magicweapons) and ("scroll of night" in eqgear)):
             sharddmg = random.randint(1, 4) + magicbonus
             print("Your scroll fires a magic shard, dealing " + sharddmg +                  white + " damage!")
             target -= sharddmg
+        elif eqweapon == "angelic warhammer": #not a spell, but a special attack (still counts as magic)
+            print("You raise your warhammer and call upon the heavens to smite your enemies.")
+            if random.randint(1, 20) + magicbonus + 10 >= tac: #high stakes
+                print("The heavens answer your call, and a bolt of divine energy strikes the " + enemies[av] + "!")
+                target -= random.randint(5, 10) + magicbonus
+            else:
+                print("The heavens do not answer your call.")
         else:
           print("Magic sparks feebly from your hand and strikes the " +                enemies[av] + ".")
           target -= (1 + magicbonus)
@@ -8283,8 +8534,8 @@ def combat():
     enemy1drop1 = "rusty dagger"
     enemy1drop2 = "outlaw bandana"
     enemy1chance1 = 10
-    enemy1chance2 = 15
-    enemy1weapon = "stabs you with a rusty dagger.  ouch."
+    enemy1chance2 = 7
+    enemy1weapon = "stabs you with a rusty dagger."
     special1 = "none"
   elif enemies[0] == "goblin striker":
     enemy1hp = 13
@@ -8364,6 +8615,32 @@ def combat():
     statusg1 = "none"
     enemy1weapon = "erupts from the ground next to you and pounces."
     special1 = "burrow"
+  elif enemies[0] == "outlaw brute":
+      enemy1hp = 15
+      enemy1ac = 10
+      enemy1dmg = 4
+      enemy1acc = 1
+      enemy1drop1 = "worn mace"
+      enemy1drop2 = "outlaw bandana"
+      enemy1chance1 = 10
+      enemy1chance2 = 7
+      statusb1 = "none"
+      statusg1 = "none"
+      enemy1weapon = "clobbers you with their mace."
+      special1 = "none"
+  elif enemies [0] == "outlaw raider":
+      enemy1hp = 10
+      enemy1ac = 15
+      enemy1dmg = 3
+      enemy1acc = 2
+      enemy1drop1 = "rusty handaxe"
+      enemy1drop2 = "raider cloak"
+      enemy1chance1 = 10
+      enemy1chance2 = 7
+      statusb1 = "none"
+      statusg1 = "none"
+      enemy1weapon = "slashes at you with a rusty handaxe."
+      special1 = "none"
   enemy1dmgbonus = 0
   if len(enemies) >= 2:
     if enemies[1] not in bestiarylist:
@@ -9062,9 +9339,9 @@ def bosstext(text, ex):
       hypstr = text[0:clet]
       totalspaces = len(text) - clet + 5
     if clet != len(text):
-      os.system("cls")
+      clearscreen()
     else:
-      os.system("cls")
+      clearscreen()
       print(text)
   time.sleep(2)
 
@@ -9126,7 +9403,7 @@ def shadowboss():
   time.sleep(0.3)
   print("             \\\\         ")
   time.sleep(0.8)
-  os.system("cls")
+  clearscreen()
   while enemy1hp > 0 and hp > 0:
     attack()
     if injury > 0:
@@ -9784,7 +10061,7 @@ def arrowboss():
   time.sleep(0.3)
   print("             \\\\         ")
   time.sleep(0.8)
-  os.system("cls")
+  clearscreen()
   while enemy1hp > 0 and hp > 0:
     attack()
     if injury > 0:
@@ -9901,22 +10178,51 @@ def arrowboss():
     hp = 1
     Falezrin()
 
-os.system("cls")
+def bossrush():
+    dt(0.04, "Okay, starting your demise...")
+    time.sleep(0.5)
+    clearscreen()
+    InBossRush = 1
+    global enemies
+    print("Welcome to the vast open world fantasy realm of Iloraea!")
+    time.sleep(2)
+    print("First of all, we need a few quick things to start building your ideal character.")
+    time.sleep(2)
+    classchoose()
+    time.sleep(1)
+    stylechoose()
+    print("Oh, and here's the discord link if you want it, you can always check [HELP] in Falezrin to find it again.")
+    print("https://discord.gg/DCZTg5rw2r")
+    time.sleep(1)
+    print("[ENTER] to continue.")
+    wait = input()
+    print("Next, let's test your fighting skills on a goblin to get you used to your class.")
+    time.sleep(1)
+    enemies.append("goblin")
+    combat()
+
+
+
+clearscreen()
 dt(0.05, "Aquilo presents...")
 time.sleep(1)
-os.system("cls")
+clearscreen()
 title()
 time.sleep(2.5)
 print("")
 enterwait()
-os.system("cls")
+clearscreen()
+print("Would you like to attempt the bossrush?\nIf you don't then just say no.")
+rush = input("> ").lower()
+if "y" in rush:
+    bossrush()
 print("Would you like to open an existing data save?\nIf you don't have one, just say no.")
 saveloadyes = input("> ").lower()
 if "y" in saveloadyes:
-  os.system("cls")
+  clearscreen()
   loaddata()
 else:
   dt(0.04, "Okay, starting your adventure...")
   time.sleep(0.5)
-  os.system("cls")
+  clearscreen()
   start()
