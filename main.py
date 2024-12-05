@@ -68,8 +68,6 @@ maxhunger = 10
 hp = 0
 #UNCHANGED - PURPOSE: Maximum player hitpoints
 maxhp = 0
-#NEW - PURPOSE: Boss rush protocol
-InBossRush = 0
 
 #UNCHANGED - PURPOSE: A conditional value used in the start combat and the Broken Ballista quest combat
 dp = 0
@@ -1004,7 +1002,7 @@ def acs(placeholder, actions):
 
 #UNCHANGED - PURPOSE: Class choosing sequence for intro
 def classchoose():
-  global classes, cdesc, sclass, eqweapon, eqoffhand, eqhelm, maxhp, atkbonus, hp, magicbonus, throwingknife, xp, lvl, battleactions, spells, maxspells, inventory, InBossRush
+  global classes, cdesc, sclass, eqweapon, eqoffhand, eqhelm, maxhp, atkbonus, hp, magicbonus, throwingknife, xp, lvl, battleactions, spells, maxspells, inventory
   current = 0
   clearscreen()
   time.sleep(2)
@@ -1032,7 +1030,7 @@ def classchoose():
       time.sleep(0.15)
       chclass = classes[current]
     clearscreen()
-  if chclass in classes and InBossRush == 0:
+  if chclass in classes:
     inventory.append("bestiary")
     if chclass == "warrior" or chclass == "Warrior":
       sclass = "warrior"
@@ -1103,59 +1101,6 @@ def classchoose():
     hp = maxhp
     lvl = 1
     xp = 0
-  elif chclass in classes and InBossRush == 1:
-      #buffed stats for boss rush
-      inventory.append("health potion")
-      inventory.append("health potion")
-      inventory.append("health potion")
-      inventory.append("health potion")
-      inventory.append("health potion")
-      if chclass == "warrior" or chclass == "Warrior":
-          sclass = "warrior"
-          maxhp = 25
-          atkbonus = 3
-          eqweapon = "warrior's pride"
-          eqoffhand = "heavy shield"
-          battleactions.append("repost")
-      elif chclass == "rogue" or chclass == "Rogue":
-          sclass = "rogue"
-          maxhp = 20
-          atkbonus = 3
-          eqweapon = "scarlet blade"
-          battleactions.append("knife throw")
-          throwingknife = 50
-          battleactions.append("backstab")
-      elif chclass == "mage" or chclass == "Mage":
-          sclass = "mage"
-          maxhp = 15
-          atkbonus = 2
-          eqweapon = "staff of the archmage"
-          battleactions.append("magic")
-          spells.append("magic missile")
-          spells.append("magic missile")
-          spells.append("fireball")
-          spells.append("fireball")
-          spells.append("psionic blast")
-          maxspells.extend(spells)
-          inventory.append("manaspark potion")
-          inventory.append("manaspark potion")
-          inventory.append("manaspark potion")
-          inventory.append("manaspark potion")
-          inventory.append("manaspark potion")
-          inventory.append("manaspark potion")
-          inventory.append("manaspark potion")
-          inventory.append("manaspark potion")
-          inventory.append("manaspark potion")
-          inventory.append("manaspark potion")
-      elif chclass == "cleric" or chclass == "Cleric":
-          sclass = "cleric"
-          maxhp = 20
-          atkbonus = 2
-          eqweapon = "staff of the divine"
-          battleactions.append("magic")
-          spells.append("heal I")
-
-
   else:
     print("uh, that's not a class. sorry...")
     print("")
@@ -8615,32 +8560,6 @@ def combat():
     statusg1 = "none"
     enemy1weapon = "erupts from the ground next to you and pounces."
     special1 = "burrow"
-  elif enemies[0] == "outlaw brute":
-      enemy1hp = 15
-      enemy1ac = 10
-      enemy1dmg = 4
-      enemy1acc = 1
-      enemy1drop1 = "worn mace"
-      enemy1drop2 = "outlaw bandana"
-      enemy1chance1 = 10
-      enemy1chance2 = 7
-      statusb1 = "none"
-      statusg1 = "none"
-      enemy1weapon = "clobbers you with their mace."
-      special1 = "none"
-  elif enemies [0] == "outlaw raider":
-      enemy1hp = 10
-      enemy1ac = 15
-      enemy1dmg = 3
-      enemy1acc = 2
-      enemy1drop1 = "rusty handaxe"
-      enemy1drop2 = "raider cloak"
-      enemy1chance1 = 10
-      enemy1chance2 = 7
-      statusb1 = "none"
-      statusg1 = "none"
-      enemy1weapon = "slashes at you with a rusty handaxe."
-      special1 = "none"
   enemy1dmgbonus = 0
   if len(enemies) >= 2:
     if enemies[1] not in bestiarylist:
@@ -10178,44 +10097,18 @@ def arrowboss():
     hp = 1
     Falezrin()
 
-def bossrush():
-    dt(0.04, "Okay, starting your demise...")
-    time.sleep(0.5)
-    clearscreen()
-    InBossRush = 1
-    global enemies
-    print("Welcome to the vast open world fantasy realm of Iloraea!")
-    time.sleep(2)
-    print("First of all, we need a few quick things to start building your ideal character.")
-    time.sleep(2)
-    classchoose()
-    time.sleep(1)
-    stylechoose()
-    print("Oh, and here's the discord link if you want it, you can always check [HELP] in Falezrin to find it again.")
-    print("https://discord.gg/DCZTg5rw2r")
-    time.sleep(1)
-    print("[ENTER] to continue.")
-    wait = input()
-    print("Next, let's test your fighting skills on a goblin to get you used to your class.")
-    time.sleep(1)
-    enemies.append("goblin")
-    combat()
-
-
-
 clearscreen()
-dt(0.05, "Aquilo presents...")
-time.sleep(1)
+dt(0.05, "A Game by Aquilo...")
+time.sleep(2)
+clearscreen()
+dt(0.05, "In collaboration with HADHUS...")
+time.sleep(2)
 clearscreen()
 title()
 time.sleep(2.5)
 print("")
 enterwait()
 clearscreen()
-print("Would you like to attempt the bossrush?\nIf you don't then just say no.")
-rush = input("> ").lower()
-if "y" in rush:
-    bossrush()
 print("Would you like to open an existing data save?\nIf you don't have one, just say no.")
 saveloadyes = input("> ").lower()
 if "y" in saveloadyes:
