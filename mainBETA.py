@@ -68,6 +68,12 @@ maxhunger = 10
 hp = 0
 #UNCHANGED - PURPOSE: Maximum player hitpoints
 maxhp = 0
+#NEW: Player Level
+level = 1
+#NEW: Player Experience
+exp = 0
+#NEW: Experience needed to level up
+expneeded = 100
 
 #UNCHANGED - PURPOSE: A conditional value used in the start combat and the Broken Ballista quest combat
 dp = 0
@@ -668,367 +674,6 @@ fishingrodstats = {
         "control": 1.05,
         "resilience": 1.05,
         "maxKG": 100
-        }
-    }
-
-# NEW: Fishing bait stat dictionary
-fishingbaitstats = {
-    "bagel": {
-        "preferredLuck": 25,
-        "universalLuck": 0,
-        "lureSpeed": 1,
-        "resilience": 1.15
-        },
-    "worm": {
-        "preferredLuck": 25,
-        "universalLuck": 0,
-        "lureSpeed": 1.15,
-        "resilience": 1
-        },
-    "insect": {
-        "preferredLuck": 35,
-        "universalLuck": 0,
-        "lureSpeed": 1.05,
-        "resilience": 1
-        },
-    "flakes": {
-        "preferredLuck": 55,
-        "universalLuck": 0,
-        "lureSpeed": 1.1,
-        "resilience": 0.97
-        },
-    "garbage": {
-        "preferredLuck": -250,
-        "universalLuck": 0,
-        "lureSpeed": 0.95,
-        "resilience": 1.5
-        },
-    "maggot": {
-        "preferredLuck": 0,
-        "universalLuck": 35,
-        "lureSpeed": 0.9,
-        "resilience": 1
-        },
-    "shrimp": {
-        "preferredLuck": 45,
-        "universalLuck": 25,
-        "lureSpeed": 1,
-        "resilience": 0.95
-        },
-    "squid": {
-        "preferredLuck": 55,
-        "universalLuck": 45,
-        "lureSpeed": 0.75,
-        "resilience": 1
-        },
-    "seaweed": {
-        "preferredLuck": 35,
-        "universalLuck": 0,
-        "lureSpeed": 1.2,
-        "resilience": 1.1
-        },
-    "magnet": {
-        "preferredLuck": 200,
-        "universalLuck": 1,
-        "lureSpeed": 1,
-        "resilience": 1
-        },
-    "minnow": {
-        "preferredLuck": 65,
-        "universalLuck": 1,
-        "lureSpeed": 1,
-        "resilience": 0.9
-        },
-    "coral": {
-        "preferredLuck": 1,
-        "universalLuck": 1,
-        "lureSpeed": 1.2,
-        "resilience": 1.2
-        },
-    "super flakes": {
-        "preferredLuck": 0,
-        "universalLuck": 70,
-        "lureSpeed": 1,
-        "resilience": 0.85
-        },
-    "coal": {
-        "preferredLuck": 45,
-        "universalLuck": 0,
-        "lureSpeed": 1,
-        "resilience": 0.9
-        },
-    "rapid catcher": {
-        "preferredLuck": 0,
-        "universalLuck": 0,
-        "lureSpeed": 1.35,
-        "resilience": 0.85
-        },
-    "truffle worm": {
-        "preferredLuck": 300,
-        "universalLuck": 0,
-        "lureSpeed": 0.9,
-        "resilience": 1
-        },
-    "weird algae": {
-        "preferredLuck": 0,
-        "universalLuck": 200,
-        "lureSpeed": 0.65,
-        "resilience": 1
-        },
-    "fish head": {
-        "preferredLuck": 150,
-        "universalLuck": 0,
-        "lureSpeed": 1.1,
-        "resilience": 0.9
-        },
-    "night shrimp": {
-        "preferredLuck": 0,
-        "universalLuck": 90,
-        "lureSpeed": 1.15,
-        "resilience": 1
-        },
-    "instant catcher": {
-        "preferredLuck": 0,
-        "universalLuck": -20,
-        "lureSpeed": 1.65,
-        "resilience": 0.85
-        },
-    "deep coral": {
-        "preferredLuck": 0,
-        "universalLuck": 0,
-        "lureSpeed": 1,
-        "resilience": 1
-        },
-    "shark head": {
-        "preferredLuck": 225,
-        "universalLuck": 30,
-        "lureSpeed": 0.95,
-        "resilience": 1.1
-        },
-    "aurora bait": {
-        "preferredLuck": 100,
-        "universalLuck": 30,
-        "lureSpeed": 0.95,
-        "resilience": 1.1
-        }
-    }
-
-fishstats = {
-    "trash": {
-        #sequence length
-        "catchlengthMin": 3,
-        "catchlengthMax": 5,
-        #fishes
-        "seaweed": {
-            "locations": ["all"],
-            "bait": 'magnet',
-            "times": ["morning", "midday", "evening", "night"],
-            "weathers": ["clear", "rain", "storm", "fog"],
-            "seasons": ["spring", "summer", "fall", "winter"],
-            "xp": 5,
-            "minKG": 0.1,
-            "avgKG": 0.5,
-            "maxKG": 1.3,
-            "creditsPerKG": 0.5,
-            "catchQuips": {
-                1: "Seaweed!",
-                2: "Oh. Seaweed.",
-                3: "It's!- Oh.. Seaweed..",
-                4: "Seaweed.."
-                }
-            },
-        "rock": {
-            "locations": ["all"],
-            "bait": 'magnet',
-            "times": ["morning", "midday", "evening", "night"],
-            "weathers": ["clear", "rain", "storm", "fog"],
-            "seasons": ["spring", "summer", "fall", "winter"],
-            "xp": 5,
-            "minKG": 20,
-            "avgKG": 34,
-            "maxKG": 41,
-            "creditsPerKG": 0.75,
-            "catchQuips": {
-                1: "Ermm..?",
-                2: "Uhmm..?",
-                3: "A Rock!",
-                4: "Oh. A Rock.",
-                5: "It's!- Oh.. A Rock..",
-                6: "A rock.."
-                }
-            },
-        "boot": {
-            "locations": ["all"],
-            "bait": 'magnet',
-            "times": ["morning", "midday", "evening", "night"],
-            "weathers": ["clear", "rain", "storm", "fog"],
-            "seasons": ["spring", "summer", "fall", "winter"],
-            "xp": 5,
-            "minKG": 1.3,
-            "avgKG": 1.6,
-            "maxKG": 2.7,
-            "creditsPerKG": 1,
-            "catchQuips": {
-                1: "Ermm..?",
-                2: "Why only one..?",
-                3: "A Boot!",
-                4: "A Boot...",
-                5: "I caught!.. a Boot..?",
-                6: "Erm.. A Boot?"
-                }
-            },
-        "driftwood": {
-            "locations": ["all"],
-            "bait": 'magnet',
-            "times": ["morning", "midday", "evening", "night"],
-            "weathers": ["clear", "rain", "storm", "fog"],
-            "seasons": ["spring", "summer", "fall", "winter"],
-            "xp": 10,
-            "minKG": 0.6,
-            "avgKG": 0.6,
-            "maxKG": 0.6,
-            "creditsPerKG": 1.2,
-            "catchQuips": {
-                1: "Ermm..?",
-                2: "Uhmm..?",
-                3: "Driftwood!",
-                4: "Oh. Driftwood.",
-                5: "It's!- Oh.. Driftwood..",
-                6: "Driftwood.."
-                }
-            },
-        "log": {
-            "locations": ["all"],
-            "bait": 'magnet',
-            "times": ["morning", "midday", "evening", "night"],
-            "weathers": ["clear", "rain", "storm", "fog"],
-            "seasons": ["spring", "summer", "fall", "winter"],
-            "xp": 15,
-            "minKG": 3.8,
-            "avgKG": 5.2,
-            "maxKG": 7,
-            "creditsPerKG": 16.6,
-            "catchQuips": {
-                1: "Oh.. a Log!",
-                2: "A.. Log?",
-                3: "How did I pull this up?",
-                4: "A Log..?"
-                }
-            },
-        "bone": {
-            "locations": ["darksporeforest", "scintillantrainforest", "bogofmangroves"],
-            "bait": 'magnet',
-            "times": ["morning", "midday", "evening", "night"],
-            "weathers": ["clear", "rain", "storm", "fog"],
-            "seasons": ["spring", "summer", "fall", "winter"],
-            "xp": 20,
-            "minKG": 2.7,
-            "avgKG": 5.3,
-            "maxKG": 8,
-            "creditsPerKG": 4.3,
-            "catchQuips": {
-                1: "Oh.. a Bone!",
-                2: "A.. Bone?",
-                3: "Oh my..",
-                4: "A Bone..?"
-                }
-            },
-        "fungal cluster": {
-            "locations": ["darksporeforest"],
-            "bait": 'magnet',
-            "times": ["morning", "midday", "evening", "night"],
-            "weathers": ["clear", "rain", "storm", "fog"],
-            "seasons": ["spring", "summer", "fall", "winter"],
-            "xp": 10,
-            "minKG": 0.5,
-            "avgKG": 0.8,
-            "maxKG": 1.2,
-            "creditsPerKG": 2.5,
-            "catchQuips": {
-                1: "Ermm..?",
-                2: "Hmm..?"
-                }
-            }
-        },
-    "common": {
-        #sequence length
-        "catchlengthMin": 5,
-        "catchlengthMax": 10,
-        #fishes
-        "sea bass": {
-            "locations": ["northernsea", "southeastsea"],
-            "bait": 'squid',
-            "times": ["morning", "midday", "evening", "night"],
-            "weathers": ["clear"],
-            "seasons": ["spring", "summer"],
-            "xp": 40,
-            "minKG": 2.7,
-            "avgKG": 9.9,
-            "maxKG": 20,
-            "creditsPerKG": 16,
-            "catchQuips": {
-                1: "A Sea Bass!",
-                2: "I caught a Sea Bass!",
-                3: "Woah! A Sea Bass!",
-                4: "Ouu! A Bass!"
-                }
-            },
-        "trout": {
-            "locations": ["verdanthills", "oakensanctuary"],
-            "bait": 'insect',
-            "times": ["morning", "midday", "evening", "night"],
-            "weathers": ["clear"],
-            "seasons": ["spring", "summer", "fall", "winter"],
-            "xp": 35,
-            "minKG": 1.2,
-            "avgKG": 4.1,
-            "maxKG": 11,
-            "creditsPerKG": 13,
-            "catchQuips": {
-                1: "I thought theres a rainbow?",
-                2: "Woah, a Trout!",
-                3: "Woah!",
-                4: "A Trout!",
-                5: "I caught a Trout!"
-                }
-            },
-        "largemouth bass": {
-            "locations": ["verdanthills", "oakensanctuary"],
-            "bait": 'worm',
-            "times": ["morning", "midday", "evening", "night"],
-            "weathers": ["rain"],
-            "seasons": ["spring", "summer"],
-            "xp": 45,
-            "minKG": 1,
-            "avgKG": 3.6,
-            "maxKG": 8,
-            "creditsPerKG": 20,
-            "catchQuips": {
-                1: "Now, where's the snare?",
-                2: "Woah!",
-                3: "Awesome!",
-                4: "A Largemouth Bass!",
-                5: "Ou! A Bass!"
-                }
-            },
-        "pollock": {
-            "locations": ["twilighttundra"],
-            "bait": 'any',
-            "times": ["morning", "midday", "evening", "night"],
-            "weathers": ["rain", "fog"],
-            "seasons": ["summer"],
-            "xp": 50,
-            "minKG": 2,
-            "avgKG": 4.7,
-            "maxKG": 10,
-            "creditsPerKG": 14.3,
-            "catchQuips": {
-                1: "A Pollock!",
-                2: "I caught a Pollock!",
-                3: "Woah, a Pollock!",
-                4: "Look! A Pollock!"
-                }
-            }
         }
     }
 
@@ -2054,17 +1699,18 @@ def fish():
         print("You don't have a fishing rod!")
         time.sleep(1)
         locationreturn()
+    if location.startswith("embersreach") and eqrod != "magma rod":
+        print("You need a better rod to do that!")
+        time.sleep(1)
+        locationreturn()
     if eqrod in fishingrodstats:
         lurespeed = fishingrodstats[eqrod][0]
         luremax = luremax * lurespeed
         luremin = luremin * lurespeed
-    if weather == "rain":
-        luremax -= 2
-    if weather == "storm":
-        luremax -= 5
-    if weather == "wind":
-        luremax -= 3
-    print("You cast your line into the water.")
+    if location.startswith("embersreach"):
+        print("You cast your line into the lava.")
+    else:
+        print("You cast your line into the water.")
     lureTime = random.randint(luremin, luremax)
     pressSequence = []
     for i in range(lureTime):
@@ -2090,10 +1736,209 @@ def fish():
     print("Something bites!")
     time.sleep(1)
     clearscreen()
-
-
-
-
+    #FISHLIST SETUP
+    if location.startswith("verdanthills"): #temperate river fishes
+        fishlist = ["verdant trout", "salmon", "largemouth bass", "pike", "perch"]
+    elif location.startswith("bogofmangroves"): #swamp fishes
+        fishlist = ["swamp bass", "white perch", "bowfin", "marsh gar", "catfish", "handfish"]
+    elif location == "scintillantrainforest13" or location == "scintillantrainforest8" or location == "scintillantrainforest3": #rainforest rapids fishes
+        fishlist = ["piranha", "arapaima", "pacu", "tambaqui"]
+    elif location.startswith("scintillantrainforest") and (location.endswith("14") or location.endswith("15") or location.endswith("17")): #rainforest river fishes
+        fishlist = ["arowana", "redtail catfish", "tigerfish", "alligator gar"]
+    elif location == "scintillantrainforest5": #rainforest pond fishes
+        fishlist = ["discus", "angelfish", "tetra", "guppy", "sunfish", "betta"]
+    elif location == "LakeOya": #freshwater river-runnoff lake fishes
+        fishlist = ["trout", "perch", "white bass", "bluegill", "carp", "chub", "bream"]
+    elif location.startswith("skygrassprairie"): #magical river fishes
+        fishlist = ["rainbow trout", "crystaline bass", "mythicfish", "cloudfish", "godfish"]
+    elif location.startswith("northernsea"): #cold sea fishes
+        fishlist = ["cod", "haddock", "pollock", "herring", "mackerel", "whiting", "plaice"]
+    elif location.startswith("twilighttundra"): #cold river fishes
+        fishlist = ["arctic char", "grayling", "pike", "perch", "trout", "salmon", "burbot"]
+    elif location == "Falezrin": #training freshwater pond fishes
+        fishlist = ["minnow", "tadpole", "guppy", "sunfish", "betta", "goldfish"]
+    elif location.startswith("sandyshores"): #tropical sea fishes
+        fishlist = ["grouper", "snapper", "parrotfish", "triggerfish", "barracuda", "wahoo", "mahi mahi"]
+    elif location == "southeastsea1" or location == "southeastsea2" or location == "southeastsea4" or location == "southeastsea6" or location == "southeastsea8" or location == "southeastsea10" or location == "southeastsea14" or location == "southeastsea16": #shallow lukewarm sea fishes
+        fishlist = ["mullet", "flounder", "sole", "turbot", "halibut", "plaice", "dab"]
+    elif location == "southeastsea3" or location == "southeastsea5" or location == "southeastsea7" or location == "southeastsea9" or location == "southeastsea11" or location == "southeastsea12" or location == "southeastsea13" or location == "southeastsea15" or location == "southeastsea17" or location == "southeastsea18" or location == "southeastsea19": #deep sea fishes
+        fishlist = ["tuna", "swordfish", "sailfish", "marlin", "squid", "dolphin", "jellyfish", "shark", "orca", "whale"]
+    elif location == "darksporeforest6": #dark pond fishes
+        fishlist = ["blackfish", "darkbass", "shadowfish", "nightfish", "moonfish", "voidfish"]
+    elif location.startswith("sunsetmesa"): #desert river fishes
+        fishlist = ["desert trout", "sand bass", "cactusfish", "sunfish", "gila trout", "desert chub"]
+    elif location.startswith("embersreach"): #lava fishes
+        fishlist = ["magma tang", "ember perch", "ember snapper", "pyrogrub", "obsidian salmon", "obsidian swordfish"]
+    fish = random.choice(fishlist)
+    #FISH DIFFICULTY DEFINER
+    if fish == "verdant trout":
+        fishtime = random.randint(10, 20)
+    elif fish == "salmon":
+        fishtime = random.randint(15, 25)
+    elif fish == "largemouth bass":
+        fishtime = random.randint(15, 25)
+    elif fish == "pike":
+        fishtime = random.randint(20, 30)
+    elif fish == "perch":
+        fishtime = random.randint(10, 20)
+    elif fish == "swamp bass":
+        fishtime = random.randint(15, 25)
+    elif fish == "white perch":
+        fishtime = random.randint(10, 20)
+    elif fish == "bowfin":
+        fishtime = random.randint(20, 30)
+    elif fish == "marsh gar":
+        fishtime = random.randint(20, 30)
+    elif fish == "catfish":
+        fishtime = random.randint(15, 25)
+    elif fish == "handfish":
+        fishtime = random.randint(30, 40)
+    elif fish == "piranha":
+        fishtime = random.randint(10, 20)
+    elif fish == "arapaima":
+        fishtime = random.randint(20, 30)
+    elif fish == "pacu":
+        fishtime = random.randint(15, 25)
+    elif fish == "tambaqui":
+        fishtime = random.randint(15, 25)
+    elif fish == "arowana":
+        fishtime = random.randint(20, 30)
+    elif fish == "redtail catfish":
+        fishtime = random.randint(20, 30)
+    elif fish == "tigerfish":
+        fishtime = random.randint(15, 25)
+    elif fish == "alligator gar":
+        fishtime = random.randint(20, 30)
+    elif fish == "discus":
+        fishtime = random.randint(10, 20)
+    elif fish == "angelfish":
+        fishtime = random.randint(10, 20)
+    elif fish == "tetra":
+        fishtime = random.randint(10, 20)
+    elif fish == "guppy":
+        fishtime = random.randint(10, 20)
+    elif fish == "sunfish":
+        fishtime = random.randint(10, 20)
+    elif fish == "betta":
+        fishtime = random.randint(10, 20)
+    elif fish == "cod":
+        fishtime = random.randint(15, 25)
+    elif fish == "haddock":
+        fishtime = random.randint(15, 25)
+    elif fish == "pollock":
+        fishtime = random.randint(15, 25)
+    elif fish == "herring":
+        fishtime = random.randint(20, 30)
+    elif fish == "mackerel":
+        fishtime = random.randint(15, 25)
+    elif fish == "whiting":
+        fishtime = random.randint(15, 25)
+    elif fish == "plaice":
+        fishtime = random.randint(15, 25)
+    elif fish == "arctic char":
+        fishtime = random.randint(15, 25)
+    elif fish == "grayling":
+        fishtime = random.randint(15, 25)
+    elif fish == "salmon":
+        fishtime = random.randint(15, 25)
+    elif fish == "burbot":
+        fishtime = random.randint(20, 30)
+    elif fish == "minnow":
+        fishtime = random.randint(10, 20)
+    elif fish == "tadpole":
+        fishtime = random.randint(10, 20)
+    elif fish == "goldfish":
+        fishtime = random.randint(10, 20)
+    elif fish == "grouper":
+        fishtime = random.randint(20, 30)
+    elif fish == "snapper":
+        fishtime = random.randint(20, 30)
+    elif fish == "parrotfish":
+        fishtime = random.randint(20, 30)
+    elif fish == "triggerfish":
+        fishtime = random.randint(20, 30)
+    elif fish == "barracuda":
+        fishtime = random.randint(20, 30)
+    elif fish == "wahoo":
+        fishtime = random.randint(20, 30)
+    elif fish == "mahi mahi":
+        fishtime = random.randint(20, 30)
+    elif fish == "mullet":
+        fishtime = random.randint(15, 25)
+    elif fish == "flounder":
+        fishtime = random.randint(15, 25)
+    elif fish == "sole":
+        fishtime = random.randint(15, 25)
+    elif fish == "turbot":
+        fishtime = random.randint(15, 25)
+    elif fish == "halibut":
+        fishtime = random.randint(15, 25)
+    elif fish == "plaice":
+        fishtime = random.randint(15, 25)
+    elif fish == "dab":
+        fishtime = random.randint(15, 25)
+    elif fish == "tuna":
+        fishtime = random.randint(25, 35)
+    elif fish == "swordfish":
+        fishtime = random.randint(30, 40)
+    elif fish == "sailfish":
+        fishtime = random.randint(30, 40)
+    elif fish == "marlin":
+        fishtime = random.randint(30, 40)
+    elif fish == "squid":
+        fishtime = random.randint(30, 50)
+    elif fish == "dolphin":
+        fishtime = random.randint(30, 50)
+    elif fish == "jellyfish":
+        fishtime = random.randint(15, 25)
+    elif fish == "shark":
+        fishtime = random.randint(30, 50)
+    elif fish == "orca":
+        fishtime = random.randint(40, 60)
+    elif fish == "whale":
+        fishtime = random.randint(50, 100)
+    elif fish == "blackfish":
+        fishtime = random.randint(15, 25)
+    elif fish == "darkbass":
+        fishtime = random.randint(15, 25)
+    elif fish == "shadowfish":
+        fishtime = random.randint(20, 30)
+    elif fish == "nightfish":
+        fishtime = random.randint(20, 30)
+    elif fish == "moonfish":
+        fishtime = random.randint(20, 30)
+    elif fish == "voidfish":
+        fishtime = random.randint(30, 40)
+    elif fish == "desert trout":
+        fishtime = random.randint(15, 25)
+    elif fish == "sand bass":
+        fishtime = random.randint(15, 25)
+    elif fish == "cactusfish":
+        fishtime = random.randint(15, 25)
+    elif fish == "sunfish":
+        fishtime = random.randint(15, 25)
+    clearscreen()
+    pressSequence = []
+    for i in range():
+        pressSequence.append(random.choice(['a', 's', 'd', 'f']))
+    while len(pressSequence) > 0:
+        time.sleep(0.5)
+        presstime = time.time()
+        print("Press " + pressSequence[0] + ".")
+        if readkey() == pressSequence[0]:
+            if time.time() - presstime < 0.5:
+                print("Perfect!")
+            elif time.time() - presstime < 1:
+                print("Good!")
+            elif time.time() - presstime < 2:
+                print("Okay!")
+            elif time.time() - presstime < 3:
+                print("Meh...")
+            pressSequence.pop(0)
+        else:
+            print("Wrong button!")
+            pressSequence.pop(0)
+            pressSequence.append(random.choice(['a', 's', 'd', 'f']))
 
 
 
