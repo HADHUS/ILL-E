@@ -297,8 +297,6 @@ eqoffhand = "none"
 eqgear = []
 # NEW: Player's equipped fishing rod
 eqrod = "none"
-# NEW: Player's equipped bait
-eqbait = "none"
 
 #NEW: Escape code formatting
 clearline = '\x1B[2K'
@@ -391,289 +389,37 @@ fishingrodstats = {
         "levelReq": 0,
         "lureSpeed": 1,
         "luck": 0,
-        "control": 1,
-        "resilience": 1,
-        "maxKG": 10.4
+        "durability": 10
         },
-    "training rod": {
+    "oaken rod": {
         "levelReq": 0,
-        "lureSpeed": 1.1,
-        "luck": -70,
-        "control": 1.2,
-        "resilience": 1.2,
-        "maxKG": 9
+        "lureSpeed": 2,
+        "luck": 5,
+        "durability": 15
         },
-    "basic rod": {
+    "iron rod": {
         "levelReq": 0,
-        "lureSpeed": 1.1,
-        "luck": 15,
-        "control": 1,
-        "resilience": 1.1,
-        "maxKG": 100
+        "lureSpeed": 2,
+        "luck": -5,
+        "durability": 30
         },
-    "metal rod": {
-        "levelReq": 0,
-        "lureSpeed": 0.9,
-        "luck": 25,
-        "control": 1.05,
-        "resilience": 1.1,
-        "maxKG": 600
-        },
-    "fast rod": {
-        "levelReq": 0,
-        "lureSpeed": 1.45,
-        "luck": 30,
-        "control": 1.05,
-        "resilience": 0.88,
-        "maxKG": 175
-        },
-    "lucky rod": {
-        "levelReq": 0,
-        "lureSpeed": 0.7,
-        "luck": 60,
-        "control": 1.05,
-        "resilience": 0.88,
-        "maxKG": 175
-        },
-    "steady rod": {
-        "levelReq": 0,
-        "lureSpeed": 0.4,
-        "luck": 35,
-        "control": 1.05,
-        "resilience": 1.3,
-        "maxKG": 100000
-        },
-    "fortune rod": {
-        "levelReq": 0,
-        "lureSpeed": 0.65,
-        "luck": 110,
-        "control": 1,
-        "resilience": 0.85,
-        "maxKG": 700
-        },
-    "rapid rod": {
-        "levelReq": 0,
-        "lureSpeed": 1.72,
-        "luck": -20,
-        "control": 1,
-        "resilience": 0.8,
-        "maxKG": 700
-        },
-    "nocturnal rod": {
-        "levelReq": 0,
-        "lureSpeed": 0.9,
-        "luck": 70,
-        "control": 1,
-        "resilience": 1,
-        "maxKG": 2000
-        },
-    "aurora rod": {
-        "levelReq": 0,
-        "lureSpeed": 1.1,
-        "luck": 60,
-        "control": 1.06,
-        "resilience": 1.06,
-        "maxKG": 6000
-        },
-    "rod of the depths": {
-        "levelReq": 0,
-        "lureSpeed": 1.65,
-        "luck": 130,
-        "control": 1.15,
-        "resilience": 1.1,
-        "maxKG": 30000
-        },
-    "magnet rod": {
-        "levelReq": 0,
-        "lureSpeed": 0.9,
-        "luck": 0,
-        "control": 1.05,
-        "resilience": 1,
-        "maxKG": 10000
-        },
-    "kings rod": {
-        "levelReq": 0,
-        "lureSpeed": 0.55,
-        "luck": 55,
-        "control": 1.15,
-        "resilience": 1.35,
-        "maxKG": 999999999999999
-        },
-    "destiny rod": {
-        "levelReq": 0,
-        "lureSpeed": 0.9,
-        "luck": 250,
-        "control": 1,
-        "resilience": 1,
-        "maxKG": 2000
-        },
-    "midas rod": {
-        "levelReq": 0,
-        "lureSpeed": 1.6,
+    "steel rod": {
+        "levelReq": 5,
+        "lureSpeed": 3,
         "luck": 10,
-        "control": 1,
-        "resilience": 0.8,
-        "maxKG": 4000
-        },
-    "mythical rod": {
-        "levelReq": 0,
-        "lureSpeed": 1,
-        "luck": 45,
-        "control": 1.05,
-        "resilience": 1,
-        "maxKG": 2000
+        "durability": 40
         },
     "reinforced rod": {
-        "levelReq": 0,
-        "lureSpeed": 1,
-        "luck": 25,
-        "control": 1.05,
-        "resilience": 1,
-        "maxKG": 999999999999999
+        "levelReq": 10,
+        "lureSpeed": 2,
+        "luck": 0,
+        "durability": 50
         },
-    "trident rod": {
-        "levelReq": 0,
-        "lureSpeed": 1.2,
-        "luck": 150,
-        "control": 1,
-        "resilience": 1,
-        "maxKG": 6000
-        },
-    "phoenix rod": {
-        "levelReq": 0,
-        "lureSpeed": 1.55,
-        "luck": 30,
-        "control": 1.02,
-        "resilience": 0.9,
-        "maxKG": 2800
-        },
-    "stone rod": {
-        "levelReq": 0,
-        "lureSpeed": 0.75,
-        "luck": 10,
-        "control": 1,
-        "resilience": 1.05,
-        "maxKG": 900
-        },
-    "magma rod": {
-        "levelReq": 0,
-        "lureSpeed": 0.3,
-        "luck": 15,
-        "control": 1,
-        "resilience": 1,
-        "maxKG": 1200
-        },
-    "fungal rod": {
-        "levelReq": 0,
-        "lureSpeed": 0.9,
-        "luck": 45,
-        "control": 1,
-        "resilience": 1,
-        "maxKG": 200
-        },
-    "gamer rod": {
-        "levelReq": 50,
-        "lureSpeed": 1.9,
-        "luck": 100,
-        "control": 1.25,
-        "resilience": 1.15,
-        "maxKG": 999999999999999
-        },
-    "sunken rod": {
-        "levelReq": 0,
-        "lureSpeed": 1.2,
-        "luck": 150,
-        "control": 1.15,
-        "resilience": 1.15,
-        "maxKG": 5000
-        },
-    "rod of the forgotten fang": {
-        "levelReq": 75,
-        "lureSpeed": 1.15,
-        "luck": 125,
-        "control": 1.25,
-        "resilience": 1.25,
-        "maxKG": 999999999999999
-        },
-    "rod of the eternal king": {
-        "levelReq": 65,
-        "lureSpeed": 1.55,
-        "luck": 150,
-        "control": 1.2,
-        "resilience": 1.1,
-        "maxKG": 75000
-        },
-    "celestial rod": {
-        "levelReq": 50,
-        "lureSpeed": 1.3,
-        "luck": 50,
-        "control": 1.06,
-        "resilience": 1.05,
-        "maxKG": 999999999999999
-        },
-    "the lost rod": {
-        "levelReq": 45,
-        "lureSpeed": 1.15,
-        "luck": 25,
-        "control": 1.08,
-        "resilience": 1.05,
-        "maxKG": 50000
-        },
-    "voyager rod": {
-        "levelReq": 40,
-        "lureSpeed": 1.15,
-        "luck": 20,
-        "control": 0.98,
-        "resilience": 1,
-        "maxKG": 2800
-        },
-    "riptide rod": {
-        "levelReq": 20,
-        "lureSpeed": 1.15,
-        "luck": 25,
-        "control": 1.05,
-        "resilience": 1.05,
-        "maxKG": 3500
-        },
-    "seasons rod": {
+    "quickcast rod": {
         "levelReq": 15,
-        "lureSpeed": 1.15,
-        "luck": 25,
-        "control": 1.03,
-        "resilience": 1.1,
-        "maxKG": 3000
-        },
-    "resourceful rod": {
-        "levelReq": 5,
-        "lureSpeed": 1.15,
-        "luck": 20,
-        "control": 0.99,
-        "resilience": 1,
-        "maxKG": 1000
-        },
-    "wisdom rod": {
-        "levelReq": 4,
-        "lureSpeed": 1,
-        "luck": 20,
-        "control": 1.05,
-        "resilience": 1,
-        "maxKG": 800
-        },
-    "precision rod": {
-        "levelReq": 4,
-        "lureSpeed": 1.2,
-        "luck": 150,
-        "control": 1,
-        "resilience": 1.05,
-        "maxKG": 12000
-        },
-    "anglers rod": {
-        "levelReq": 0,
-        "lureSpeed": 1.1,
-        "luck": 10,
-        "control": 1.05,
-        "resilience": 1.05,
-        "maxKG": 100
+        "lureSpeed": 5,
+        "luck": 5,
+        "durability": 20
         }
     }
 
