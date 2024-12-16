@@ -43,6 +43,7 @@ import time
 import random
 import math
 import ast
+import tkinter as tk
 from readchar import readkey, key #ignore on github (missing package manager)
 
 #UNCHANGED - PURPOSE: Climbing speed bonus value
@@ -89,6 +90,8 @@ soq = 0
 vq = 0
 #UNCHANGED - PURPOSE: A staged (0-1-2) conditional value for a fetch quest "A Broken Ballista" (2 = player gives oak branches and iron ingot to npc/ballista finished (player needs to interact with npc again), 1 = Accepted quest and needs to retrive materials, 0 = quest not started)
 gsq = 0
+#NEW: A conditional value depending on if the player has killed the twilight tundra superboss
+ttsb = 0
 
 #UNCHANGED - PURPOSE: A list of all discovered enemies (killing a new enemy type adds it to the list)
 bestiarylist = []
@@ -420,6 +423,12 @@ fishingrodstats = {
         "lureSpeed": 5,
         "luck": 5,
         "durability": 20
+        },
+    "magma rod": {
+        "levelReq": 20,
+        "lureSpeed": 3,
+        "luck": 10,
+        "durability": 60
         }
     }
 
@@ -1661,11 +1670,25 @@ def fish():
         fishtime = random.randint(15, 25)
     elif fish == "cactusfish":
         fishtime = random.randint(15, 25)
-    elif fish == "sunfish":
+    elif fish == "gila trout":
         fishtime = random.randint(15, 25)
+    elif fish == "desert chub":
+        fishtime = random.randint(15, 25)
+    elif fish == "magma tang":
+        fishtime = random.randint(20, 30)
+    elif fish == "ember perch":
+        fishtime = random.randint(20, 30)
+    elif fish == "ember snapper":
+        fishtime = random.randint(20, 30)
+    elif fish == "pyrogrub":
+        fishtime = random.randint(20, 30)
+    elif fish == "obsidian salmon":
+        fishtime = random.randint(20, 30)
+    elif fish == "obsidian swordfish":
+        fishtime = random.randint(20, 30)
     clearscreen()
     pressSequence = []
-    for i in range():
+    for i in range(fishtime):
         pressSequence.append(random.choice(['a', 's', 'd', 'f']))
     while len(pressSequence) > 0:
         time.sleep(0.5)
@@ -1685,10 +1708,521 @@ def fish():
             print("Wrong button!")
             pressSequence.pop(0)
             pressSequence.append(random.choice(['a', 's', 'd', 'f']))
+    print("You caught a " + fish + "!")
+    inventory.append(fish)
+    time.sleep(1)
+    locationreturn()
 
-
-
-
+# NEW FUNCTION - PURPOSE: A function for cooking food
+def cooking():
+    global inventory, firelevel, location
+    print(f"Your fire has {firelevel} more uses.")
+    cookablelist = []
+    if "raw meat" in inventory:
+        cookablelist.append("[Steak]")
+    if "verdant trout" in inventory:
+        cookablelist.append("[Grilled Verdant Trout]")
+    if "salmon" in inventory:
+        cookablelist.append("[Grilled Salmon]")
+    if "largemouth bass" in inventory:
+        cookablelist.append("[Grilled Largemouth Bass]")
+    if "pike" in inventory:
+        cookablelist.append("[Grilled Pike]")
+    if "perch" in inventory:
+        cookablelist.append("[Grilled Perch]")
+    if "swamp bass" in inventory:
+        cookablelist.append("[Grilled Swamp Bass]")
+    if "white perch" in inventory:
+        cookablelist.append("[Grilled White Perch]")
+    if "bowfin" in inventory:
+        cookablelist.append("[Grilled Bowfin]")
+    if "marsh gar" in inventory:
+        cookablelist.append("[Grilled Marsh Gar]")
+    if "catfish" in inventory:
+        cookablelist.append("[Grilled Catfish]")
+    if "handfish" in inventory:
+        cookablelist.append("[Grilled Handfish]")
+    if "piranha" in inventory:
+        cookablelist.append("[Grilled Piranha]")
+    if "arapaima" in inventory:
+        cookablelist.append("[Grilled Arapaima]")
+    if "pacu" in inventory:
+        cookablelist.append("[Grilled Pacu]")
+    if "tambaqui" in inventory:
+        cookablelist.append("[Grilled Tambaqui]")
+    if "arowana" in inventory:
+        cookablelist.append("[Grilled Arowana]")
+    if "redtail catfish" in inventory:
+        cookablelist.append("[Grilled Redtail Catfish]")
+    if "tigerfish" in inventory:
+        cookablelist.append("[Grilled Tigerfish]")
+    if "alligator gar" in inventory:
+        cookablelist.append("[Grilled Alligator Gar]")
+    if "discus" in inventory:
+        cookablelist.append("[Grilled Discus]")
+    if "angelfish" in inventory:
+        cookablelist.append("[Grilled Angelfish]")
+    if "tetra" in inventory:
+        cookablelist.append("[Grilled Tetra]")
+    if "guppy" in inventory:
+        cookablelist.append("[Grilled Guppy]")
+    if "sunfish" in inventory:
+        cookablelist.append("[Grilled Sunfish]")
+    if "betta" in inventory:
+        cookablelist.append("[Grilled Betta]")
+    if "cod" in inventory:
+        cookablelist.append("[Grilled Cod]")
+    if "haddock" in inventory:
+        cookablelist.append("[Grilled Haddock]")
+    if "pollock" in inventory:
+        cookablelist.append("[Grilled Pollock]")
+    if "herring" in inventory:
+        cookablelist.append("[Grilled Herring]")
+    if "mackerel" in inventory:
+        cookablelist.append("[Grilled Mackerel]")
+    if "whiting" in inventory:
+        cookablelist.append("[Grilled Whiting]")
+    if "plaice" in inventory:
+        cookablelist.append("[Grilled Plaice]")
+    if "arctic char" in inventory:
+        cookablelist.append("[Grilled Arctic Char]")
+    if "grayling" in inventory:
+        cookablelist.append("[Grilled Grayling]")
+    if "salmon" in inventory:
+        cookablelist.append("[Grilled Salmon]")
+    if "burbot" in inventory:
+        cookablelist.append("[Grilled Burbot]")
+    if "minnow" in inventory:
+        cookablelist.append("[Grilled Minnow]")
+    if "tadpole" in inventory:
+        cookablelist.append("[Grilled Tadpole]")
+    if "goldfish" in inventory:
+        cookablelist.append("[Grilled Goldfish]")
+    if "grouper" in inventory:
+        cookablelist.append("[Grilled Grouper]")
+    if "snapper" in inventory:
+        cookablelist.append("[Grilled Snapper]")
+    if "parrotfish" in inventory:
+        cookablelist.append("[Grilled Parrotfish]")
+    if "triggerfish" in inventory:
+        cookablelist.append("[Grilled Triggerfish]")
+    if "barracuda" in inventory:
+        cookablelist.append("[Grilled Barracuda]")
+    if "wahoo" in inventory:
+        cookablelist.append("[Grilled Wahoo]")
+    if "mahi mahi" in inventory:
+        cookablelist.append("[Grilled Mahi Mahi]")
+    if "mullet" in inventory:
+        cookablelist.append("[Grilled Mullet]")
+    if "flounder" in inventory:
+        cookablelist.append("[Grilled Flounder]")
+    if "sole" in inventory:
+        cookablelist.append("[Grilled Sole]")
+    if "turbot" in inventory:
+        cookablelist.append("[Grilled Turbot]")
+    if "halibut" in inventory:
+        cookablelist.append("[Grilled Halibut]")
+    if "plaice" in inventory:
+        cookablelist.append("[Grilled Plaice]")
+    if "dab" in inventory:
+        cookablelist.append("[Grilled Dab]")
+    if "tuna" in inventory:
+        cookablelist.append("[Grilled Tuna]")
+    if "swordfish" in inventory:
+        cookablelist.append("[Grilled Swordfish]")
+    if "sailfish" in inventory:
+        cookablelist.append("[Grilled Sailfish]")
+    if "marlin" in inventory:
+        cookablelist.append("[Grilled Marlin]")
+    if "squid" in inventory:
+        cookablelist.append("[Grilled Squid]")
+    if "dolphin" in inventory:
+        cookablelist.append("[Grilled Dolphin]")
+    if "jellyfish" in inventory:
+        cookablelist.append("[Grilled Jellyfish]")
+    if "shark" in inventory:
+        cookablelist.append("[Grilled Shark]")
+    if "orca" in inventory:
+        cookablelist.append("[Grilled Orca]")
+    if "whale" in inventory:
+        cookablelist.append("[Grilled Whale]")
+    if "blackfish" in inventory:
+        cookablelist.append("[Grilled Blackfish]")
+    if "darkbass" in inventory:
+        cookablelist.append("[Grilled Darkbass]")
+    if "shadowfish" in inventory:
+        cookablelist.append("[Grilled Shadowfish]")
+    if "nightfish" in inventory:
+        cookablelist.append("[Grilled Nightfish]")
+    if "moonfish" in inventory:
+        cookablelist.append("[Grilled Moonfish]")
+    if "voidfish" in inventory:
+        cookablelist.append("[Grilled Voidfish]")
+    if "desert trout" in inventory:
+        cookablelist.append("[Grilled Desert Trout]")
+    if "sand bass" in inventory:
+        cookablelist.append("[Grilled Sand Bass]")
+    if "cactusfish" in inventory:
+        cookablelist.append("[Grilled Cactusfish]")
+    if "gila trout" in inventory:
+        cookablelist.append("[Grilled Gila Trout]")
+    if "desert chub" in inventory:
+        cookablelist.append("[Grilled Desert Chub]")
+    if "magma tang" in inventory:
+        cookablelist.append("[Grilled Magma Tang]")
+    if "ember perch" in inventory:
+        cookablelist.append("[Grilled Ember Perch]")
+    if "ember snapper" in inventory:
+        cookablelist.append("[Grilled Ember Snapper]")
+    if "pyrogrub" in inventory:
+        cookablelist.append("[Grilled Pyrogrub]")
+    if "obsidian salmon" in inventory:
+        cookablelist.append("[Grilled Obsidian Salmon]")
+    if "obsidian swordfish" in inventory:
+        cookablelist.append("[Grilled Obsidian Swordfish]")
+    if len(cookablelist) == 0:
+        print("You don't have anything to cook!")
+        time.sleep(1)
+        locationreturn()
+    print("What would you like to cook?")
+    print(", ".join(cookablelist))
+    choice = input("> ").lower()
+    if choice == "steak" and "raw meat" in inventory:
+        inventory.remove("raw meat")
+        inventory.append("steak")
+        print("You cooked a steak!")
+    elif choice == "grilled verdant trout" and "verdant trout" in inventory:
+        inventory.remove("verdant trout")
+        inventory.append("grilled verdant trout")
+        print("You cooked a Grilled Verdant Trout!")
+    elif choice == "grilled salmon" and "salmon" in inventory:
+        inventory.remove("salmon")
+        inventory.append("grilled salmon")
+        print("You cooked a Grilled Salmon!")
+    elif choice == "grilled largemouth bass" and "largemouth bass" in inventory:
+        inventory.remove("largemouth bass")
+        inventory.append("grilled largemouth bass")
+        print("You cooked a Grilled Largemouth Bass!")
+    elif choice == "grilled pike" and "pike" in inventory:
+        inventory.remove("pike")
+        inventory.append("grilled pike")
+        print("You cooked a Grilled Pike!")
+    elif choice == "grilled perch" and "perch" in inventory:
+        inventory.remove("perch")
+        inventory.append("grilled perch")
+        print("You cooked a Grilled Perch!")
+    elif choice == "grilled swamp bass" and "swamp bass" in inventory:
+        inventory.remove("swamp bass")
+        inventory.append("grilled swamp bass")
+        print("You cooked a Grilled Swamp Bass!")
+    elif choice == "grilled white perch" and "white perch" in inventory:
+        inventory.remove("white perch")
+        inventory.append("grilled white perch")
+        print("You cooked a Grilled White Perch!")
+    elif choice == "grilled bowfin" and "bowfin" in inventory:
+        inventory.remove("bowfin")
+        inventory.append("grilled bowfin")
+        print("You cooked a Grilled Bowfin!")
+    elif choice == "grilled marsh gar" and "marsh gar" in inventory:
+        inventory.remove("marsh gar")
+        inventory.append("grilled marsh gar")
+        print("You cooked a Grilled Marsh Gar!")
+    elif choice == "grilled catfish" and "catfish" in inventory:
+        inventory.remove("catfish")
+        inventory.append("grilled catfish")
+        print("You cooked a Grilled Catfish!")
+    elif choice == "grilled handfish" and "handfish" in inventory:
+        inventory.remove("handfish")
+        inventory.append("grilled handfish")
+        print("You cooked a Grilled Handfish!")
+    elif choice == "grilled piranha" and "piranha" in inventory:
+        inventory.remove("piranha")
+        inventory.append("grilled piranha")
+        print("You cooked a Grilled Piranha!")
+    elif choice == "grilled arapaima" and "arapaima" in inventory:
+        inventory.remove("arapaima")
+        inventory.append("grilled arapaima")
+        print("You cooked a Grilled Arapaima!")
+    elif choice == "grilled pacu" and "pacu" in inventory:
+        inventory.remove("pacu")
+        inventory.append("grilled pacu")
+        print("You cooked a Grilled Pacu!")
+    elif choice == "grilled tambaqui" and "tambaqui" in inventory:
+        inventory.remove("tambaqui")
+        inventory.append("grilled tambaqui")
+        print("You cooked a Grilled Tambaqui!")
+    elif choice == "grilled arowana" and "arowana" in inventory:
+        inventory.remove("arowana")
+        inventory.append("grilled arowana")
+        print("You cooked a Grilled Arowana!")
+    elif choice == "grilled redtail catfish" and "redtail catfish" in inventory:
+        inventory.remove("redtail catfish")
+        inventory.append("grilled redtail catfish")
+        print("You cooked a Grilled Redtail Catfish!")
+    elif choice == "grilled tigerfish" and "tigerfish" in inventory:
+        inventory.remove("tigerfish")
+        inventory.append("grilled tigerfish")
+        print("You cooked a Grilled Tigerfish!")
+    elif choice == "grilled alligator gar" and "alligator gar" in inventory:
+        inventory.remove("alligator gar")
+        inventory.append("grilled alligator gar")
+        print("You cooked a Grilled Alligator Gar!")
+    elif choice == "grilled discus" and "discus" in inventory:
+        inventory.remove("discus")
+        inventory.append("grilled discus")
+        print("You cooked a Grilled Discus!")
+    elif choice == "grilled angelfish" and "angelfish" in inventory:
+        inventory.remove("angelfish")
+        inventory.append("grilled angelfish")
+        print("You cooked a Grilled Angelfish!")
+    elif choice == "grilled tetra" and "tetra" in inventory:
+        inventory.remove("tetra")
+        inventory.append("grilled tetra")
+        print("You cooked a Grilled Tetra!")
+    elif choice == "grilled guppy" and "guppy" in inventory:
+        inventory.remove("guppy")
+        inventory.append("grilled guppy")
+        print("You cooked a Grilled Guppy!")
+    elif choice == "grilled sunfish" and "sunfish" in inventory:
+        inventory.remove("sunfish")
+        inventory.append("grilled sunfish")
+        print("You cooked a Grilled Sunfish!")
+    elif choice == "grilled betta" and "betta" in inventory:
+        inventory.remove("betta")
+        inventory.append("grilled betta")
+        print("You cooked a Grilled Betta!")
+    elif choice == "grilled cod" and "cod" in inventory:
+        inventory.remove("cod")
+        inventory.append("grilled cod")
+        print("You cooked a Grilled Cod!")
+    elif choice == "grilled haddock" and "haddock" in inventory:
+        inventory.remove("haddock")
+        inventory.append("grilled haddock")
+        print("You cooked a Grilled Haddock!")
+    elif choice == "grilled pollock" and "pollock" in inventory:
+        inventory.remove("pollock")
+        inventory.append("grilled pollock")
+        print("You cooked a Grilled Pollock!")
+    elif choice == "grilled herring" and "herring" in inventory:
+        inventory.remove("herring")
+        inventory.append("grilled herring")
+        print("You cooked a Grilled Herring!")
+    elif choice == "grilled mackerel" and "mackerel" in inventory:
+        inventory.remove("mackerel")
+        inventory.append("grilled mackerel")
+        print("You cooked a Grilled Mackerel!")
+    elif choice == "grilled whiting" and "whiting" in inventory:
+        inventory.remove("whiting")
+        inventory.append("grilled whiting")
+        print("You cooked a Grilled Whiting!")
+    elif choice == "grilled plaice" and "plaice" in inventory:
+        inventory.remove("plaice")
+        inventory.append("grilled plaice")
+        print("You cooked a Grilled Plaice!")
+    elif choice == "grilled arctic char" and "arctic char" in inventory:
+        inventory.remove("arctic char")
+        inventory.append("grilled arctic char")
+        print("You cooked a Grilled Arctic Char!")
+    elif choice == "grilled grayling" and "grayling" in inventory:
+        inventory.remove("grayling")
+        inventory.append("grilled grayling")
+        print("You cooked a Grilled Grayling!")
+    elif choice == "grilled salmon" and "salmon" in inventory:
+        inventory.remove("salmon")
+        inventory.append("grilled salmon")
+        print("You cooked a Grilled Salmon!")
+    elif choice == "grilled burbot" and "burbot" in inventory:
+        inventory.remove("burbot")
+        inventory.append("grilled burbot")
+        print("You cooked a Grilled Burbot!")
+    elif choice == "grilled minnow" and "minnow" in inventory:
+        inventory.remove("minnow")
+        inventory.append("grilled minnow")
+        print("You cooked a Grilled Minnow!")
+    elif choice == "grilled tadpole" and "tadpole" in inventory:
+        inventory.remove("tadpole")
+        inventory.append("grilled tadpole")
+        print("You cooked a Grilled Tadpole!")
+    elif choice == "grilled goldfish" and "goldfish" in inventory:
+        inventory.remove("goldfish")
+        inventory.append("grilled goldfish")
+        print("You cooked a Grilled Goldfish!")
+    elif choice == "grilled grouper" and "grouper" in inventory:
+        inventory.remove("grouper")
+        inventory.append("grilled grouper")
+        print("You cooked a Grilled Grouper!")
+    elif choice == "grilled snapper" and "snapper" in inventory:
+        inventory.remove("snapper")
+        inventory.append("grilled snapper")
+        print("You cooked a Grilled Snapper!")
+    elif choice == "grilled parrotfish" and "parrotfish" in inventory:
+        inventory.remove("parrotfish")
+        inventory.append("grilled parrotfish")
+        print("You cooked a Grilled Parrotfish!")
+    elif choice == "grilled triggerfish" and "triggerfish" in inventory:
+        inventory.remove("triggerfish")
+        inventory.append("grilled triggerfish")
+        print("You cooked a Grilled Triggerfish!")
+    elif choice == "grilled barracuda" and "barracuda" in inventory:
+        inventory.remove("barracuda")
+        inventory.append("grilled barracuda")
+        print("You cooked a Grilled Barracuda!")
+    elif choice == "grilled wahoo" and "wahoo" in inventory:
+        inventory.remove("wahoo")
+        inventory.append("grilled wahoo")
+        print("You cooked a Grilled Wahoo!")
+    elif choice == "grilled mahi mahi" and "mahi mahi" in inventory:
+        inventory.remove("mahi mahi")
+        inventory.append("grilled mahi mahi")
+        print("You cooked a Grilled Mahi Mahi!")
+    elif choice == "grilled mullet" and "mullet" in inventory:
+        inventory.remove("mullet")
+        inventory.append("grilled mullet")
+        print("You cooked a Grilled Mullet!")
+    elif choice == "grilled flounder" and "flounder" in inventory:
+        inventory.remove("flounder")
+        inventory.append("grilled flounder")
+        print("You cooked a Grilled Flounder!")
+    elif choice == "grilled sole" and "sole" in inventory:
+        inventory.remove("sole")
+        inventory.append("grilled sole")
+        print("You cooked a Grilled Sole!")
+    elif choice == "grilled turbot" and "turbot" in inventory:
+        inventory.remove("turbot")
+        inventory.append("grilled turbot")
+        print("You cooked a Grilled Turbot!")
+    elif choice == "grilled halibut" and "halibut" in inventory:
+        inventory.remove("halibut")
+        inventory.append("grilled halibut")
+        print("You cooked a Grilled Halibut!")
+    elif choice == "grilled plaice" and "plaice" in inventory:
+        inventory.remove("plaice")
+        inventory.append("grilled plaice")
+        print("You cooked a Grilled Plaice!")
+    elif choice == "grilled dab" and "dab" in inventory:
+        inventory.remove("dab")
+        inventory.append("grilled dab")
+        print("You cooked a Grilled Dab!")
+    elif choice == "grilled tuna" and "tuna" in inventory:
+        inventory.remove("tuna")
+        inventory.append("grilled tuna")
+        print("You cooked a Grilled Tuna!")
+    elif choice == "grilled swordfish" and "swordfish" in inventory:
+        inventory.remove("swordfish")
+        inventory.append("grilled swordfish")
+        print("You cooked a Grilled Swordfish!")
+    elif choice == "grilled sailfish" and "sailfish" in inventory:
+        inventory.remove("sailfish")
+        inventory.append("grilled sailfish")
+        print("You cooked a Grilled Sailfish!")
+    elif choice == "grilled marlin" and "marlin" in inventory:
+        inventory.remove("marlin")
+        inventory.append("grilled marlin")
+        print("You cooked a Grilled Marlin!")
+    elif choice == "grilled squid" and "squid" in inventory:
+        inventory.remove("squid")
+        inventory.append("grilled squid")
+        print("You cooked a Grilled Squid!")
+    elif choice == "grilled dolphin" and "dolphin" in inventory:
+        inventory.remove("dolphin")
+        inventory.append("grilled dolphin")
+        print("You cooked a Grilled Dolphin!")
+    elif choice == "grilled jellyfish" and "jellyfish" in inventory:
+        inventory.remove("jellyfish")
+        inventory.append("grilled jellyfish")
+        print("You cooked a Grilled Jellyfish!")
+    elif choice == "grilled shark" and "shark" in inventory:
+        inventory.remove("shark")
+        inventory.append("grilled shark")
+        print("You cooked a Grilled Shark!")
+    elif choice == "grilled orca" and "orca" in inventory:
+        inventory.remove("orca")
+        inventory.append("grilled orca")
+        print("You cooked a Grilled Orca!")
+    elif choice == "grilled whale" and "whale" in inventory:
+        inventory.remove("whale")
+        inventory.append("grilled whale")
+        print("You cooked a Grilled Whale!")
+    elif choice == "grilled blackfish" and "blackfish" in inventory:
+        inventory.remove("blackfish")
+        inventory.append("grilled blackfish")
+        print("You cooked a Grilled Blackfish!")
+    elif choice == "grilled darkbass" and "darkbass" in inventory:
+        inventory.remove("darkbass")
+        inventory.append("grilled darkbass")
+        print("You cooked a Grilled Darkbass!")
+    elif choice == "grilled shadowfish" and "shadowfish" in inventory:
+        inventory.remove("shadowfish")
+        inventory.append("grilled shadowfish")
+        print("You cooked a Grilled Shadowfish!")
+    elif choice == "grilled nightfish" and "nightfish" in inventory:
+        inventory.remove("nightfish")
+        inventory.append("grilled nightfish")
+        print("You cooked a Grilled Nightfish!")
+    elif choice == "grilled moonfish" and "moonfish" in inventory:
+        inventory.remove("moonfish")
+        inventory.append("grilled moonfish")
+        print("You cooked a Grilled Moonfish!")
+    elif choice == "grilled voidfish" and "voidfish" in inventory:
+        inventory.remove("voidfish")
+        inventory.append("grilled voidfish")
+        print("You cooked a Grilled Voidfish!")
+    elif choice == "grilled desert trout" and "desert trout" in inventory:
+        inventory.remove("desert trout")
+        inventory.append("grilled desert trout")
+        print("You cooked a Grilled Desert Trout!")
+    elif choice == "grilled sand bass" and "sand bass" in inventory:
+        inventory.remove("sand bass")
+        inventory.append("grilled sand bass")
+        print("You cooked a Grilled Sand Bass!")
+    elif choice == "grilled cactusfish" and "cactusfish" in inventory:
+        inventory.remove("cactusfish")
+        inventory.append("grilled cactusfish")
+        print("You cooked a Grilled Cactusfish!")
+    elif choice == "grilled gila trout" and "gila trout" in inventory:
+        inventory.remove("gila trout")
+        inventory.append("grilled gila trout")
+        print("You cooked a Grilled Gila Trout!")
+    elif choice == "grilled desert chub" and "desert chub" in inventory:
+        inventory.remove("desert chub")
+        inventory.append("grilled desert chub")
+        print("You cooked a Grilled Desert Chub!")
+    elif choice == "grilled magma tang" and "magma tang" in inventory:
+        inventory.remove("magma tang")
+        inventory.append("grilled magma tang")
+        print("You cooked a Grilled Magma Tang!")
+    elif choice == "grilled ember perch" and "ember perch" in inventory:
+        inventory.remove("ember perch")
+        inventory.append("grilled ember perch")
+        print("You cooked a Grilled Ember Perch!")
+    elif choice == "grilled ember snapper" and "ember snapper" in inventory:
+        inventory.remove("ember snapper")
+        inventory.append("grilled ember snapper")
+        print("You cooked a Grilled Ember Snapper!")
+    elif choice == "grilled pyrogrub" and "pyrogrub" in inventory:
+        inventory.remove("pyrogrub")
+        inventory.append("grilled pyrogrub")
+        print("You cooked a Grilled Pyrogrub!")
+    elif choice == "grilled obsidian salmon" and "obsidian salmon" in inventory:
+        inventory.remove("obsidian salmon")
+        inventory.append("grilled obsidian salmon")
+        print("You cooked a Grilled Obsidian Salmon!")
+    elif choice == "grilled obsidian swordfish" and "obsidian swordfish" in inventory:
+        inventory.remove("obsidian swordfish")
+        inventory.append("grilled obsidian swordfish")
+        print("You cooked a Grilled Obsidian Swordfish!")
+    else:
+        print("You can't cook that!")
+        time.sleep(1)
+        locationreturn()
+    firelevel -= 1
+    if firelevel == 0:
+        print("Your fire has gone out.")
+        time.sleep(1)
+        locationreturn()
+    print("Your fire has " + str(firelevel) + " more uses.")
+    time.sleep(1)
+    locationreturn()
 
 #UNCHANGED - PURPOSE: A function that opens the off-character storage menu
 def storage():
@@ -2540,6 +3074,370 @@ def verdanthills3():
       verdanthills3()
   else:
     verdanthills3()
+
+def twilighttundra1():
+    global location, hours, timeofday, minutes, hunger
+    locationchange("twilighttundra1")
+    mealcheck()
+    dt(0.02,"The tundra is a vast, flat, and cold landscape.  The ground is covered in a thick layer of snow, and the sky is a dark blue.  The sun is setting, casting a pink and purple hue over the land.")
+    lactionfix()
+    time.sleep(4)
+    global laction
+    laction = ""
+    laction = acs(laction, locationactions)
+    if laction in locationactions:
+        if laction == "inventory":
+            invf()
+        elif laction == "hp":
+            hpcheck()
+        elif laction == "quests":
+            print("Your quests: " + str(quests))
+            time.sleep(1)
+            locationreturn()
+        elif laction == "gather":
+            timeshift(0, 15)
+            print("You spend 15 minutes gathering some sticks")
+            time.sleep(2)
+            print("...")
+            time.sleep(2)
+            gatherluck = random.randint(1, 11)
+            if 1 <= gatherluck <= 5:
+                print("You find some sticks, but they're not very good quality.")
+            elif 6 <= gatherluck <= 11:
+                print("You find some nice, thick sticks.")
+                inventory.append("bundle of sticks")
+            time.sleep(2.5)
+            twilighttundra1()
+        elif laction == "loadout":
+            loadout()
+        elif laction == "coins":
+            coins()
+        elif laction == "exchange":
+            exchange()
+        elif laction == "throwing knives":
+            knifecount()
+        elif laction == "hunger":
+            hungercheck()
+        elif laction == "time":
+            timecheck()
+        elif laction == "save data":
+            savedata()
+        elif laction == "west": #to northern sea 2
+            if "boat" in inventory:
+                hunger = hunger - 1
+                print("You walk towards the sea.")
+                time.sleep(1)
+                print("You find your boat and row out to sea.")
+                time.sleep(2)
+                timeshift(0, 30)
+                northernsea2()
+            else:
+                print("You need a boat to go out to sea.")
+                time.sleep(1)
+                twilighttundra1()
+        elif laction == "east": #to shattered taiga 1
+            hunger = hunger - 1
+            print("You walk towards the east.")
+            time.sleep(1)
+            print("You see a forest in the distance.")
+            time.sleep(1)
+            timeshift(0, 30)
+            time.sleep(1)
+            shatteredtaiga1()
+        elif laction == "south": #to shattered taiga 2
+            hunger = hunger - 1
+            print("You walk towards the south.")
+            time.sleep(1)
+            print("You see a forest in the distance.")
+            time.sleep(1)
+            timeshift(0, 30)
+            time.sleep(1)
+            shatteredtaiga2()
+        #NO NORTH
+        elif laction == "help":
+            print("Use the directions to move to new areas, use some commands to look around town, and some commands to check stats and items you have.  If some commands don't work, they're likely being developed or haven't been coded yet.  I strive to make this a positive experience for players and will almost always test commands I've edited recently.")
+            print("")
+            print("tl;dr: follow the commands it says you can use, directions are to explore and everything else is self-explanatory.")
+            wait = input()
+            twilighttundra1()
+        else:
+            print("[not coded yet, sorry]")
+            time.sleep(1)
+            twilighttundra1()
+    else:
+        twilighttundra1()
+
+def twilighttundra2():
+    global location, hours, timeofday, minutes, hunger
+    locationchange("twilighttundra2")
+    mealcheck()
+    dt(0.02,"The tundra is a vast, flat, and cold landscape.  The ground is covered in a thick layer of snow, and the sky is a dark blue.  The sun is setting, casting a pink and purple hue over the land.")
+    lactionfix()
+    time.sleep(4)
+    global laction
+    laction = ""
+    laction = acs(laction, locationactions)
+    if laction in locationactions:
+        if laction == "inventory":
+            invf()
+        elif laction == "hp":
+            hpcheck()
+        elif laction == "quests":
+            print("Your quests: " + str(quests))
+            time.sleep(1)
+            locationreturn()
+        elif laction == "gather":
+            timeshift(0, 15)
+            print("You spend 15 minutes gathering some sticks")
+            time.sleep(2)
+            print("...")
+            time.sleep(2)
+            gatherluck = random.randint(1, 11)
+            if 1 <= gatherluck <= 5:
+                print("You find some sticks, but they're not very good quality.")
+            elif 6 <= gatherluck <= 11:
+                print("You find some nice, thick sticks.")
+                inventory.append("bundle of sticks")
+            time.sleep(2.5)
+            twilighttundra2()
+        elif laction == "loadout":
+            loadout()
+        elif laction == "coins":
+            coins()
+        elif laction == "exchange":
+            exchange()
+        elif laction == "throwing knives":
+            knifecount()
+        elif laction == "hunger":
+            hungercheck()
+        elif laction == "time":
+            timecheck()
+        elif laction == "save data":
+            savedata()
+        elif laction == "west": #to northern sea 3
+            if "boat" in inventory:
+                hunger = hunger - 1
+                print("You walk towards the sea.")
+                time.sleep(1)
+                print("You find your boat and row out to sea.")
+                time.sleep(2)
+                timeshift(0, 30)
+                northernsea3()
+            else:
+                print("You need a boat to go out to sea.")
+                time.sleep(1)
+                twilighttundra2()
+        elif laction == "east": #to shattered taiga 2
+            hunger = hunger - 1
+            print("You walk towards the east.")
+            time.sleep(1)
+            print("You see a forest in the distance.")
+            time.sleep(1)
+            timeshift(0, 30)
+            time.sleep(1)
+            shatteredtaiga2()
+        elif laction == "south": #to twilight tundra 4
+            hunger = hunger - 1
+            print("You walk towards the south.")
+            time.sleep(1)
+            print("You see a vast, flat, and cold landscape.")
+            time.sleep(1)
+            timeshift(0, 30)
+            time.sleep(1)
+            twilighttundra4()
+        elif laction == "north": #to northern sea 2
+            if "boat" in inventory:
+                hunger = hunger - 1
+                print("You walk towards the sea.")
+                time.sleep(1)
+                print("You find your boat and row out to sea.")
+                time.sleep(2)
+                timeshift(0, 30)
+                northernsea2()
+            else:
+                print("You need a boat to go out to sea.")
+                time.sleep(1)
+                twilighttundra2()
+        elif laction == "help":
+            print("Use the directions to move to new areas, use some commands to look around town, and some commands to check stats and items you have.  If some commands don't work, they're likely being developed or haven't been coded yet.  I strive to make this a positive experience for players and will almost always test commands I've edited recently.")
+            print("")
+            print("tl;dr: follow the commands it says you can use, directions are to explore and everything else is self-explanatory.")
+            wait = input()
+            twilighttundra2()
+        else:
+            print("[not coded yet, sorry]")
+            time.sleep(1)
+            twilighttundra2()
+    else:
+        twilighttundra2()
+
+def twilighttundra3(): #superboss arena
+  global minutes, hours, DR, loot, maxhp, hp, ac, atkbonus, dmgbonus, rage, throwingknife, eqweapon, eqhelm, wsyes, sclass, magicbonus, hours, timeofday, eqoffhand, gc, inventory, gwpy, gwpcharge, locations, monkbonus, leafybonus, injury1, injury2, injury3, enemy1dmgbonus, enemy2dmgbonus, enemy3dmgbonus, enemy1ac, enemy2ac, enemy3ac, action, rage, tac, av, targeteden, inventory, snipe, reload, bowbonus
+  if ttsb == 1:
+      print("You have already defeated the super boss.")
+      time.sleep(1)
+      twilighttundra4()
+  print("ARE YOU SURE YOU WANT TO ENTER THE SUPERBOSS ARENA?")
+  input = input("> ").lower()
+  if input == "yes":
+      print("GOOD LUCK")
+  else:
+      twilighttundra4()
+  ni = 0
+  enemies = ["executioner"]
+  injury = 0
+  leafybonus = 0
+  monkbonus = 0
+  enemy1hp = 100
+  enemy1ac = 15
+  behead = 1
+  bossatkbonus = 5
+  bossstatusg = "none"
+  bossstatusb = "none"
+  if gwpy == "yes":
+    dmgbonus = dmgbonus + 3
+    gwpcharge = gwpcharge - 1
+  verdantbonusa = 0
+  verdantbonusb = 0
+  verdantcharge = 0
+  verdantchargeyes = 0
+  statusb = "none"
+  loot = "yes"
+  rage = "no"
+  injury1 = 0
+  print("======================================")
+  time.sleep(1)
+  print("...")
+  time.sleep(1)
+  print("...")
+  time.sleep(1)
+  print("...")
+  time.sleep(1)
+  print("...")
+  time.sleep(1)
+  bosstext("[Forsaken Executioner, tundra slayer.]", 4)
+  time.sleep(2)
+  clearscreen()
+  while enemy1hp > 0 and hp > 0:
+    attack()
+    if injury > 0:
+      hp = hp - injury
+      print("You bleed for " + str(injury) + " damage.")
+      injury = injury - 1
+    print("")
+    if enemy1hp > 0 and hp > 0:
+      bossmove = random.randint(1, 10)
+      if 1 <= bossmove <= 4:
+        #normal attack
+        if random.randint(1, 20) + bossatkbonus >= ac:
+          print("The executioner swings their massive axe at you.")
+          hp -= random.randint(4, 6)
+        else:
+          print("The axe swing misses.")
+          print("")
+          if action == "block":
+            enemy1hp = enemy1hp - 2
+            print("You strike out with a counterattack!")
+            print("")
+            if eqweapon == "phalanx polearm":
+              enemy1hp = enemy1hp - 2
+      if 5 <= bossmove <= 7:
+        if behead == 0:
+          print("The executioner starts charging up.")
+          behead += 1
+          time.sleep(2)
+        else:
+          print("The executioner focuses on you.")
+          enemy1ac += 1
+      if 8 <= bossmove <= 10:
+        print("The executioner slams their axe on the floor.")
+        time.sleep(1)
+        if random.randint(1, 20) + bossatkbonus >= ac:
+            print("You take 5 damage.")
+            hp -= 5
+        else:
+            print("The axe slam misses.")
+    if injury1 != 0:
+      enemy1hp = enemy1hp - injury1
+      print("The executioner bleeds for " + str(injury1) + " damage.")
+      injury1 = injury1 - 1
+      time.sleep(0.5)
+    if 0 >= hp and wsyes == "no":
+      print("You have fallen.")
+    elif 0 >= hp and wsyes == "yes":
+      print("You revert form.")
+      ac = wsac
+      maxhp = wsmaxhp
+      hp = wshp
+      eqweapon = wsweapon
+      atkbonus = wsatkbonus
+      dmgbonus = wsdmgbonus
+    if action == "block":
+      ac = ac - 1
+      if eqoffhand == "wooden shield":
+        ac = ac - 1
+      if eqoffhand == "primordial shield":
+        ac = ac - 15
+    if behead == 2:
+      behead = 0
+      print("The executioner swings their axe at you with all their might.")
+      time.sleep(2)
+      hp -= random.randint(10, 15)
+    if behead == 1:
+      behead = 2
+    print("")
+  if enemy1hp <= 0:
+      ttsb = 1
+  atkbonus = atkbonus - monkbonus
+  magicbonus = magicbonus - leafybonus
+  magicbonus = magicbonus - verdantbonusa
+  dmgbonus = dmgbonus - verdantbonusb
+  if gwpy == "yes":
+    dmgbonus = dmgbonus - 3
+    if gwpcharge == 0:
+      gwpy = "no"
+  if wsyes == "yes":
+    print("You revert form.")
+    ac = wsac
+    maxhp = wsmaxhp
+    hp = wshp
+    eqweapon = wsweapon
+    atkbonus = wsatkbonus
+    dmgbonus = wsdmgbonus
+    battleactions.append("magic")
+  if rage == "yes":
+    print("Your anger fades.")
+    ac = ac + 4
+    atkbonus = atkbonus - 2
+    dmgbonus = dmgbonus - 1
+  rage = "no"
+  if loot == "yes" and hp > 0:
+    print("The battle is over.  You stand victorious.")
+    bossloot = random.randint(1, 3)
+    if bossloot == 1:
+      bossloot = ("Executioner Axe")
+      inventory.append("executioner axe")
+    elif bossloot == 2:
+      bossloot = ("Cape of the Executioner")
+      inventory.append("cape of the executioner")
+    elif bossloot == 3:
+      bossloot = ("Darksteel Plate")
+      inventory.append("darksteel plate")
+    print("You got a " + bossloot + "!")
+    time.sleep(0.2)
+    goldg = random.randint(40, 50)
+    gc += goldg
+    print("You found " + goldg + "" + gold + "gc" + white + "!")
+    time.sleep(0.2)
+    print("[ENTER] to continue.")
+    waitv = input("")
+    timeshift(0,15)
+  else:
+    loot = "no"
+    time.sleep(1)
+    print("You died. Heading to the nearest village...")
+    hp = 1
+    Snowdrift()
 
 #verdant hills
 def verdanthills4():
@@ -10129,6 +11027,7 @@ print("Would you like to open an existing data save?\nIf you don't have one, jus
 saveloadyes = input("> ").lower()
 if "y" in saveloadyes:
   clearscreen()
+  #tkinter save file window
   loaddata()
 else:
   dt(0.04, "Okay, starting your adventure...")
