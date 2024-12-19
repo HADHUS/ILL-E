@@ -143,7 +143,7 @@ styles = [
 battleactions = ["attack", "block", "run"]
 
 #UNCHANGED - PURPOSE: A list of all possible actions in a given location
-locationactions = ["west", "east", "north", "south", "save data", "loadout", "inventory", "help", "coins","hp", "time", "hunger", "quests", "exchange"]
+locationactions = ["west", "east", "north", "south", "save data", "loadout", "inventory", "help", "coins","hp", "time", "hunger", "quests", "exchange", "debug"]
 
 #CHANGE: All locations added | PURPOSE: A list of locations where fishing is allowed
 fishingspots = [
@@ -584,22 +584,34 @@ def enterwait():
   print("[ENTER] to continue.")
   wait = input()
 
-#UNCHANGED - PURPOSE: Title card function
+#UPDATED - PURPOSE: Title card function | Changed to the new titlecard
 def title():
-  print(gold+ "         ██\                     "+white+"/\                  "+green+"           (''''')")
-  print(gold + "         \_███\ ███\ "+green+"  (o)      "+white+"/  \_           /\      "+green+"      (_    3  _)")
-  print(gold +"███████████\__\ ████\ "+lime+" _"+brown+"|"+lime+"__"+white+"   _/ /\  \_        /  \ "+tan+"     ___ "+green+"   (_o  _)")
-  print(gold +"\___████\__\    ████ |"+lime+"/    \\"+white+"_/ \/  \/\/\__   _/\/\/\ "+tan+"___/   \   __"+brown+"| |   "+green+"    ( )3")
-  print(gold +"    ████ |      ████ | "+grey+"  __/        o     \_/ o     \_"+tan+"       \_/__"+brown+"| | "+green+"( o)"+darkgreen+"___"+brown+"|//      ")
-  print(gold +"    ████ |      ████ |"+grey+"__/     o                  o   "+gold+"█████\   "+brown+"    |  \ ||    ||"+gold+"█████\ ")
-  print(gold +"    ████ |      ████ |      ████\   ███\  ████\    ██\_.._██\  "+brown+"  / "+gold+"█████\    ██\_.._██\ ")
-  print(gold +"    ████ |      ████ |   ███\_._███ \__███\___██\  \_ █████\    ███\____██\  \_ █████\ ")
-  print(gold +"    ████ |      ████ |  ███/     ███\  ███|   \_\   ███\___██|  ██ █████\     ███\___██|")
-  print(gold +"    ████ |      ████ |  ███|     ███|  ███|        ███\|   ██|  ███\____\    ███\|   ██|")
-  print(gold +"  ████████\      \██ |   ███\   ███/   ███|        \███\  ██/    ███    ██\  \███\  ██/ ")
-  print(gold +"█████████████|     █ |     \████\_/    ██\          \__███\_████\  \████\_\   \__███\_████\ ")
-  print(gold +"\____________\     \_\      \___/      \_\             \__\ \___\   \___\        \__\ \___\ "+white)
-  
+  print(gold +"⚝﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋⚝"+gold)
+  print(gold +"⸾          ██\                     "+white+"/\                  "+green+"           (''''')                       "+gold+"⸾")
+  print(gold +"⸾          \_███\ ███\ "+green+"  (o)      "+white+"/  \_           /\      "+green+"      (_    3  _)                     "+gold+"⸾")
+  print(gold +"⸾ ███████████\__\ ████\ "+lime+" _"+brown+"|"+lime+"__"+white+"   _/ /\  \_        /  \ "+tan+"     ___ "+green+"   (_o  _)                       "+gold+"⸾")
+  print(gold +"⸾ \___████\__\    ████ |"+lime+"/    \\"+white+"_/ \/  \/\/\__   _/\/\/\ "+tan+"___/   \   __"+brown+"| |   "+green+"    ( )3              "+gold+"⸾")
+  print(gold +"⸾     ████ |      ████ | "+grey+"  __/        o     \_/ o     \_"+tan+"       \_/__"+brown+"| | "+green+"( o)"+darkgreen+"___"+brown+"|//              "+gold+"⸾")
+  print(gold +"⸾     ████ |      ████ |"+grey+"__/     o                  o   "+gold+"█████\   "+brown+"    |  \ ||    ||"+gold+"█████\         ⸾")
+  print(gold +"⸾     ████ |      ████ |      ████\   ███\  ████\    ██\_.._██\  "+brown+"  / "+gold+"█████\    ██\_.._██\       ⸾ ")
+  print(gold +"⸾     ████ |      ████ |   ███\_._███ \__███\___██\  \_ █████\    ███\____██\  \_ █████\        ⸾")
+  print(gold +"⸾     ████ |      ████ |  ███/     ███\  ███|   \_\   ███\___██|  ██ █████\     ███\___██|      ⸾")
+  print(gold +"⸾     ████ |      ████ |  ███|     ███|  ███|        ███\|   ██|  ███\____\    ███\|   ██|      ⸾")
+  print(gold +"⸾   ████████\      \██ |   ███\   ███/   ███|        \███\  ██/    ███    ██\  \███\  ██/       ⸾")
+  print(gold +"⸾ █████████████|_____█_|_____\████\_/____██/__________\__███\_████\__\████\_\___\__███\_████..  ⸾")
+  print(gold +"⸾ "+bronze+"\\\\════════════════════════════════════════════════════════════════════════════════════════//"+gold+"  ⸾")
+  print(gold +"⸾  "+bronze+"\\\\"+darkred+"######################################################################################"+bronze+"//   "+gold+"⸾")
+  print(gold +"⸾   "+bronze+"\\\\"+darkred+"#"+red2+"|__|__|_"+bronze+"███████╗██╗"+red2+"__"+bronze+"██╗██████╗"+red2+"__"+bronze+"█████╗"+red2+"|"+bronze+"███╗"+red2+"_|_"+bronze+"██╗██████╗"+red2+"|"+bronze+"███████╗██████╗"+red2+"__|__|__|"+darkred+"#"+bronze+"//    "+gold+"⸾")
+  print(gold +"⸾    "+bronze+"\\\\"+darkred+"#"+red2+"_|__|__"+bronze+"██╔════╝╚██╗██╔╝██╔══██╗██╔══██╗████╗"+red2+"__"+bronze+"██║██╔══██╗██╔════╝██╔══██╗"+red2+"|__|__|"+darkred+"#"+bronze+"//     "+gold+"⸾")
+  print(gold +"⸾     "+bronze+"\\\\"+darkred+"#"+red2+"__|__|"+bronze+"█████╗"+red2+"__|"+bronze+"╚███╔╝"+red2+"_"+bronze+"██████╔╝███████║██╔██╗"+red2+"|"+bronze+"██║██║"+red2+"|_"+bronze+"██║█████╗"+red2+"|_"+bronze+"██║"+red2+"_|"+bronze+"██║"+red2+"__|__|"+darkred+"#"+bronze+"//      "+gold+"⸾")
+  print(gold +"⸾      "+bronze+"\\\\"+darkred+"#"+red2+"|__|_"+bronze+"██╔══╝"+red2+"_|_"+bronze+"██╔██╗"+red2+"_"+bronze+"██╔═══╝"+red2+"_"+bronze+"██╔══██║██║╚██╗██║██║"+red2+"_|"+bronze+"██║██╔══╝"+red2+"__"+bronze+"██║"+red2+"|_"+bronze+"██║"+red2+"_|__|"+darkred+"#"+bronze+"//       "+gold+"⸾")
+  print(gold +"⸾       "+bronze+"\\\\"+darkred+"#"+red2+"_|__"+bronze+"███████╗██╔╝"+red2+"|"+bronze+"██╗██║"+red2+"__|__"+bronze+"██║"+red2+"|_"+bronze+"██║██║"+red2+"_"+bronze+"╚████║██████╔╝███████╗██████╔╝"+red2+"|__|"+darkred+"#"+bronze+"//        "+gold+"⸾")
+  print(gold +"⸾        "+bronze+"\\\\"+darkred+"#"+red2+"__|"+bronze+"╚══════╝╚═╝"+red2+"|_"+bronze+"╚═╝╚═╝"+red2+"_|__|"+bronze+"╚═╝"+red2+"__"+bronze+"╚═╝╚═╝"+red2+"|_"+bronze+"╚═══╝╚═════╝"+red2+"_"+bronze+"╚══════╝╚═════╝"+red2+"|__|"+darkred+"#"+bronze+"//         "+gold+"⸾")
+  print(gold +"⸾         "+bronze+"\\\\"+darkred+"########################################################################"+bronze+"//          "+gold+"⸾")
+  print(gold +"⸾          "+bronze+"\\\\══════════════════════════════════════════════════════════════════════//           "+gold+"⸾")
+  print(gold +"⸾                                                                                               "+gold+"⸾")
+  print(gold +"⚝﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏⚝"+white)
+
 #UNCHANGED - PURPOSE: Decorative list display function | EXAMPLE: las(LIST_NAME_HERE)
 def las(listc):
   laas = ", ".join(listc)
@@ -2223,6 +2235,34 @@ def cooking():
     print("Your fire has " + str(firelevel) + " more uses.")
     time.sleep(1)
     locationreturn()
+
+def debugmenu():
+    global location
+    print("Debug Menu")
+    print("1. twilighttundra test")
+    print("2. give debug stick")
+    print("3. give debug armor")
+    print("4. spawn fishing rod")
+    print("5. give item")
+    user_input = input("> ")
+    if user_input == "1":
+        twilighttundra1()
+    elif user_input == "2":
+        inventory.append("debug stick")
+        locationreturn()
+    elif user_input == "3":
+        inventory.append("debug armor")
+        locationreturn()
+    elif user_input == "4":
+        eqrod("magma rod")
+        locationreturn()
+    elif user_input == "5":
+        print("What item would you like to give yourself?")
+        item = input("> ")
+        inventory.append(item)
+        locationreturn()
+    else:
+        locationreturn()
 
 #UNCHANGED - PURPOSE: A function that opens the off-character storage menu
 def storage():
@@ -4467,6 +4507,8 @@ def Falezrin():
       Falinn()
     elif laction == "inventory":
       invf()
+    elif laction == "debug":
+      debugmenu()
     elif laction == "hp":
       hpcheck()
     elif laction == "taxi":
@@ -7372,6 +7414,14 @@ def invf():
           print("Goblin sword equipped!")
         else:
           print("You can't equip that weapon!")
+      elif inve == "debug stick":
+          if eqweapon != "none":
+              inventory.append(eqweapon)
+              eqweapon = inve
+              inventory.remove(inve)
+              print("Debug stick equipped!")
+          else:
+              print("You can't equip that weapon!")
       elif inve == "striker blade":
         if ((sclass == "warrior") or (sclass == "berserker") or (sclass == "skirmisher")):
           if eqweapon != "none":
@@ -7768,7 +7818,7 @@ def invf():
         eqremove('armor')
         eqarmor = inve
         inventory.remove(inve)
-        print("Iron plate equipped!")
+        print("Scale mail equipped!")
         ac = ac + 4
         maxhp = maxhp + 3
         DR = DR + 1
@@ -7779,6 +7829,31 @@ def invf():
         print("Iron plate equipped!")
         ac = ac + 3
         maxhp = maxhp + 2
+      elif inve == "debug armor":
+          if eqarmor == "iron plate":
+            ac = ac - 3
+            maxhp = maxhp - 2
+          if eqarmor == "leather vest":
+            ac = ac - 2
+            maxhp = maxhp - 1
+            rangedDR = rangedDR - 1
+          if eqarmor == "scale mail":
+            ac = ac - 4
+            maxhp = maxhp - 3
+            DR = DR - 1
+          if eqarmor == "debug armor":
+            ac = ac - 100
+            maxhp = maxhp - 100
+            DR = DR - 100
+          if eqarmor != "none":
+            inventory.append(eqarmor)
+          eqremove('armor')
+          eqarmor = inve
+          inventory.remove(inve)
+          print("Debug armor equipped!")
+          ac = ac + 100
+          maxhp = maxhp + 100
+          DR = DR + 100
       elif inve == "leather vest":
         if eqarmor == "iron plate":
           ac = ac - 3
@@ -7787,6 +7862,14 @@ def invf():
           ac = ac - 2
           maxhp = maxhp - 1
           rangedDR = rangedDR - 1
+        if eqarmor == "scale mail":
+          ac = ac - 4
+          maxhp = maxhp - 3
+          DR = DR - 1
+        if eqarmor == "debug armor":
+            ac = ac - 100
+            maxhp = maxhp - 100
+            DR = DR - 100
         if eqarmor != "none":
           inventory.append(eqarmor)
         eqarmor = inve
@@ -9096,6 +9179,9 @@ def attack(target):
                   injure(injury2, iv)
                 elif targeteden == 3:
                   injure(injury3, iv)
+            if eqweapon == "debug stick":
+                target -= (random.randint(999, 999999) + dmgbonus)
+                print("You swing the debug stick, and the " + enemies[av] + " is obliterated.")
             if eqweapon == "none":
               if sclass == "monk":
                 target -= (random.randint(1, 3) + dmgbonus)
@@ -9116,7 +9202,7 @@ def attack(target):
                 print("One strong punch strikes.")
             if ((eqweapon in magicweapons) and ("scroll of night" in eqgear)):
               sharddmg = random.randint(1, 4) + magicbonus
-              print("Your scroll fires a magic shard, dealing " + sharddmg +                    white + " damage!")
+              print("Your scroll fires a magic shard, dealing " + sharddmg + white + " damage!")
               target -= sharddmg
           else:
             print("You missed!")
